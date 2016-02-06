@@ -1,0 +1,12 @@
+# ignore auto generated folders
+auto-save-list/*
+chinese-fonts-setup/*
+elpa/*
+server/*
+tutorial/*
+# ignore auto generated files
+*.*~
+*.dat
+*.elc
+*.emacs.desktop*
+*.session
