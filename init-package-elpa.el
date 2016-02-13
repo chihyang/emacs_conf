@@ -15,8 +15,10 @@
     auto-complete
     autopair
     chinese-fonts-setup
+    column-marker
     csharp-mode
     ecb
+    emms
     markdown-mode
     markdown-preview-mode
     markdown-preview-mode
@@ -45,6 +47,7 @@
 (tabbar-mode)                                 ; tab-bar
 
 (add-hook 'after-init-hook 'session-initialize) ;restore session
+(add-hook 'foo-mode-hook (lambda () (interactive) (column-marker-1 80))) ; Highlight column 80 in foo mode
 
 (global-set-key (kbd "C-x o") 'switch-window) ; rebind switch-window
 
