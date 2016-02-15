@@ -18,6 +18,7 @@
    '(("no_proxy" . "^\\(localhost\\|10.*\\)")
      ("http" . "127.0.0.1:8118")
      ("https" . "127.0.0.1:8118")))
+(setenv "GIT_ASKPASS" "git-gui--askpass")
 
 ;; change hot-key
 (global-set-key (kbd "M-9") 'kill-whole-line) ; delete a whole line with M-9

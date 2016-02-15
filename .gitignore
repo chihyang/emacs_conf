@@ -4,6 +4,7 @@ chinese-fonts-setup/*
 elpa/*
 server/*
 tutorial/*
+emms/*
 # ignore auto generated files
 *.*~
 *.dat
