@@ -1,4 +1,10 @@
 (server-start)
+;;; set proxy
+(setq url-proxy-services
+      '(("no_proxy" . "^\\(localhost\\|10.*\\)")
+        ("http" . "127.0.0.1:8118")
+        ("https" . "127.0.0.1:8118")))
+
 ;;; load packages and customized functions
 (load "~/.emacs.d/init-package-elpa.el")
 (load "~/.emacs.d/init-night-mode.el")
@@ -14,12 +20,10 @@
 (global-linum-mode 1) ; enable linum-mode
 (setq hs-allow-nesting t) ; hide-show
 (desktop-save-mode 1)     ; save sessions
-(setq url-proxy-services                ; set proxy
-   '(("no_proxy" . "^\\(localhost\\|10.*\\)")
-     ("http" . "127.0.0.1:8118")
-     ("https" . "127.0.0.1:8118")))
-(setenv "GIT_ASKPASS" "git-gui--askpass")
-
+(setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (flyspell-prog-mode))             ; add hook for program spell checking
 ;; change hot-key
 (global-set-key (kbd "M-9") 'kill-whole-line) ; delete a whole line with M-9
 
