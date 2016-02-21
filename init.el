@@ -21,9 +21,6 @@
 (setq hs-allow-nesting t) ; hide-show
 (desktop-save-mode 1)     ; save sessions
 (setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
-(add-hook 'c++-mode-hook
-          (lambda ()
-            (flyspell-prog-mode))             ; add hook for program spell checking
 ;; change hot-key
 (global-set-key (kbd "M-9") 'kill-whole-line) ; delete a whole line with M-9
 
