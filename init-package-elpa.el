@@ -20,6 +20,7 @@
     csharp-mode
     ecb
     emms
+    magit
     markdown-mode
     markdown-preview-mode
     markdown-preview-mode
