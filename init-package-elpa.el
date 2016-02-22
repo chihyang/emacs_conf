@@ -24,6 +24,7 @@
     markdown-mode
     markdown-preview-mode
     markdown-preview-mode
+    pandoc-mode
     session
     sr-speedbar
     switch-window
