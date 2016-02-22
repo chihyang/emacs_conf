@@ -1,13 +1,13 @@
+;;; load packages and customized functions
+(load "~/.emacs.d/init-package-elpa.el")
+(load "~/.emacs.d/init-night-mode.el")
+
 (server-start)
 ;;; set proxy
 (setq url-proxy-services
       '(("no_proxy" . "^\\(localhost\\|10.*\\)")
         ("http" . "127.0.0.1:8118")
         ("https" . "127.0.0.1:8118")))
-
-;;; load packages and customized functions
-(load "~/.emacs.d/init-package-elpa.el")
-(load "~/.emacs.d/init-night-mode.el")
 
 ;;; set parameters of built-in functions
 (show-paren-mode 1)                     ; highlight paired brackets
