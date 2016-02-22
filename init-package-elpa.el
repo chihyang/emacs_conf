@@ -14,6 +14,7 @@
   '(
     auto-complete
     autopair
+    cal-china-x
     chinese-fonts-setup
     column-marker
     csharp-mode
