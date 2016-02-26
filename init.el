@@ -6,6 +6,9 @@
 ;;; set parameters of built-in functions
 (show-paren-mode 1)                     ; highlight paired brackets
 (setq default-tab-width 4) ; set tab as 4 spaces
+(setq-default c-basic-offset 4)         ; set indentation for cc mode
+(setq c-default-style "linux"
+          c-basic-offset 4)             ; set tab width as four spaces
 (setq-default indent-tabs-mode nil)
 (fset 'yes-or-no-p 'y-or-n-p)           ; substitue y/n for yes/no
 (setq backup-by-copying nil)  ; do not copy
@@ -15,6 +18,7 @@
 (setq hs-allow-nesting t) ; hide-show
 (desktop-save-mode 1)     ; save sessions
 (setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
+(delete-selection-mode 1)                 ; delete selection mode
 ;; change hot-key
 (global-set-key (kbd "M-9") 'kill-whole-line) ; delete a whole line with M-9
 
