@@ -19,8 +19,7 @@
     column-marker
     csharp-mode
     ecb
-    emms
-    magit
+    ;; magit
     markdown-mode
     markdown-preview-mode
     markdown-preview-mode
