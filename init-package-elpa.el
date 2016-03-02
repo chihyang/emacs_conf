@@ -17,6 +17,7 @@
     cal-china-x
     chinese-fonts-setup
     column-marker
+    color-theme
     csharp-mode
     ecb
     ;; magit
