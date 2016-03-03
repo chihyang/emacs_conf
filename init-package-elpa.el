@@ -20,7 +20,7 @@
     color-theme
     csharp-mode
     ecb
-    ;; magit
+    magit
     markdown-mode
     markdown-preview-mode
     markdown-preview-mode
