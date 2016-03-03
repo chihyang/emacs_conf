@@ -18,7 +18,9 @@
     chinese-fonts-setup
     column-marker
     color-theme
+    color-theme-solarized
     csharp-mode
+    cursor-chg
     ecb
     magit
     markdown-mode
