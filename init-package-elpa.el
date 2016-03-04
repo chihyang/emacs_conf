@@ -14,6 +14,7 @@
   '(
     auto-complete
     autopair
+    blank-mode
     cal-china-x
     chinese-fonts-setup
     column-marker
@@ -22,10 +23,11 @@
     csharp-mode
     cursor-chg
     ecb
+    haskell-mode
     magit
     markdown-mode
     markdown-preview-mode
-    markdown-preview-mode
+    minimap
     pandoc-mode
     session
     sr-speedbar
@@ -47,8 +49,12 @@
 
 ;; configuration of packages
 (ac-config-default)                             ; autocomplete
-(autopair-global-mode)                ; enable autopair in all buffers
-(sr-speedbar-open)                            ; sr-speendbar
+(autopair-global-mode)                          ; enable autopair in all buffers
+;; sr-speedbar
+(sr-speedbar-open)                              ; open
+(custom-set-variables
+ '(sr-speedbar-default-width 100)
+ '(sr-speedbar-max-width 100))
 (tabbar-mode)                                 ; tab-bar
 
 (add-hook 'after-init-hook 'session-initialize) ;restore session
@@ -64,3 +70,5 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 (require 'chinese-fonts-setup)
+
+(global-set-key (kbd "C-c C-b") 'blank-mode) ; show whitespace

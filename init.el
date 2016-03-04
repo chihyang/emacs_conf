@@ -32,9 +32,16 @@
 ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 (setq-default fill-column 80)                  ;set auto-fill at 80
+
 ;; change hot-key
 (global-set-key (kbd "M-9") 'kill-whole-line)  ; delete a whole line with M-9
 (global-set-key (kbd "C-c q") 'auto-fill-mode) ; auto-fill mode by C-c q
+
+;; flyspell mode for text mode
+(dolist (hook '(text-mode-hook))
+      (add-hook hook (lambda () (flyspell-mode 1))))
+(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
+      (add-hook hook (lambda () (flyspell-mode -1))))
 
 ;; custom parameter
 (custom-set-variables
