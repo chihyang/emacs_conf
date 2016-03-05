@@ -13,6 +13,7 @@
 (defconst required-packages
   '(
     auto-complete
+    auto-highlight-symbol
     autopair
     blank-mode
     cal-china-x
@@ -49,18 +50,24 @@
 
 ;; configuration of packages
 (ac-config-default)                             ; autocomplete
-(autopair-global-mode)                          ; enable autopair in all buffers
+(autopair-global-mode 1)                        ; enable autopair in all buffers
+(auto-highlight-symbol-mode 1)                  ; auto highlight current symbol
 ;; sr-speedbar
 (sr-speedbar-open)                              ; open
 (custom-set-variables
  '(sr-speedbar-default-width 100)
  '(sr-speedbar-max-width 100))
 (tabbar-mode)                                 ; tab-bar
+;; enable some minor modes globally
+(define-globalized-minor-mode my-global-minor-mode auto-highlight-symbol-mode
+  (lambda () (auto-highlight-symbol-mode 1)))
+(my-global-minor-mode 1)
 
 (add-hook 'after-init-hook 'session-initialize) ;restore session
 (add-hook 'foo-mode-hook (lambda () (interactive) (column-marker-1 80))) ; Highlight column 80 in foo mode
 
 (global-set-key (kbd "C-x o") 'switch-window) ; rebind switch-window
+(global-set-key (kbd "C-c C-b") 'blank-mode) ; show whitespace
 
 ;; configuration of markdown-mode
 ;; (autoload 'markdown-mode "markdown-mode"
@@ -70,5 +77,3 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 (require 'chinese-fonts-setup)
-
-(global-set-key (kbd "C-c C-b") 'blank-mode) ; show whitespace
