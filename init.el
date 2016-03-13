@@ -43,6 +43,26 @@
 (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
       (add-hook hook (lambda () (flyspell-mode -1))))
 
+;; compile command
+(add-hook 'c-mode-hook
+          (lambda ()
+            (set (make-local-variable 'compile-command)
+                 (concat "gcc " buffer-file-name " -Wall -g -o "
+                         (file-name-directory buffer-file-name) "/obj/"
+                         (file-name-sans-extension (file-name-nondirectory
+                                                    buffer-file-name))
+                         ".exe"))))
+(defun execute-c-program ()
+  (interactive)
+  (defvar run)
+  (setq run (concat (file-name-directory buffer-file-name) "/obj/"
+                    (file-name-sans-extension
+                     (file-name-nondirectory buffer-file-name))
+                    ".exe"))
+  (shell-command run))
+(global-set-key [C-f5] 'compile)
+(global-set-key [C-f1] 'execute-c-program)
+
 ;; custom parameter
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
