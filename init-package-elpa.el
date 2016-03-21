@@ -12,6 +12,7 @@
 
 (defconst required-packages
   '(
+    auctex
     auto-complete
     auto-highlight-symbol
     autopair
