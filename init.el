@@ -8,7 +8,7 @@
 (setq default-tab-width 4) ; set tab as 4 spaces
 (setq-default c-basic-offset 4)         ; set indentation for cc mode
 (setq c-default-style "linux"
-          c-basic-offset 4)             ; set tab width as four spaces
+      c-basic-offset 4)             ; set tab width as four spaces
 (setq-default indent-tabs-mode nil)
 (fset 'yes-or-no-p 'y-or-n-p)           ; substitue y/n for yes/no
 (setq backup-by-copying nil)  ; do not copy
@@ -24,6 +24,7 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
+(setq-default cursor-type 'bar)
 ;; backwards compatibility as default-buffer-file-coding-system
 ;; is deprecated in 23.2.
 (if (boundp 'buffer-file-coding-system)
@@ -39,9 +40,9 @@
 
 ;; flyspell mode for text mode
 (dolist (hook '(text-mode-hook))
-      (add-hook hook (lambda () (flyspell-mode 1))))
+  (add-hook hook (lambda () (flyspell-mode 1))))
 (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
-      (add-hook hook (lambda () (flyspell-mode -1))))
+  (add-hook hook (lambda () (flyspell-mode -1))))
 
 ;; compile command
 (add-hook 'c-mode-hook
@@ -55,13 +56,28 @@
 (defun execute-c-program ()
   (interactive)
   (defvar run)
-  (setq run (concat (file-name-directory buffer-file-name) "/obj/"
+  (setq run (concat (file-name-directory buffer-file-name) "obj/"
                     (file-name-sans-extension
                      (file-name-nondirectory buffer-file-name))
                     ".exe"))
   (shell-command run))
 (global-set-key [C-f5] 'compile)
 (global-set-key [C-f1] 'execute-c-program)
+
+;; CC-mode
+(add-hook 'c-mode-common-hook
+          '(lambda ()
+             (setq ac-sources (append '(ac-source-semantic) ac-sources))))
+(setq gdb-show 1)
+
+(defun comment-or-uncomment-line-or-region ()
+  "Comments or uncomments the current line or region."
+  (interactive)
+  (if (region-active-p)
+      (comment-or-uncomment-region (region-beginning) (region-end))
+    (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
+  )
+(global-set-key (kbd "C-q") 'comment-or-uncomment-line-or-region)
 
 ;; custom parameter
 (custom-set-variables

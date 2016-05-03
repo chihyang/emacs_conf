@@ -50,7 +50,24 @@
 (ensure-packages)
 
 ;; configuration of packages
-(ac-config-default)                             ; autocomplete
+(ac-config-default)                             ; auto-complete
+(ac-flyspell-workaround)
+(dolist (hook '(lisp-mode-hook
+                emacs-lisp-mode-hook
+                scheme-mode-hook
+                c-mode-hook
+                ruby-mode-hook
+                yaml-mode
+                python-mode-hook
+                shell-mode-hook
+                php-mode-hook
+                css-mode-hook
+                nxml-mode-hook
+                crontab-mode-hook
+                perl-mode-hook
+                javascript-mode-hook
+                LaTeX-mode-hook))
+  (add-hook hook 'flyspell-prog-mode))  ; enable comments spell check
 (autopair-global-mode 1)                        ; enable autopair in all buffers
 (auto-highlight-symbol-mode 1)                  ; auto highlight current symbol
 ;; sr-speedbar
