@@ -5,6 +5,7 @@ elpa/*
 server/*
 tutorial/*
 emms/*
+semanticdb/*
 # ignore auto generated files
 *.*~
 *.dat
