@@ -51,7 +51,8 @@
 
 ;; configuration of packages
 (ac-config-default)                             ; auto-complete
-(ac-flyspell-workaround)
+(ac-flyspell-workaround)                        ; fix collisions with flyspell
+(ac-linum-workaround)                   ;fix collisions with linum
 (dolist (hook '(lisp-mode-hook
                 emacs-lisp-mode-hook
                 scheme-mode-hook
