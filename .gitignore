@@ -6,6 +6,7 @@ server/*
 tutorial/*
 emms/*
 semanticdb/*
+irony/*
 # ignore auto generated files
 *.*~
 *.dat
