@@ -99,7 +99,8 @@
 (my-global-minor-mode 1)
 
 (add-hook 'after-init-hook 'session-initialize) ;restore session
-(add-hook 'foo-mode-hook (lambda () (interactive) (column-marker-1 80))) ; Highlight column 80 in foo mode
+(add-hook 'foo-mode-hook
+          (lambda () (interactive) (column-marker-1 80))) ; Highlight column 80 in foo mode
 
 (global-set-key (kbd "C-x o") 'switch-window) ; rebind switch-window
 (global-set-key (kbd "C-c C-b") 'blank-mode) ; show whitespace
@@ -110,5 +111,18 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+;; add-to-list, not available in melpa
+(add-to-list 'load-path "~/.emacs.d/elpa/paredit")
+(require 'paredit)
+(autoload 'enable-paredit-mode "paredit"
+  "Turn on pseudo-structural editing of Lisp code." t)
+(dolist (hook '(emacs-lisp-mode-hook
+                eval-expression-minibuffer-setup-hook
+                ielm-mode-hook
+                lisp-mode-hook
+                lisp-interaction-mode-hook
+                scheme-mode-hook))
+  (add-hook hook 'enable-paredit-mode))
 
 (require 'chinese-fonts-setup)
