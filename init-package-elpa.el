@@ -79,10 +79,10 @@
  '(sr-speedbar-max-width 100))
 (tabbar-mode)                                 ; tab-bar
 
+;; irony-mode
 (add-hook 'c++-mode-hook 'irony-mode)
 (add-hook 'c-mode-hook 'irony-mode)
 (add-hook 'objc-mode-hook 'irony-mode)
-(add-to-list 'exec-path "D:/ProgramDevelop/LLVM/bin")
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
 ;; irony-mode's buffers by irony-mode's function
 (defun my-irony-mode-hook ()
@@ -92,6 +92,7 @@
     'irony-completion-at-point-async))
 (add-hook 'irony-mode-hook 'my-irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(setq w32-pipe-read-delay 0)
 
 ;; enable some minor modes globally
 (define-globalized-minor-mode my-global-minor-mode auto-highlight-symbol-mode

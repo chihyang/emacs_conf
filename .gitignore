@@ -13,3 +13,4 @@ irony/*
 *.elc
 *.emacs.desktop*
 *.session
+ede-projects.el
