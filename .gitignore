@@ -14,3 +14,4 @@ irony/*
 *.emacs.desktop*
 *.session
 ede-projects.el
+recentf

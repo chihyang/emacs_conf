@@ -86,6 +86,11 @@
 (global-semantic-idle-summary-mode 1)
 (global-set-key [f12] 'semantic-ia-fast-jump)
 
+;; recentf-mode
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+(global-set-key (kbd "C-x C-r") 'recentf-open-files)
+
 ;; custom parameter
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
