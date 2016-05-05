@@ -79,6 +79,13 @@
   )
 (global-set-key (kbd "C-q") 'comment-or-uncomment-line-or-region)
 
+;; cedet implementation
+(semantic-mode 1)
+(global-ede-mode 1)                      ; Enable the Project management system
+(ede-enable-generic-projects)
+(global-semantic-idle-summary-mode 1)
+(global-set-key [f12] 'semantic-ia-fast-jump)
+
 ;; custom parameter
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
