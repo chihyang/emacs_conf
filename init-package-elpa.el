@@ -27,6 +27,7 @@
     ecb
     haskell-mode
     irony
+    indent-guide
     magit
     markdown-mode
     markdown-preview-mode
@@ -58,6 +59,9 @@
                 emacs-lisp-mode-hook
                 scheme-mode-hook
                 c-mode-hook
+                c++-mode
+                CC-mode
+                java-mode
                 ruby-mode-hook
                 yaml-mode
                 python-mode-hook
@@ -125,5 +129,8 @@
                 lisp-interaction-mode-hook
                 scheme-mode-hook))
   (add-hook hook 'enable-paredit-mode))
+
+;; indent-guide
+(setq indent-guide-recursive t)
 
 (require 'chinese-fonts-setup)
