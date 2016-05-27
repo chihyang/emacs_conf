@@ -24,6 +24,8 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
+(if (eq system-type 'windows-nt)
+    (setq file-name-coding-system 'gbk))
 (setq-default cursor-type 'bar)
 ;; backwards compatibility as default-buffer-file-coding-system
 ;; is deprecated in 23.2.
@@ -37,6 +39,12 @@
 ;; change hot-key
 (global-set-key (kbd "M-9") 'kill-whole-line)  ; delete a whole line with M-9
 (global-set-key (kbd "C-c q") 'auto-fill-mode) ; auto-fill mode by C-c q
+
+(dolist (hook '(markdown-mode-hook
+                text-mode-hook
+                latex-mode-hook
+                tex-mode-hook))
+  (add-hook hook 'turn-on-auto-fill))
 
 ;; flyspell mode for text mode
 (dolist (hook '(text-mode-hook))
@@ -91,6 +99,10 @@
 (setq recentf-max-menu-items 25)
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
+;; global key
+(global-set-key (kbd "<M-up>") 'windmove-up)
+(global-set-key (kbd "<M-down>") 'windmove-down)
+
 ;; custom parameter
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -102,6 +114,9 @@
  '(markdown-command "pandoc -f markdown_github")
  '(session-use-package t nil (session))
  '(speedbar-show-unknown-files t))
+ '(speedbar-show-unknown-files t)
+ '(sr-speedbar-default-width 100)
+ '(sr-speedbar-max-width 100))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

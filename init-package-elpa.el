@@ -72,7 +72,8 @@
                 crontab-mode-hook
                 perl-mode-hook
                 javascript-mode-hook
-                LaTeX-mode-hook))
+                latex-mode-hook
+                tex-mode-hook))
   (add-hook hook 'flyspell-prog-mode))  ; enable comments spell check
 (autopair-global-mode 1)                        ; enable autopair in all buffers
 (auto-highlight-symbol-mode 1)                  ; auto highlight current symbol
@@ -109,6 +110,8 @@
 
 (global-set-key (kbd "C-x o") 'switch-window) ; rebind switch-window
 (global-set-key (kbd "C-c C-b") 'blank-mode) ; show whitespace
+(global-set-key [C-tab] 'tabbar-forward-tab) ; tabbar mode
+(global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab) ; tabbar mode
 
 ;; configuration of markdown-mode
 ;; (autoload 'markdown-mode "markdown-mode"
