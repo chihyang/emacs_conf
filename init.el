@@ -69,6 +69,13 @@
                      (file-name-nondirectory buffer-file-name))
                     ".exe"))
   (shell-command run))
+(add-hook 'java-mode-hook
+          (lambda ()
+            (set (make-local-variable 'compile-command)
+                 (concat "javac "
+                         buffer-file-name
+                         " -d "
+                         (file-name-directory buffer-file-name) "obj/"))))
 (global-set-key [C-f5] 'compile)
 (global-set-key [C-f1] 'execute-c-program)
 
@@ -113,7 +120,6 @@
  '(ecb-options-version "2.40")
  '(markdown-command "pandoc -f markdown_github")
  '(session-use-package t nil (session))
- '(speedbar-show-unknown-files t))
  '(speedbar-show-unknown-files t)
  '(sr-speedbar-default-width 100)
  '(sr-speedbar-max-width 100))
