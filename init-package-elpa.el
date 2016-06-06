@@ -17,6 +17,7 @@
     auto-highlight-symbol
     autopair
     blank-mode
+    bm
     cal-china-x
     chinese-fonts-setup
     column-marker
@@ -28,6 +29,7 @@
     haskell-mode
     irony
     indent-guide
+    lua-mode
     magit
     markdown-mode
     markdown-preview-mode
@@ -135,5 +137,10 @@
 
 ;; indent-guide
 (setq indent-guide-recursive t)
+
+;; bm
+(global-set-key (kbd "<C-f2>") 'bm-toggle)
+(global-set-key (kbd "<f2>")   'bm-next)
+(global-set-key (kbd "<S-f2>") 'bm-previous)
 
 (require 'chinese-fonts-setup)
