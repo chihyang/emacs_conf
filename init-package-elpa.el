@@ -75,7 +75,8 @@
                 perl-mode-hook
                 javascript-mode-hook
                 latex-mode-hook
-                tex-mode-hook))
+                tex-mode-hook
+                lua-mode-hook))
   (add-hook hook 'flyspell-prog-mode))  ; enable comments spell check
 (autopair-global-mode 1)                        ; enable autopair in all buffers
 (auto-highlight-symbol-mode 1)                  ; auto highlight current symbol
