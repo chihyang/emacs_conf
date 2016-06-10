@@ -57,6 +57,9 @@
 (ac-config-default)                             ; auto-complete
 (ac-flyspell-workaround)                        ; fix collisions with flyspell
 (ac-linum-workaround)                   ;fix collisions with linum
+
+;; spell check
+(ispell-change-dictionary "american" t)
 (dolist (hook '(lisp-mode-hook
                 emacs-lisp-mode-hook
                 scheme-mode-hook
@@ -76,10 +79,16 @@
                 javascript-mode-hook
                 latex-mode-hook
                 tex-mode-hook
-                lua-mode-hook))
+                lua-mode-hook
+                text-mode-hook))
   (add-hook hook 'flyspell-prog-mode))  ; enable comments spell check
+(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode -1)))) ;disable spell check for log mode
+
 (autopair-global-mode 1)                        ; enable autopair in all buffers
+
 (auto-highlight-symbol-mode 1)                  ; auto highlight current symbol
+
 ;; sr-speedbar
 (sr-speedbar-open)                              ; open
 (custom-set-variables
@@ -143,5 +152,8 @@
 (global-set-key (kbd "<C-f2>") 'bm-toggle)
 (global-set-key (kbd "<f2>")   'bm-next)
 (global-set-key (kbd "<S-f2>") 'bm-previous)
+
+;; lua mode
+(setq lua-indent-level 4)
 
 (require 'chinese-fonts-setup)

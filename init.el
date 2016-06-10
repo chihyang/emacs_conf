@@ -46,12 +46,6 @@
                 tex-mode-hook))
   (add-hook hook 'turn-on-auto-fill))
 
-;; flyspell mode for text mode
-(dolist (hook '(text-mode-hook))
-  (add-hook hook (lambda () (flyspell-mode 1))))
-(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
-  (add-hook hook (lambda () (flyspell-mode -1))))
-
 ;; compile command
 (add-hook 'c-mode-hook
           (lambda ()
