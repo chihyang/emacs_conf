@@ -27,6 +27,7 @@
     cursor-chg
     ecb
     haskell-mode
+    icicles
     irony
     indent-guide
     lua-mode
@@ -39,6 +40,7 @@
     sr-speedbar
     switch-window
     tabbar
+    vimrc-mode
     websocket
     ))
 
@@ -80,7 +82,8 @@
                 latex-mode-hook
                 tex-mode-hook
                 lua-mode-hook
-                text-mode-hook))
+                text-mode-hook
+                vimrc-mode))
   (add-hook hook 'flyspell-prog-mode))  ; enable comments spell check
 (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
   (add-hook hook (lambda () (flyspell-mode -1)))) ;disable spell check for log mode
@@ -155,5 +158,8 @@
 
 ;; lua mode
 (setq lua-indent-level 4)
+
+;; vimrc-mode
+(add-to-list 'auto-mode-alist '(".vim\\(rc\\)?$" . vimrc-mode))
 
 (require 'chinese-fonts-setup)

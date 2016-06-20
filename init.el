@@ -46,6 +46,7 @@
                 tex-mode-hook))
   (add-hook hook 'turn-on-auto-fill))
 
+(add-to-list 'auto-mode-alist '("\\.tex\\'" . tex-mode))
 ;; compile command
 (add-hook 'c-mode-hook
           (lambda ()
@@ -84,9 +85,15 @@
   (interactive)
   (if (region-active-p)
       (comment-or-uncomment-region (region-beginning) (region-end))
-    (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
-  )
-(global-set-key (kbd "C-q") 'comment-or-uncomment-line-or-region)
+    (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
+(defun comment-shortcut-for-coding-mode-hook ()
+    (local-set-key (kbd "C-q") 'comment-or-uncomment-line-or-region))
+(dolist (hook '(prog-mode-hook
+                latex-mode-hook
+                tex-mode-hook
+                plain-TeX-mode-hook
+                ))
+  (add-hook hook 'comment-shortcut-for-coding-mode-hook))
 
 ;; cedet implementation
 (semantic-mode 1)
