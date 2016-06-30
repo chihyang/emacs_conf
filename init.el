@@ -3,23 +3,8 @@
 (load "~/.emacs.d/init-night-mode.el")
 
 (server-start)
-;;; set parameters of built-in functions
-(show-paren-mode 1)                     ; highlight paired brackets
-(setq default-tab-width 4) ; set tab as 4 spaces
-(setq-default c-basic-offset 4)         ; set indentation for cc mode
-(setq c-default-style "linux"
-      c-basic-offset 4)             ; set tab width as four spaces
-(setq-default indent-tabs-mode nil)
-(fset 'yes-or-no-p 'y-or-n-p)           ; substitue y/n for yes/no
-(setq backup-by-copying nil)  ; do not copy
-(setq backup-directory-alist `(("." . "~/.saves")))
-(setq visible-bell 1)                   ; turn of audible belling
-(global-linum-mode 1) ; enable linum-mode
-(setq hs-allow-nesting t) ; hide-show
-(desktop-save-mode 1)     ; save sessions
-(setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
-(delete-selection-mode 1)                 ; delete selection mode
-(setq column-number-mode t)               ; enable column-number-mode
+
+;;; encoding system
 (prefer-coding-system 'utf-8)             ; set default encoding as utf-8
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -34,20 +19,44 @@
   (setq default-buffer-file-coding-system 'utf-8))
 ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-(setq-default fill-column 80)                  ;set auto-fill at 80
+
+;;; set parameters of built-in functions
+(show-paren-mode 1)                       ; highlight paired brackets
+(setq default-tab-width 4)                ; set tab as 4 spaces
+(setq-default c-basic-offset 4)           ; set indentation for cc mode
+(setq c-default-style "linux"
+      c-basic-offset 4)                   ; set tab width as four spaces
+(setq-default indent-tabs-mode nil)
+(fset 'yes-or-no-p 'y-or-n-p)             ; substitue y/n for yes/no
+(setq backup-by-copying nil)              ; do not copy
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq visible-bell 1)                     ; turn of audible belling
+(global-linum-mode 1)                     ; enable linum-mode
+(setq hs-allow-nesting t)                 ; hide-show
+(desktop-save-mode 1)                     ; save sessions
+(setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
+(delete-selection-mode 1)                 ; delete selection mode
+(setq column-number-mode t)               ; enable column-number-mode
+
+;; session restore
+(add-hook 'after-init-hook 'session-initialize) ;restore session
+(add-hook 'foo-mode-hook
+          (lambda () (interactive) (column-marker-1 80))) ; Highlight column 80 in foo mode
 
 ;; change hot-key
 (global-set-key (kbd "M-9") 'kill-whole-line)  ; delete a whole line with M-9
-(global-set-key (kbd "C-c q") 'auto-fill-mode) ; auto-fill mode by C-c q
 
+;; auto-fill
+(global-set-key (kbd "C-c q") 'auto-fill-mode) ; auto-fill mode by C-c q
+(setq-default fill-column 80)                  ;set auto-fill at 80
 (dolist (hook '(markdown-mode-hook
                 text-mode-hook
                 latex-mode-hook
                 tex-mode-hook))
   (add-hook hook 'turn-on-auto-fill))
 
-(add-to-list 'auto-mode-alist '("\\.tex\\'" . tex-mode))
-;; compile command
+;;; compile command
+;; C/C++
 (add-hook 'c-mode-hook
           (lambda ()
             (set (make-local-variable 'compile-command)
@@ -64,6 +73,7 @@
                      (file-name-nondirectory buffer-file-name))
                     ".exe"))
   (shell-command run))
+;; Java
 (add-hook 'java-mode-hook
           (lambda ()
             (set (make-local-variable 'compile-command)
@@ -71,6 +81,7 @@
                          buffer-file-name
                          " -d "
                          (file-name-directory buffer-file-name) "obj/"))))
+;; global shortcut
 (global-set-key [C-f5] 'compile)
 (global-set-key [C-f1] 'execute-c-program)
 
@@ -79,7 +90,7 @@
           '(lambda ()
              (setq ac-sources (append '(ac-source-semantic) ac-sources))))
 (setq gdb-show 1)
-
+;; comment line or region with the shortcut `C-q'
 (defun comment-or-uncomment-line-or-region ()
   "Comments or uncomments the current line or region."
   (interactive)
@@ -95,21 +106,21 @@
                 ))
   (add-hook hook 'comment-shortcut-for-coding-mode-hook))
 
-;; cedet implementation
+;;; cedet implementation
+;; semantic
+;; (global-semanticdb-minor-mode)
+;; (global-semantic-idle-scheduler-mode 1)
+;; (global-semantic-idle-summary-mode 1)
+(global-set-key [f12] 'semantic-ia-fast-jump)
 (semantic-mode 1)
+;; ede
 (global-ede-mode 1)                      ; Enable the Project management system
 (ede-enable-generic-projects)
-(global-semantic-idle-summary-mode 1)
-(global-set-key [f12] 'semantic-ia-fast-jump)
 
 ;; recentf-mode
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
-
-;; global key
-(global-set-key (kbd "<M-up>") 'windmove-up)
-(global-set-key (kbd "<M-down>") 'windmove-down)
 
 ;; custom parameter
 (custom-set-variables
@@ -120,6 +131,7 @@
  '(cfs--current-profile-name "profile1" t)
  '(ecb-options-version "2.40")
  '(markdown-command "pandoc -f markdown_github")
+ '(scheme-program-name "petite")
  '(session-use-package t nil (session))
  '(speedbar-show-unknown-files t)
  '(sr-speedbar-default-width 100)

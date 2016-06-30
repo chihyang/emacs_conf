@@ -1,8 +1,9 @@
 ;; load newer bytecodes
 (setq load-prefer-newer t)
 (require 'package)
+
 ;;; Standard package repositories
-;;; melpa for most packages
+;; melpa for most packages
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
 ;; org repository for completeness
@@ -20,9 +21,13 @@
     bm
     cal-china-x
     chinese-fonts-setup
+    cmake-mode
     column-marker
     color-theme
     color-theme-solarized
+    company
+    company-shell
+    cpputils-cmake
     csharp-mode
     cursor-chg
     ecb
@@ -55,12 +60,20 @@
 
 (ensure-packages)
 
-;; configuration of packages
+;; cedet
+;; (load-file (concat user-emacs-directory "cedet/cedet-devel-load.el"))
+;; (load-file (concat user-emacs-directory "cedet/contrib/cedet-contrib-load.el"))
+
+;;; configuration of packages
+;; auto-complete
 (ac-config-default)                             ; auto-complete
 (ac-flyspell-workaround)                        ; fix collisions with flyspell
 (ac-linum-workaround)                   ;fix collisions with linum
 
-;; spell check
+;; auto-highlight-symbol-mode
+(global-auto-highlight-symbol-mode)
+
+;; flyspell-mode
 (ispell-change-dictionary "american" t)
 (dolist (hook '(lisp-mode-hook
                 emacs-lisp-mode-hook
@@ -88,16 +101,24 @@
 (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
   (add-hook hook (lambda () (flyspell-mode -1)))) ;disable spell check for log mode
 
+;; autopair
 (autopair-global-mode 1)                        ; enable autopair in all buffers
 
-(auto-highlight-symbol-mode 1)                  ; auto highlight current symbol
+;; company
+(add-hook 'after-init-hook 'global-company-mode)
+(with-eval-after-load 'company
+  (add-to-list 'company-backends '((company-shell company-fish-shell))))
 
 ;; sr-speedbar
-(sr-speedbar-open)                              ; open
+(sr-speedbar-open)
 (custom-set-variables
  '(sr-speedbar-default-width 100)
  '(sr-speedbar-max-width 100))
-(tabbar-mode)                                 ; tab-bar
+
+;; tabbar-mode
+(tabbar-mode)
+(global-set-key [C-tab] 'tabbar-forward-tab) ; tabbar mode
+(global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab) ; tabbar mode
 
 ;; irony-mode
 (add-hook 'c++-mode-hook 'irony-mode)
@@ -114,28 +135,18 @@
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 (setq w32-pipe-read-delay 0)
 
-;; enable some minor modes globally
-(define-globalized-minor-mode my-global-minor-mode auto-highlight-symbol-mode
-  (lambda () (auto-highlight-symbol-mode 1)))
-(my-global-minor-mode 1)
+;; switch-window
+(global-set-key (kbd "C-x o") 'switch-window) ; rebind `C-x o' to switch-window
 
-(add-hook 'after-init-hook 'session-initialize) ;restore session
-(add-hook 'foo-mode-hook
-          (lambda () (interactive) (column-marker-1 80))) ; Highlight column 80 in foo mode
-
-(global-set-key (kbd "C-x o") 'switch-window) ; rebind switch-window
+;; blank-mode
 (global-set-key (kbd "C-c C-b") 'blank-mode) ; show whitespace
-(global-set-key [C-tab] 'tabbar-forward-tab) ; tabbar mode
-(global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab) ; tabbar mode
 
-;; configuration of markdown-mode
-;; (autoload 'markdown-mode "markdown-mode"
-;;   "Major mode for editing Markdown files" t)
+;; markdown-mode
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-;; paredit, not available in melpa
+;; paredit
 (add-to-list 'load-path "~/.emacs.d/elpa/paredit")
 (require 'paredit)
 (autoload 'enable-paredit-mode "paredit"
@@ -156,10 +167,17 @@
 (global-set-key (kbd "<f2>")   'bm-next)
 (global-set-key (kbd "<S-f2>") 'bm-previous)
 
-;; lua mode
+;; lua-mode
 (setq lua-indent-level 4)
 
 ;; vimrc-mode
-(add-to-list 'auto-mode-alist '(".vim\\(rc\\)?$" . vimrc-mode))
+(add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
 
+;; cpputils-cmake
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (if (derived-mode-p 'c-mode 'c++-mode)
+                (cppcm-reload-all))))
+
+;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
