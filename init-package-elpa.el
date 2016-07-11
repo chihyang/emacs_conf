@@ -27,10 +27,13 @@
     color-theme-solarized
     company
     company-shell
+    company-c-headers
+    company-shell    
     cpputils-cmake
     csharp-mode
     cursor-chg
     ecb
+    fish-mode
     haskell-mode
     icicles
     irony
@@ -41,7 +44,10 @@
     markdown-preview-mode
     minimap
     pandoc-mode
+    powerline-evil
     session
+    smart-mode-line
+    smart-mode-line-powerline-theme
     sr-speedbar
     switch-window
     tabbar
@@ -65,49 +71,30 @@
 ;; (load-file (concat user-emacs-directory "cedet/contrib/cedet-contrib-load.el"))
 
 ;;; configuration of packages
+;; flyspell-mode
+(ispell-change-dictionary "american" t)
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode -1)))) ;disable spell check for log mode
+
+;; flyspell-popup
+(add-hook 'flyspell-mode-hook 'flyspell-popup-auto-correct-mode)
+
 ;; auto-complete
 (ac-config-default)                             ; auto-complete
 (ac-flyspell-workaround)                        ; fix collisions with flyspell
-(ac-linum-workaround)                   ;fix collisions with linum
+(ac-linum-workaround)                           ; fix collisions with linum
+(global-auto-complete-mode t)                   ; enable auto-complete-mode  globally
+
+;; company
+;; (add-hook 'after-init-hook 'global-company-mode)
 
 ;; auto-highlight-symbol-mode
 (global-auto-highlight-symbol-mode)
 
-;; flyspell-mode
-(ispell-change-dictionary "american" t)
-(dolist (hook '(lisp-mode-hook
-                emacs-lisp-mode-hook
-                scheme-mode-hook
-                c-mode-hook
-                c++-mode
-                CC-mode
-                java-mode
-                ruby-mode-hook
-                yaml-mode
-                python-mode-hook
-                shell-mode-hook
-                php-mode-hook
-                css-mode-hook
-                nxml-mode-hook
-                crontab-mode-hook
-                perl-mode-hook
-                javascript-mode-hook
-                latex-mode-hook
-                tex-mode-hook
-                lua-mode-hook
-                text-mode-hook
-                vimrc-mode))
-  (add-hook hook 'flyspell-prog-mode))  ; enable comments spell check
-(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
-  (add-hook hook (lambda () (flyspell-mode -1)))) ;disable spell check for log mode
-
 ;; autopair
 (autopair-global-mode 1)                        ; enable autopair in all buffers
-
-;; company
-(add-hook 'after-init-hook 'global-company-mode)
-(with-eval-after-load 'company
-  (add-to-list 'company-backends '((company-shell company-fish-shell))))
 
 ;; sr-speedbar
 (sr-speedbar-open)
@@ -178,6 +165,13 @@
           (lambda ()
             (if (derived-mode-p 'c-mode 'c++-mode)
                 (cppcm-reload-all))))
+
+;; smart-mode-line
+(setq sml/no-confirm-load-theme t)
+;; (setq powerline-arrow-shape 'curve)
+;; (setq powerline-default-separator-dir '(right . left))
+;; (setq sml/theme 'respectful)
+;; (sml/setup)
 
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
