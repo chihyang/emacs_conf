@@ -32,8 +32,8 @@
     cpputils-cmake
     csharp-mode
     cursor-chg
-    ecb
     fish-mode
+    flycheck
     haskell-mode
     icicles
     irony
@@ -45,6 +45,7 @@
     minimap
     pandoc-mode
     powerline-evil
+    rainbow-mode
     session
     smart-mode-line
     smart-mode-line-powerline-theme
@@ -81,11 +82,16 @@
 ;; flyspell-popup
 (add-hook 'flyspell-mode-hook 'flyspell-popup-auto-correct-mode)
 
+;; flycheck-mode
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
 ;; auto-complete
 (ac-config-default)                             ; auto-complete
 (ac-flyspell-workaround)                        ; fix collisions with flyspell
 (ac-linum-workaround)                           ; fix collisions with linum
 (global-auto-complete-mode t)                   ; enable auto-complete-mode  globally
+(add-hook 'prog-mode-hook 'auto-complete-mode)
+(add-hook 'text-mode-hook 'auto-complete-mode)
 
 ;; company
 ;; (add-hook 'after-init-hook 'global-company-mode)
@@ -97,7 +103,7 @@
 (autopair-global-mode 1)                        ; enable autopair in all buffers
 
 ;; sr-speedbar
-(sr-speedbar-open)
+;; (sr-speedbar-open)
 (custom-set-variables
  '(sr-speedbar-default-width 100)
  '(sr-speedbar-max-width 100))

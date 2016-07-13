@@ -49,10 +49,9 @@
 ;; auto-fill
 (global-set-key (kbd "C-c q") 'auto-fill-mode) ; auto-fill mode by C-c q
 (setq-default fill-column 80)                  ;set auto-fill at 80
-(dolist (hook '(markdown-mode-hook
-                text-mode-hook
-                latex-mode-hook
-                tex-mode-hook))
+(setq comment-auto-fill-only-comments t)
+(dolist (hook '(text-mode-hook
+                prog-mode-hook))
   (add-hook hook 'turn-on-auto-fill))
 
 ;;; compile command

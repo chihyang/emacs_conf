@@ -22,6 +22,12 @@
  :underline nil
  :box '(:line-width 5 :color "gray95" :style nil))
 (set-face-attribute
+ 'tabbar-modified nil
+ :background "gray80"
+ :foreground "blue"
+ :underline nil
+ :box '(:line-width 5 :color "gray80" :style nil))
+(set-face-attribute
  'tabbar-button nil
  :box '(:line-width 1 :color "gray90" :style nil))
 (set-face-attribute
