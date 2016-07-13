@@ -104,6 +104,7 @@
 
 ;; tabbar-mode
 (tabbar-mode)
+(load "~/.emacs.d/init-tabbar-theme.el")
 (global-set-key [C-tab] 'tabbar-forward-tab) ; tabbar mode
 (global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab) ; tabbar mode
 
