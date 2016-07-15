@@ -29,7 +29,8 @@
 (setq-default indent-tabs-mode nil)
 (fset 'yes-or-no-p 'y-or-n-p)             ; substitue y/n for yes/no
 (setq backup-by-copying nil)              ; do not copy
-(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-directory-alist
+      `(("." . "~/.saves")))              ; change backup directory
 (setq visible-bell 1)                     ; turn of audible belling
 (global-linum-mode 1)                     ; enable linum-mode
 (setq hs-allow-nesting t)                 ; hide-show
@@ -37,6 +38,7 @@
 (setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
 (delete-selection-mode 1)                 ; delete selection mode
 (setq column-number-mode t)               ; enable column-number-mode
+(setq compilation-scroll-output t)        ; auto-scroll the compilation buffer
 
 ;; session restore
 (add-hook 'after-init-hook 'session-initialize) ;restore session
@@ -120,6 +122,10 @@
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
+
+;; hl-line-mode
+(global-hl-line-mode)
+(set-face-background hl-line-face "#E8E8FF")
 
 ;; custom parameter
 (custom-set-variables
