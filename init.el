@@ -40,8 +40,6 @@
 (setq column-number-mode t)               ; enable column-number-mode
 (setq compilation-scroll-output t)        ; auto-scroll the compilation buffer
 
-;; session restore
-(add-hook 'after-init-hook 'session-initialize) ;restore session
 (add-hook 'foo-mode-hook
           (lambda () (interactive) (column-marker-1 80))) ; Highlight column 80 in foo mode
 
@@ -126,6 +124,17 @@
 ;; hl-line-mode
 (global-hl-line-mode)
 (set-face-background hl-line-face "#E8E8FF")
+
+;; copy a word
+(defun copy-word (&optional arg)
+  "Copy words at point into kill-ring"
+  (interactive "P")
+  (copy-thing 'backward-word 'forward-word arg)
+  ;;(paste-to-mark arg)
+  )
+
+;; Key binding
+(global-set-key (kbd "C-c w")         (quote copy-word))
 
 ;; custom parameter
 (custom-set-variables

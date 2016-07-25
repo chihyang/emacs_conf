@@ -1,3 +1,9 @@
+;; proxy settings, disable this if necessary
+(setq url-proxy-services
+   '(("no_proxy" . "^\\(localhost\\|10.*\\)")
+     ("http" . "127.0.0.1:8118")
+     ("https" . "127.0.0.1:8118")))
+
 ;; load newer bytecodes
 (setq load-prefer-newer t)
 (require 'package)
@@ -172,6 +178,9 @@
           (lambda ()
             (if (derived-mode-p 'c-mode 'c++-mode)
                 (cppcm-reload-all))))
+
+;; session restore
+(add-hook 'after-init-hook 'session-initialize) ;restore session
 
 ;; smart-mode-line
 (setq sml/no-confirm-load-theme t)
