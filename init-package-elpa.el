@@ -34,7 +34,7 @@
     company
     company-shell
     company-c-headers
-    company-shell    
+    company-shell
     cpputils-cmake
     csharp-mode
     cursor-chg

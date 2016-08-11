@@ -33,8 +33,9 @@
       `(("." . "~/.saves")))              ; change backup directory
 (setq visible-bell 1)                     ; turn of audible belling
 (global-linum-mode 1)                     ; enable linum-mode
-(setq hs-allow-nesting t)                 ; hide-show
-(desktop-save-mode 1)                     ; save sessions
+(setq hs-allow-nesting t)                 ; hide-show     
+(setq desktop-files-not-to-save "^$")     ; reload tramp path
+(desktop-save-mode 1)                     ; save session
 (setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
 (delete-selection-mode 1)                 ; delete selection mode
 (setq column-number-mode t)               ; enable column-number-mode
@@ -123,7 +124,7 @@
 
 ;; hl-line-mode
 (global-hl-line-mode)
-(set-face-background hl-line-face "#E8E8FF")
+(set-face-background hl-line-face "grey20")
 
 ;; copy a word
 (defun copy-word (&optional arg)
@@ -135,6 +136,14 @@
 
 ;; Key binding
 (global-set-key (kbd "C-c w")         (quote copy-word))
+
+;; configuration mode
+(add-to-list 'auto-mode-alist '(".\\(rc\\)" . conf-mode))
+
+;; tramp-mode
+(require 'tramp)
+(if (eq system-type 'windows-nt)
+    (setq tramp-default-mothod "plink"))
 
 ;; custom parameter
 (custom-set-variables
