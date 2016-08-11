@@ -124,7 +124,6 @@
 
 ;; hl-line-mode
 (global-hl-line-mode)
-(set-face-background hl-line-face "grey20")
 
 ;; copy a word and a line with shortcut
 (defun get-point (symbol &optional arg)
@@ -163,11 +162,12 @@
   ;;(paste-to-mark arg)
   )
 
+;; copy a line
 (defun copy-line (&optional arg)
   "Save current line into Kill-Ring without mark the line "
   (interactive "P")
   (copy-thing 'beginning-of-line 'end-of-line arg)
-  (paste-to-mark arg)
+  ;; (paste-to-mark arg)
   )
 
 ;; Key binding
