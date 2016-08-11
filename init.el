@@ -126,6 +126,35 @@
 (global-hl-line-mode)
 (set-face-background hl-line-face "grey20")
 
+;; copy a word and a line with shortcut
+(defun get-point (symbol &optional arg)
+  "get the point"
+  (funcall symbol arg)
+  (point)
+  )
+
+(defun copy-thing (begin-of-thing end-of-thing &optional arg)
+  "copy thing between beg & end into kill ring"
+  (save-excursion
+    (let ((beg (get-point begin-of-thing 1))
+          (end (get-point end-of-thing arg)))
+      (copy-region-as-kill beg end)))
+  )
+
+(defun paste-to-mark(&optional arg)
+  "Paste things to mark, or to the prompt in shell-mode"
+  (let ((pasteMe
+         (lambda()
+           (if (string= "shell-mode" major-mode)
+               (progn (comint-next-prompt 25535) (yank))
+             (progn (goto-char (mark)) (yank) )))))
+    (if arg
+        (if (= arg 1)
+            nil
+          (funcall pasteMe))
+      (funcall pasteMe))
+    ))
+
 ;; copy a word
 (defun copy-word (&optional arg)
   "Copy words at point into kill-ring"
@@ -134,8 +163,21 @@
   ;;(paste-to-mark arg)
   )
 
+(defun copy-line (&optional arg)
+  "Save current line into Kill-Ring without mark the line "
+  (interactive "P")
+  (copy-thing 'beginning-of-line 'end-of-line arg)
+  (paste-to-mark arg)
+  )
+
 ;; Key binding
 (global-set-key (kbd "C-c w")         (quote copy-word))
+(global-set-key (kbd "C-c l")         (quote copy-line))
+
+;; display-time
+(setq display-time-24hr-format t)
+(setq display-time-day-and-date t)
+(display-time-mode t)
 
 ;; configuration mode
 (add-to-list 'auto-mode-alist '(".\\(rc\\)" . conf-mode))
@@ -152,10 +194,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cfs--current-profile-name "profile1" t)
+ '(column-number-mode t)
  '(ecb-options-version "2.40")
  '(markdown-command "pandoc -f markdown_github")
  '(scheme-program-name "petite")
  '(session-use-package t nil (session))
+ '(show-paren-mode t)
+ '(size-indication-mode t)
  '(speedbar-show-unknown-files t)
  '(sr-speedbar-default-width 100)
  '(sr-speedbar-max-width 100))

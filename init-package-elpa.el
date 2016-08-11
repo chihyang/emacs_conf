@@ -139,7 +139,7 @@
 (global-set-key (kbd "C-x o") 'switch-window) ; rebind `C-x o' to switch-window
 
 ;; blank-mode
-(global-set-key (kbd "C-c C-b") 'blank-mode) ; show whitespace
+(global-set-key (kbd "C-c C-b") 'whitespace-mode) ; show whitespace
 
 ;; markdown-mode
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
