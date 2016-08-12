@@ -74,6 +74,7 @@
                     ".exe"))
   (shell-command run))
 ;; Java
+(add-to-list 'auto-mode-alist '(".\\(aidl\\)" . java-mode))
 (add-hook 'java-mode-hook
           (lambda ()
             (set (make-local-variable 'compile-command)
