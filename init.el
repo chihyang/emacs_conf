@@ -74,7 +74,7 @@
                     ".exe"))
   (shell-command run))
 ;; Java
-(add-to-list 'auto-mode-alist '(".\\(aidl\\)" . java-mode))
+(add-to-list 'auto-mode-alist '(".\\(aidl\\)" . idl-mode))
 (add-hook 'java-mode-hook
           (lambda ()
             (set (make-local-variable 'compile-command)
@@ -181,7 +181,7 @@
 (display-time-mode t)
 
 ;; configuration mode
-(add-to-list 'auto-mode-alist '(".\\(rc\\)" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.rc\\'" . conf-mode))
 
 ;; tramp-mode
 (require 'tramp)
