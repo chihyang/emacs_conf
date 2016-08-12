@@ -40,6 +40,7 @@
     cursor-chg
     fish-mode
     flycheck
+    flyspell-popup
     haskell-mode
     icicles
     irony
@@ -86,7 +87,7 @@
   (add-hook hook (lambda () (flyspell-mode -1)))) ;disable spell check for log mode
 
 ;; flyspell-popup
-(add-hook 'flyspell-mode-hook 'flyspell-popup-auto-correct-mode)
+(add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
 
 ;; flycheck-mode
 (add-hook 'after-init-hook #'global-flycheck-mode)
