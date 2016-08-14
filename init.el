@@ -188,6 +188,9 @@
 (if (eq system-type 'windows-nt)
     (setq tramp-default-mothod "plink"))
 
+;; delete files by moving to system trash
+(setq delete-by-moving-to-trash t)
+
 ;; custom parameter
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
