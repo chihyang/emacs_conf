@@ -183,6 +183,9 @@
 ;; configuration mode
 (add-to-list 'auto-mode-alist '("\\.rc\\'" . conf-mode))
 
+;; bind `C-x n' to next-multiframe-window
+(global-set-key (kbd "C-x n") 'next-multiframe-window)
+
 ;; tramp-mode
 (require 'tramp)
 (if (eq system-type 'windows-nt)
