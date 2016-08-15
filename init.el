@@ -185,6 +185,7 @@
 
 ;; bind `C-x n' to next-multiframe-window
 (global-set-key (kbd "C-x n") 'next-multiframe-window)
+(global-set-key (kbd "C-x p") 'previous-multiframe-window)
 
 ;; tramp-mode
 (require 'tramp)
