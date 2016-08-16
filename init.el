@@ -195,6 +195,18 @@
 ;; delete files by moving to system trash
 (setq delete-by-moving-to-trash t)
 
+;; hide mixed line ending
+(defun hide-mixed-eol ()
+  "Do not show ^M in files containing mixed UNIX and DOS line endings."
+  (interactive)
+  (setq buffer-display-table (make-display-table))
+  (aset buffer-display-table ?\^M []))
+;; show mixed line ending
+(defun show-mixed-eol ()
+  "Show ^M in files containing mixed UNIX and DOS line endings."
+  (interactive)
+  (setq buffer-display-table nil))
+
 ;; custom parameter
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
