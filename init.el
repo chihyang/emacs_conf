@@ -207,6 +207,9 @@
   (interactive)
   (setq buffer-display-table nil))
 
+;; read-only-mode hot key
+(global-set-key (kbd "C-c C-r") 'read-only-mode)
+
 ;; custom parameter
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
