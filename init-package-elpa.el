@@ -52,6 +52,7 @@
     minimap
     pandoc-mode
     powerline-evil
+    protobuf-mode
     rainbow-mode
     session
     smart-mode-line
