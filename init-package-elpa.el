@@ -19,6 +19,7 @@
 
 (defconst required-packages
   '(
+    anzu
     auctex
     auto-complete
     auto-highlight-symbol
@@ -74,6 +75,11 @@
       (package-install package))))
 
 (ensure-packages)
+
+;; anzu
+(global-anzu-mode +1)
+(global-set-key [remap query-replace] 'anzu-query-replace)
+(global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
 
 ;; cedet
 ;; (load-file (concat user-emacs-directory "cedet/cedet-devel-load.el"))
