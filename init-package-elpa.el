@@ -54,6 +54,7 @@
     pandoc-mode
     powerline-evil
     protobuf-mode
+    psvn
     rainbow-mode
     session
     smart-mode-line
