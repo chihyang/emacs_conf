@@ -33,7 +33,6 @@
     color-theme
     color-theme-solarized
     company
-    company-shell
     company-c-headers
     company-shell
     cpputils-cmake
@@ -52,6 +51,7 @@
     markdown-preview-mode
     minimap
     pandoc-mode
+    plantuml-mode
     powerline-evil
     protobuf-mode
     psvn
@@ -198,6 +198,10 @@
 ;; (setq powerline-default-separator-dir '(right . left))
 ;; (setq sml/theme 'respectful)
 ;; (sml/setup)
+
+;; plantuml-mode
+(add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
+(add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
 
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
