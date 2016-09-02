@@ -64,6 +64,7 @@
     tabbar
     vimrc-mode
     websocket
+    workgroups2
     ))
 
 (defun ensure-packages ()
@@ -194,14 +195,13 @@
 
 ;; smart-mode-line
 (setq sml/no-confirm-load-theme t)
-;; (setq powerline-arrow-shape 'curve)
-;; (setq powerline-default-separator-dir '(right . left))
-;; (setq sml/theme 'respectful)
-;; (sml/setup)
 
 ;; plantuml-mode
 (add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
 (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+
+;; workgroups2
+(workgroups-mode 1)
 
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
