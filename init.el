@@ -211,7 +211,8 @@
 (global-set-key (kbd "C-c C-r") 'read-only-mode)
 
 ;; org-mode
-(setq org-startup-indented t)
+(setq org-startup-indented t)           ; enable auto-indent
+(setq org-src-fontify-natively t)       ; enable source code highlight
 
 ;; custom parameter
 (custom-set-variables
