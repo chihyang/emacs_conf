@@ -70,7 +70,7 @@
 (add-hook 'c++-mode-hook
           (lambda ()
             (set (make-local-variable 'compile-command)
-                 (concat "gcc -std=c++11 " buffer-file-name " -Wall -g -o "
+                 (concat "g++ -std=c++11 " buffer-file-name " -Wall -g -o "
                          (file-name-directory buffer-file-name) "/obj/"
                          (file-name-sans-extension (file-name-nondirectory
                                                     buffer-file-name))
