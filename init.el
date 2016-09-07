@@ -1,4 +1,7 @@
+;;; package --- Summary
+;;; Commentary:
 ;;; load packages and customized functions
+;;; Code:
 (load "~/.emacs.d/init-package-elpa.el")
 (load "~/.emacs.d/init-night-mode.el")
 
@@ -33,9 +36,7 @@
       `(("." . "~/.saves")))              ; change backup directory
 (setq visible-bell 1)                     ; turn of audible belling
 (global-linum-mode 1)                     ; enable linum-mode
-(setq hs-allow-nesting t)                 ; hide-show     
-(setq desktop-files-not-to-save "^$")     ; reload tramp path
-(desktop-save-mode 1)                     ; save session
+(setq hs-allow-nesting t)                 ; hide-show
 (setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
 (delete-selection-mode 1)                 ; delete selection mode
 (setq column-number-mode t)               ; enable column-number-mode
@@ -190,7 +191,7 @@
 ;; tramp-mode
 (require 'tramp)
 (if (eq system-type 'windows-nt)
-    (setq tramp-default-mothod "plink"))
+    (setq tramp-default-method "plink"))
 
 ;; delete files by moving to system trash
 (setq delete-by-moving-to-trash t)
@@ -222,6 +223,9 @@
  ;; If there is more than one, they won't work right.
  '(cfs--current-profile-name "profile1" t)
  '(column-number-mode t)
+ '(custom-safe-themes
+   (quote
+    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
  '(ecb-options-version "2.40")
  '(markdown-command "pandoc -f markdown_github")
  '(scheme-program-name "petite")

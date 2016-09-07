@@ -1,8 +1,7 @@
-;; proxy settings, disable this if necessary
-(setq url-proxy-services
-   '(("no_proxy" . "^\\(localhost\\|10.*\\)")
-     ("http" . "127.0.0.1:8118")
-     ("https" . "127.0.0.1:8118")))
+;;; package --- Summary
+;;; Commentary:
+;;; load packages and customized functions
+;;; Code:
 
 ;; load newer bytecodes
 (setq load-prefer-newer t)
@@ -78,28 +77,12 @@
 
 (ensure-packages)
 
+;;; configuration of packages, ordered alphabetically
+
 ;; anzu
 (global-anzu-mode +1)
 (global-set-key [remap query-replace] 'anzu-query-replace)
 (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
-
-;; cedet
-;; (load-file (concat user-emacs-directory "cedet/cedet-devel-load.el"))
-;; (load-file (concat user-emacs-directory "cedet/contrib/cedet-contrib-load.el"))
-
-;;; configuration of packages
-;; flyspell-mode
-(ispell-change-dictionary "american" t)
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
-(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
-  (add-hook hook (lambda () (flyspell-mode -1)))) ;disable spell check for log mode
-
-;; flyspell-popup
-(add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
-
-;; flycheck-mode
-(add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; auto-complete
 (ac-config-default)                             ; auto-complete
@@ -109,26 +92,46 @@
 (add-hook 'prog-mode-hook 'auto-complete-mode)
 (add-hook 'text-mode-hook 'auto-complete-mode)
 
-;; company
-;; (add-hook 'after-init-hook 'global-company-mode)
-
 ;; auto-highlight-symbol-mode
 (global-auto-highlight-symbol-mode)
 
 ;; autopair
 (autopair-global-mode 1)                        ; enable autopair in all buffers
 
-;; sr-speedbar
-;; (sr-speedbar-open)
-(custom-set-variables
- '(sr-speedbar-default-width 100)
- '(sr-speedbar-max-width 100))
+;; blank-mode
+(global-set-key (kbd "C-c C-b") 'whitespace-mode) ; show whitespace
 
-;; tabbar-mode
-(tabbar-mode)
-(load "~/.emacs.d/init-tabbar-theme.el")
-(global-set-key [C-tab] 'tabbar-forward-tab) ; tabbar mode
-(global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab) ; tabbar mode
+;; bm
+(global-set-key (kbd "<C-f2>") 'bm-toggle)
+(global-set-key (kbd "<f2>")   'bm-next)
+(global-set-key (kbd "<S-f2>") 'bm-previous)
+
+;; chinese-fonts-setup
+(require 'chinese-fonts-setup)
+
+;; color-theme-solarized
+(set-terminal-parameter nil 'background-mode 'dark)
+(set-frame-parameter nil 'background-mode 'dark)
+(load-theme 'solarized t)
+
+;; cpputils-cmake
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (if (derived-mode-p 'c-mode 'c++-mode)
+                (cppcm-reload-all))))
+
+;; flycheck-mode
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; flyspell-mode
+(ispell-change-dictionary "american" t)
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode -1)))) ;disable spell check for log mode
+
+;; flyspell-popup
+(add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
 
 ;; irony-mode
 (add-hook 'c++-mode-hook 'irony-mode)
@@ -145,11 +148,34 @@
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 (setq w32-pipe-read-delay 0)
 
-;; switch-window
-(global-set-key (kbd "C-x o") 'switch-window) ; rebind `C-x o' to switch-window
+;; indent-guide
+(setq indent-guide-recursive t)
 
-;; blank-mode
-(global-set-key (kbd "C-c C-b") 'whitespace-mode) ; show whitespace
+;; logview-mode
+(setq
+ logview-additional-timestamp-formats
+ (quote (("Android Logcat Time Format"
+           (java-pattern . "MM-dd HH:mm:ss.SSS")
+           (aliases "MM-dd HH:mm:ss.SSS")))))
+(setq
+ logview-additional-level-mappings
+ (quote (("Logcat"
+          (error "D")
+          (warning "E")
+          (information "V")
+          (debug "W")
+          (trace "F")
+          (aliases "android")))))
+(setq
+ logview-additional-submodes
+ (quote (("Android"
+           (format . "TIMESTAMP THREAD NAME:")
+           (levels . "logcat")
+           (timestamp "Android Logcat Time Format")
+           (aliases "logcat")))))
+
+;; lua-mode
+(setq lua-indent-level 4)
 
 ;; markdown-mode
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
@@ -170,38 +196,45 @@
                 scheme-mode-hook))
   (add-hook hook 'enable-paredit-mode))
 
-;; indent-guide
-(setq indent-guide-recursive t)
-
-;; bm
-(global-set-key (kbd "<C-f2>") 'bm-toggle)
-(global-set-key (kbd "<f2>")   'bm-next)
-(global-set-key (kbd "<S-f2>") 'bm-previous)
-
-;; lua-mode
-(setq lua-indent-level 4)
-
-;; vimrc-mode
-(add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
-
-;; cpputils-cmake
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (if (derived-mode-p 'c-mode 'c++-mode)
-                (cppcm-reload-all))))
-
-;; session restore
-(add-hook 'after-init-hook 'session-initialize) ;restore session
-
-;; smart-mode-line
-(setq sml/no-confirm-load-theme t)
-
 ;; plantuml-mode
 (add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
 (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
 
+;; smart-mode-line
+(setq sml/no-confirm-load-theme t)
+
+;; session restore
+(setq desktop-files-not-to-save "^$")     ; reload tramp path
+(desktop-save-mode 1)                     ; save session
+;; (add-hook 'after-init-hook 'session-initialize) ; restore session
+
+;; sr-speedbar
+(custom-set-variables
+ '(sr-speedbar-default-width 100)
+ '(sr-speedbar-max-width 100))
+
+;; switch-window
+(global-set-key (kbd "C-x o") 'switch-window) ; rebind `C-x o' to switch-window
+
+;; tabbar-mode
+(tabbar-mode)
+(load "~/.emacs.d/init-tabbar-theme.el")
+(global-set-key [C-tab] 'tabbar-forward-tab) ; tabbar mode
+(global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab) ; tabbar mode
+
+;; vimrc-mode
+(add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
+
 ;; workgroups2
+(setq wg-emacs-exit-save-behavior           'save)      ; Options: 'save 'ask nil
+(setq wg-workgroups-mode-exit-save-behavior 'save)      ; Options: 'save 'ask nil
+;; Mode Line changes
+(setq wg-mode-line-display-on t)          ; Default: (not (featurep 'powerline))
+(setq wg-flag-modified t)                 ; Display modified flags as well
+(setq wg-mode-line-decor-left-brace "["
+      wg-mode-line-decor-right-brace "]"  ; how to surround it
+      wg-mode-line-decor-divider ":")
 (workgroups-mode 1)
 
-;; chinese-fonts-setup
-(require 'chinese-fonts-setup)
+(provide 'init-package-elpa)
+;;; init-package-elpa.el ends here
