@@ -58,10 +58,19 @@
 
 ;;; compile command
 ;; C/C++
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-hook 'c-mode-hook
           (lambda ()
             (set (make-local-variable 'compile-command)
                  (concat "gcc " buffer-file-name " -Wall -g -o "
+                         (file-name-directory buffer-file-name) "/obj/"
+                         (file-name-sans-extension (file-name-nondirectory
+                                                    buffer-file-name))
+                         ".exe"))))
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (set (make-local-variable 'compile-command)
+                 (concat "gcc -std=c++11 " buffer-file-name " -Wall -g -o "
                          (file-name-directory buffer-file-name) "/obj/"
                          (file-name-sans-extension (file-name-nondirectory
                                                     buffer-file-name))
@@ -92,6 +101,7 @@
           '(lambda ()
              (setq ac-sources (append '(ac-source-semantic) ac-sources))))
 (setq gdb-show 1)
+
 ;; comment line or region with the shortcut `C-q'
 (defun comment-or-uncomment-line-or-region ()
   "Comments or uncomments the current line or region."
@@ -110,11 +120,12 @@
 
 ;;; cedet implementation
 ;; semantic
-;; (global-semanticdb-minor-mode)
-;; (global-semantic-idle-scheduler-mode 1)
-;; (global-semantic-idle-summary-mode 1)
-(global-set-key [f12] 'semantic-ia-fast-jump)
 (semantic-mode 1)
+(global-semanticdb-minor-mode)
+(global-semantic-idle-scheduler-mode 1)
+(global-semantic-idle-summary-mode 1)
+(global-set-key [f12] 'semantic-ia-fast-jump)
+
 ;; ede
 (global-ede-mode 1)                      ; Enable the Project management system
 (ede-enable-generic-projects)
