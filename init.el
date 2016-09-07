@@ -2,6 +2,13 @@
 ;;; Commentary:
 ;;; load packages and customized functions
 ;;; Code:
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (load "~/.emacs.d/init-package-elpa.el")
 (load "~/.emacs.d/init-night-mode.el")
 
@@ -75,7 +82,7 @@
                          (file-name-sans-extension (file-name-nondirectory
                                                     buffer-file-name))
                          ".exe"))))
-(defun execute-c-program ()
+(defun execute-program ()
   (interactive)
   (defvar run)
   (setq run (concat (file-name-directory buffer-file-name) "obj/"
@@ -94,7 +101,7 @@
                          (file-name-directory buffer-file-name) "obj/"))))
 ;; global shortcut
 (global-set-key [C-f5] 'compile)
-(global-set-key [C-f1] 'execute-c-program)
+(global-set-key [C-f1] 'execute-program)
 
 ;; CC-mode
 (add-hook 'c-mode-common-hook
