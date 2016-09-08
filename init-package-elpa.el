@@ -45,6 +45,7 @@
     icicles
     irony
     indent-guide
+    logview
     lua-mode
     magit
     markdown-mode
