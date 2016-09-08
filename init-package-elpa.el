@@ -231,9 +231,14 @@
 
 ;; tabbar-mode
 (tabbar-mode)
-(load "~/.emacs.d/init-tabbar-theme.el")
-(global-set-key [C-tab] 'tabbar-forward-tab) ; tabbar mode
-(global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab) ; tabbar mode
+(load "~/.emacs.d/init-tabbar-theme.el") ; theme
+(if (display-graphic-p)                      ; key-binding
+  (progn
+    (global-set-key [C-tab] 'tabbar-forward-tab)
+    (global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab))
+  (progn
+    (global-set-key (kbd "C-c t n") 'tabbar-forward-tab)
+    (global-set-key (kbd "C-c t p") 'tabbar-backward-tab)))
 
 ;; vimrc-mode
 (add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
