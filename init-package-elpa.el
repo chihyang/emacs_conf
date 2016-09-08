@@ -160,11 +160,11 @@
 (setq
  logview-additional-level-mappings
  (quote (("Logcat"
-          (error "D")
-          (warning "E")
-          (information "V")
-          (debug "W")
-          (trace "F")
+          (error "E")
+          (warning "W")
+          (information "I")
+          (debug "D")
+          (trace "V")
           (aliases "android")))))
 (setq
  logview-additional-submodes
