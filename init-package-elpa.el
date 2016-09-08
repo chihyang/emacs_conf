@@ -130,7 +130,7 @@
             (define-key dired-mode-map (kbd "^")
               (lambda ()
                 (interactive)
-                (joc-dired-single-buffer "..")))))
+                (dired-single-buffer "..")))))
 
 ;; flycheck-mode
 (add-hook 'after-init-hook #'global-flycheck-mode)
