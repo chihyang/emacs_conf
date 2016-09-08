@@ -144,6 +144,8 @@
 
 ;; hl-line-mode
 (global-hl-line-mode)
+(if  (not (window-system))
+    (set-face-background 'hl-line "brightblack"))
 
 ;; copy a word and a line with shortcut
 (defun get-point (symbol &optional arg)

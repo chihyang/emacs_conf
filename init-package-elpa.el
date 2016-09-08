@@ -113,7 +113,8 @@
 ;; color-theme-solarized
 (set-terminal-parameter nil 'background-mode 'dark)
 (set-frame-parameter nil 'background-mode 'dark)
-(load-theme 'solarized t)
+(if (window-system)
+    (load-theme 'solarized t))
 
 ;; cpputils-cmake
 (add-hook 'c-mode-common-hook
