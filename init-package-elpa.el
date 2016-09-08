@@ -170,7 +170,7 @@
  logview-additional-submodes
  (quote (("Android"
            (format . "TIMESTAMP THREAD NAME:")
-           (levels . "logcat")
+           (levels . "Logcat")
            (timestamp "Android Logcat Time Format")
            (aliases "logcat")))))
 
@@ -181,7 +181,7 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\README\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\README*" . markdown-mode))
 
 ;; paredit
 (add-to-list 'load-path "~/.emacs.d/elpa/paredit")
