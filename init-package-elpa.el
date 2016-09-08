@@ -37,6 +37,7 @@
     cpputils-cmake
     csharp-mode
     cursor-chg
+    dired-single
     fish-mode
     flycheck
     flyspell-popup
@@ -119,6 +120,16 @@
           (lambda ()
             (if (derived-mode-p 'c-mode 'c++-mode)
                 (cppcm-reload-all))))
+
+;; dired-single
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (define-key dired-mode-map (kbd "RET") 'dired-single-buffer)
+            (define-key dired-mode-map (kbd "<mouse-1>") 'dired-single-buffer-mouse)
+            (define-key dired-mode-map (kbd "^")
+              (lambda ()
+                (interactive)
+                (joc-dired-single-buffer "..")))))
 
 ;; flycheck-mode
 (add-hook 'after-init-hook #'global-flycheck-mode)
