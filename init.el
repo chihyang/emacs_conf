@@ -60,11 +60,21 @@
 
 ;; compile command
 (defun compile-program ()
+  "Compile files with basic compile command. Runs:
+
+C: `gcc' `buffer-file-name' -Wall -g -o `obj'
+C++: `g++' -std=c++11 `buffer-file-name' -Wall -g -o `obj'
+Java: `javac' -d `buffer-file-name' -d `obj'
+
+where `obj' is in the same directory of `buffer-file-name'. If
+`obj' does not exist, it will be created."
   (interactive)
+  (if (not (file-exists-p (concat (file-name-directory buffer-file-name) "obj")))
+      (make-directory (concat (file-name-directory buffer-file-name) "obj")))
   (cond ((string-equal (file-name-extension buffer-file-name) "c")
          (set (make-local-variable 'compile-command)
                  (concat "gcc " buffer-file-name " -Wall -g -o "
-                         (file-name-directory buffer-file-name) "/obj/"
+                         (file-name-directory buffer-file-name) "obj/"
                          (file-name-sans-extension (file-name-nondirectory
                                                     buffer-file-name))
                          ".exe")))
@@ -81,37 +91,52 @@
                       (file-name-directory buffer-file-name) "obj/"))))
   (compile compile-command))
 ;; execution command
-(defun execute-program ()
+(defun execute-c-c++-program ()
+  "Execute c/c++ program, just for practice purpose."
   (interactive)
-  (defvar run)
-  (if (string-equal (file-name-extension buffer-file-name) "java")
-      (setq run (concat "java -cp "
-                        (file-name-directory buffer-file-name) "obj "
-                        (file-name-sans-extension
-                         (file-name-nondirectory buffer-file-name))))
-    (setq run (concat (file-name-directory buffer-file-name) "obj/"
-                      (file-name-sans-extension
-                       (file-name-nondirectory buffer-file-name))
-                      ".exe")))
-  (shell-command run))
-(defun bind-exercise-key ()
+  (defvar execute-c-c++-program-run)      
+  (setq execute-c-c++-program-run
+        (concat (file-name-directory buffer-file-name) "obj/"
+                (file-name-sans-extension
+                 (file-name-nondirectory buffer-file-name))))
+  (if (string-equal system-type "windows-nt")
+      (setq execute-c-c++-program-run
+            (concat execute-c-c++-program-run
+                    ".exe")))
+  (shell-command execute-c-c++-program-run))
+(defun execute-java-program ()
+  "Execute Java class, just for practice purpose."
+  (interactive)
+  (defvar execute-java-program-run)
+  (setq execute-java-program-run
+        (concat "java -cp "
+                (file-name-directory buffer-file-name) "obj "
+                (file-name-sans-extension
+                 (file-name-nondirectory buffer-file-name))))
+  (shell-command execute-java-program-run))
+;; key-binding
+(defun bind-c-c++-exercise-key ()
   (when (string-match "[Ee]xer*" buffer-file-name)
     (local-set-key [C-f5]  #'compile-program)
-    (local-set-key [C-f1]  #'execute-program)))
+    (local-set-key [C-f1]  #'execute-c-c++-program)))
+(defun bind-java-exercise-key ()
+  (when (string-match "[Ee]xer*" buffer-file-name)
+    (local-set-key [C-f5]  #'compile-program)
+    (local-set-key [C-f1]  #'execute-java-program)))
 ;; C
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-hook 'c-mode-hook
           (lambda ()
-            (bind-exercise-key)))
+            (bind-c-c++-exercise-key)))
 ;; C++
 (add-hook 'c++-mode-hook
           (lambda ()
-            (bind-exercise-key)))
+            (bind-c-c++-exercise-key)))
 ;; Java
 (add-to-list 'auto-mode-alist '(".\\(aidl\\)" . idl-mode))
 (add-hook 'java-mode-hook
           (lambda ()
-            (bind-exercise-key)))
+            (bind-java-exercise-key)))
 ;; CC-mode
 (add-hook 'c-mode-common-hook
           '(lambda ()
