@@ -57,46 +57,61 @@
                 prog-mode-hook))
   (add-hook hook 'turn-on-auto-fill))
 
-;;; compile command
-;; C/C++
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-(add-hook 'c-mode-hook
-          (lambda ()
-            (set (make-local-variable 'compile-command)
+
+;; compile command
+(defun compile-program ()
+  (interactive)
+  (cond ((string-equal (file-name-extension buffer-file-name) "c")
+         (set (make-local-variable 'compile-command)
                  (concat "gcc " buffer-file-name " -Wall -g -o "
                          (file-name-directory buffer-file-name) "/obj/"
                          (file-name-sans-extension (file-name-nondirectory
                                                     buffer-file-name))
-                         ".exe"))))
-(add-hook 'c++-mode-hook
-          (lambda ()
-            (set (make-local-variable 'compile-command)
-                 (concat "g++ -std=c++11 " buffer-file-name " -Wall -g -o "
-                         (file-name-directory buffer-file-name) "/obj/"
-                         (file-name-sans-extension (file-name-nondirectory
-                                                    buffer-file-name))
-                         ".exe"))))
+                         ".exe")))
+        ((string-equal (file-name-extension buffer-file-name) "cpp")
+         (set (make-local-variable 'compile-command)
+              (concat "g++ -std=c++11 " buffer-file-name " -Wall -g -o "
+                      (file-name-directory buffer-file-name) "obj/"
+                      (file-name-sans-extension (file-name-nondirectory
+                                                 buffer-file-name))
+                      ".exe")))
+        ((string-equal (file-name-extension buffer-file-name) "java")
+         (set (make-local-variable 'compile-command)
+              (concat "javac " buffer-file-name " -d "
+                      (file-name-directory buffer-file-name) "obj/"))))
+  (compile compile-command))
+;; execution command
 (defun execute-program ()
   (interactive)
   (defvar run)
-  (setq run (concat (file-name-directory buffer-file-name) "obj/"
-                    (file-name-sans-extension
-                     (file-name-nondirectory buffer-file-name))
-                    ".exe"))
+  (if (string-equal (file-name-extension buffer-file-name) "java")
+      (setq run (concat "java -cp "
+                        (file-name-directory buffer-file-name) "obj "
+                        (file-name-sans-extension
+                         (file-name-nondirectory buffer-file-name))))
+    (setq run (concat (file-name-directory buffer-file-name) "obj/"
+                      (file-name-sans-extension
+                       (file-name-nondirectory buffer-file-name))
+                      ".exe")))
   (shell-command run))
+(defun bind-exercise-key ()
+  (when (string-match "[Ee]xer*" buffer-file-name)
+    (local-set-key [C-f5]  #'compile-program)
+    (local-set-key [C-f1]  #'execute-program)))
+;; C
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-hook 'c-mode-hook
+          (lambda ()
+            (bind-exercise-key)))
+;; C++
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (bind-exercise-key)))
 ;; Java
 (add-to-list 'auto-mode-alist '(".\\(aidl\\)" . idl-mode))
 (add-hook 'java-mode-hook
           (lambda ()
-            (set (make-local-variable 'compile-command)
-                 (concat "javac "
-                         buffer-file-name
-                         " -d "
-                         (file-name-directory buffer-file-name) "obj/"))))
-;; global shortcut
-(global-set-key [C-f5] 'compile)
-(global-set-key [C-f1] 'execute-program)
-
+            (bind-exercise-key)))
 ;; CC-mode
 (add-hook 'c-mode-common-hook
           '(lambda ()
@@ -111,7 +126,7 @@
       (comment-or-uncomment-region (region-beginning) (region-end))
     (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
 (defun comment-shortcut-for-coding-mode-hook ()
-    (local-set-key (kbd "C-q") 'comment-or-uncomment-line-or-region))
+  (local-set-key (kbd "C-q") 'comment-or-uncomment-line-or-region))
 (dolist (hook '(prog-mode-hook
                 latex-mode-hook
                 tex-mode-hook
