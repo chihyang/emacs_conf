@@ -21,6 +21,8 @@
     anzu
     auctex
     auto-complete
+	auto-complete-clang
+	auto-complete-c-headers
     auto-highlight-symbol
     autopair
     blank-mode
