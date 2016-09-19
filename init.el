@@ -5,6 +5,7 @@
 
 (load "~/.emacs.d/init-package-elpa.el")
 (load "~/.emacs.d/init-night-mode.el")
+(load "~/.emacs.d/auto-complete-clang-extension.el")
 
 (server-start)
 
@@ -138,9 +139,6 @@ where `obj' is in the same directory of `buffer-file-name'. If
           (lambda ()
             (bind-java-exercise-key)))
 ;; CC-mode
-(add-hook 'c-mode-common-hook
-          '(lambda ()
-             (setq ac-sources (append '(ac-source-semantic) ac-sources))))
 (setq gdb-show 1)
 
 ;; comment line or region with the shortcut `C-q'
@@ -160,13 +158,37 @@ where `obj' is in the same directory of `buffer-file-name'. If
   (add-hook hook 'comment-shortcut-for-coding-mode-hook))
 
 ;;; cedet implementation
-;; semantic
+;; cedet
+(require 'cedet)
+(defun my-c-mode-cedet-hook ()
+  "Set auto complete for c/c++ mode."
+  (local-set-key (kbd "RET") 'newline-and-indent)
+  ;; (setq ac-sources (append '(ac-source-semantic) ac-sources))
+  )
+(add-hook 'c-mode-common-hook 'my-c-mode-cedet-hook)
 (semantic-mode 1)
+;; semantic/ia
+(require 'semantic/ia)
+(setq-mode-local c-mode semanticdb-find-default-throttle
+                 '(project unloaded system recursive))
+(setq-mode-local c++-mode semanticdb-find-default-throttle
+                 '(project unloaded system recursive))
 (global-semanticdb-minor-mode)
 (global-semantic-idle-scheduler-mode 1)
 (global-semantic-idle-summary-mode 1)
 (global-set-key [f12] 'semantic-ia-fast-jump)
-
+;; C/C++ headers
+(require 'semantic/bovine/gcc)
+(require 'semantic/bovine/c)
+(setq semantic-c-dependency-system-include-path
+      ac-clang-extension-all-include-dirs)
+(mapc (lambda (dir)
+        (semantic-add-system-include dir 'c++-mode)
+        (semantic-add-system-include dir 'c-mode))
+      ac-clang-extension-all-include-dirs)
+(require 'semantic/db-global)
+(semanticdb-enable-gnu-global-databases 'c-mode)
+(semanticdb-enable-gnu-global-databases 'c++-mode)
 ;; ede
 (global-ede-mode 1)                      ; Enable the Project management system
 (ede-enable-generic-projects)
@@ -183,13 +205,13 @@ where `obj' is in the same directory of `buffer-file-name'. If
 
 ;; copy a word and a line with shortcut
 (defun get-point (symbol &optional arg)
-  "get the point"
+  "Get the point."
   (funcall symbol arg)
   (point)
   )
 
 (defun copy-thing (begin-of-thing end-of-thing &optional arg)
-  "copy thing between beg & end into kill ring"
+  "Copy thing between beg & end into kill ring."
   (save-excursion
     (let ((beg (get-point begin-of-thing 1))
           (end (get-point end-of-thing arg)))
@@ -197,7 +219,7 @@ where `obj' is in the same directory of `buffer-file-name'. If
   )
 
 (defun paste-to-mark(&optional arg)
-  "Paste things to mark, or to the prompt in shell-mode"
+  "Paste things to mark, or to the prompt in shell-mode."
   (let ((pasteMe
          (lambda()
            (if (string= "shell-mode" major-mode)
@@ -212,7 +234,7 @@ where `obj' is in the same directory of `buffer-file-name'. If
 
 ;; copy a word
 (defun copy-word (&optional arg)
-  "Copy words at point into kill-ring"
+  "Copy words at point into kill-ring."
   (interactive "P")
   (copy-thing 'backward-word 'forward-word arg)
   ;;(paste-to-mark arg)
@@ -227,8 +249,8 @@ where `obj' is in the same directory of `buffer-file-name'. If
   )
 
 ;; Key binding
-(global-set-key (kbd "C-c w")         (quote copy-word))
-(global-set-key (kbd "C-c l")         (quote copy-line))
+(global-set-key (kbd "C-c w") (quote copy-word))
+(global-set-key (kbd "C-c l") (quote copy-line))
 
 ;; display-time
 (setq display-time-24hr-format t)
@@ -277,9 +299,6 @@ where `obj' is in the same directory of `buffer-file-name'. If
  ;; If there is more than one, they won't work right.
  '(cfs--current-profile-name "profile1" t)
  '(column-number-mode t)
- '(custom-safe-themes
-   (quote
-    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
  '(ecb-options-version "2.40")
  '(markdown-command "pandoc -f markdown_github")
  '(scheme-program-name "petite")
