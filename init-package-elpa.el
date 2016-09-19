@@ -136,7 +136,7 @@
                 (dired-single-buffer "..")))))
 
 ;; flycheck-mode
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(global-flycheck-mode)
 
 ;; flyspell-mode
 (ispell-change-dictionary "american" t)
