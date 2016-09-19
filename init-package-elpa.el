@@ -170,8 +170,8 @@
 (setq
  logview-additional-timestamp-formats
  (quote (("Android Logcat Time Format"
-           (java-pattern . "MM-dd HH:mm:ss.SSS")
-           (aliases "MM-dd HH:mm:ss.SSS")))))
+          (java-pattern . "MM-dd HH:mm:ss.SSS")
+          (aliases "MM-dd HH:mm:ss.SSS")))))
 (setq
  logview-additional-level-mappings
  (quote (("Logcat"
@@ -184,10 +184,10 @@
 (setq
  logview-additional-submodes
  (quote (("Android"
-           (format . "TIMESTAMP THREAD NAME:")
-           (levels . "Logcat")
-           (timestamp "Android Logcat Time Format")
-           (aliases "logcat")))))
+          (format . "TIMESTAMP THREAD NAME:")
+          (levels . "Logcat")
+          (timestamp "Android Logcat Time Format")
+          (aliases "logcat")))))
 
 ;; lua-mode
 (setq lua-indent-level 4)
@@ -234,10 +234,10 @@
 ;; tabbar-mode
 (tabbar-mode)
 (load "~/.emacs.d/init-tabbar-theme.el") ; theme
-(if (display-graphic-p)                      ; key-binding
-  (progn
-    (global-set-key [C-tab] 'tabbar-forward-tab)
-    (global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab))
+(if (display-graphic-p)                  ; key-binding
+    (progn
+      (global-set-key [C-tab] 'tabbar-forward-tab)
+      (global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab))
   (progn
     (global-set-key (kbd "C-c t n") 'tabbar-forward-tab)
     (global-set-key (kbd "C-c t p") 'tabbar-backward-tab)))
