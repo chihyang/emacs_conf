@@ -54,6 +54,7 @@
     markdown-preview-mode
     minimap
     pandoc-mode
+    paredit
     plantuml-mode
     powerline-evil
     protobuf-mode
@@ -199,10 +200,6 @@
 (add-to-list 'auto-mode-alist '("\\README*" . markdown-mode))
 
 ;; paredit
-(add-to-list 'load-path "~/.emacs.d/elpa/paredit")
-(require 'paredit)
-(autoload 'enable-paredit-mode "paredit"
-  "Turn on pseudo-structural editing of Lisp code." t)
 (dolist (hook '(emacs-lisp-mode-hook
                 eval-expression-minibuffer-setup-hook
                 ielm-mode-hook
