@@ -54,6 +54,7 @@
     icicles
     irony
     indent-guide
+    java-snippets
     logview
     lua-mode
     magit
