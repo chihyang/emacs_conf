@@ -4,8 +4,10 @@
 ;;; Code:
 
 (load "~/.emacs.d/init-package-elpa.el")
-(load "~/.emacs.d/init-night-mode.el")
 (load "~/.emacs.d/auto-complete-clang-extension.el")
+(if (file-exists-p "~/.emacs.d/init-package-manual.el")
+    (load "~/.emacs.d/init-package-manual.el")) ; load manually managed packages existed
+(load "~/.emacs.d/init-night-mode.el")
 
 (server-start)
 

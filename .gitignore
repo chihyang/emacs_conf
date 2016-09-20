@@ -18,3 +18,6 @@ recentf
 bookmarks
 srecode-map.el
 tramp
+# ignore platform dependent configuration files
+init-package-manual.el
+manual/*

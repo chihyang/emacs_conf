@@ -1,6 +1,13 @@
-;;; package --- Summary
+;;; init-package-elpa --- Configuration for packages managed by elpa.
+
 ;;; Commentary:
-;;; load packages and customized functions
+;;; Load packages configuration managed by elpa.
+;;; Generally speaking, everything in this configuration file is platform
+;;; independent, i.e., once you download it from server, it will download
+;;; necessary packages automatically.  You don't need to do anything but offer a
+;;; accessible network.  Then get a cup of coffee to wait until the download
+;;; completes.
+
 ;;; Code:
 
 ;; load newer bytecodes
