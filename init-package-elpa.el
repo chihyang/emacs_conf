@@ -76,6 +76,7 @@
     vimrc-mode
     websocket
     workgroups2
+    yasnippet
     ))
 
 (defun ensure-packages ()
@@ -259,6 +260,10 @@
       wg-mode-line-decor-right-brace "]"  ; how to surround it
       wg-mode-line-decor-divider ":")
 (workgroups-mode 1)
+
+;; yasnippet
+(yas-global-mode 1)
+(add-hook 'prog-mode-hook #'yas-minor-mode)
 
 (provide 'init-package-elpa)
 ;;; init-package-elpa.el ends here
