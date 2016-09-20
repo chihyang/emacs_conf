@@ -29,7 +29,7 @@
 (show-paren-mode 1)                       ; highlight paired brackets
 (setq default-tab-width 4)                ; set tab as 4 spaces
 (setq-default c-basic-offset 4)           ; set indentation for cc mode
-(setq c-default-style "linux"
+(setq c-default-style "bsd"
       c-basic-offset 4)                   ; set tab width as four spaces
 (setq-default indent-tabs-mode nil)
 (fset 'yes-or-no-p 'y-or-n-p)             ; substitue y/n for yes/no
@@ -61,13 +61,13 @@
 
 ;; compile command
 (defun compile-program ()
-  "Compile files with basic compile command. Runs:
+  "Compile files with basic compile command.  Run:
 
 C: `gcc' `buffer-file-name' -Wall -g -o `obj'
 C++: `g++' -std=c++11 `buffer-file-name' -Wall -g -o `obj'
 Java: `javac' -d `buffer-file-name' -d `obj'
 
-where `obj' is in the same directory of `buffer-file-name'. If
+where `obj' is in the same directory of `buffer-file-name'.  If
 `obj' does not exist, it will be created."
   (interactive)
   (if (not (file-exists-p (concat (file-name-directory buffer-file-name) "obj")))
@@ -95,7 +95,7 @@ where `obj' is in the same directory of `buffer-file-name'. If
 (defun execute-c-c++-program ()
   "Execute c/c++ program, just for practice purpose."
   (interactive)
-  (defvar execute-c-c++-program-run)      
+  (defvar execute-c-c++-program-run)
   (setq execute-c-c++-program-run
         (concat (file-name-directory buffer-file-name) "obj/"
                 (file-name-sans-extension

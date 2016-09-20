@@ -114,11 +114,12 @@
 (add-hook
  'c-mode-common-hook
  '(lambda ()
-    (require 'auto-complete-c-headers)
-    (require 'auto-complete-clang)
-    (setq ac-sources (append '(ac-source-c-headers ac-source-clang) ac-sources))
-    (setq ac-clang-flags
-          (mapcar (lambda (item) (concat "-I" item)) (get-include-dirs)))
+    (when (derived-mode-p 'c-mode 'c++-mode)
+      (require 'auto-complete-c-headers)
+      (require 'auto-complete-clang)
+      (setq ac-sources (append '(ac-source-c-headers ac-source-clang) ac-sources))
+      (setq ac-clang-flags
+            (mapcar (lambda (item) (concat "-I" item)) (get-include-dirs))))
     ))
 
 (provide 'auto-complete-clang-extension)
