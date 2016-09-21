@@ -116,12 +116,17 @@
 (defun execute-java-program ()
   "Execute Java class, just for practice purpose."
   (interactive)
+  (defvar execute-java-program-prefix
+    (concat (file-name-directory buffer-file-name) "obj/"))
   (defvar execute-java-program-run)
-  (setq execute-java-program-run
-        (concat "java -cp "
-                (file-name-directory buffer-file-name) "obj "
-                (file-name-sans-extension
-                 (file-name-nondirectory buffer-file-name))))
+  (if (file-exists-p (concat execute-java-program-prefix "Main.class"))
+      (setq execute-java-program-run
+            (concat "java -cp " execute-java-program-prefix " Main"))
+    (setq execute-java-program-run
+          (concat "java -cp "
+                  execute-java-program-prefix " "
+                  (file-name-sans-extension
+                   (file-name-nondirectory buffer-file-name)))))
   (shell-command execute-java-program-run))
 
 ;; key-binding
