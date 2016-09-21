@@ -61,9 +61,14 @@
   (add-hook hook 'turn-on-auto-fill))
 
 ;; compile command
+(defun check-or-create-obj-directory ()
+  "Check if the folder `obj' exists.  If not, create it."
+  (if (not (file-exists-p (concat (file-name-directory buffer-file-name) "obj")))
+      (make-directory (concat (file-name-directory buffer-file-name) "obj"))))
 (defun compile-single-c-program ()
   "Compile C file with `gcc'."
   (interactive)
+  (check-or-create-obj-directory)
   (set (make-local-variable 'compile-command)
          (concat "gcc " buffer-file-name " -Wall -g -o "
                  (file-name-directory buffer-file-name) "obj/"
@@ -74,6 +79,7 @@
 (defun compile-single-c++-program ()
   "Compile C++ file with `g++'."
   (interactive)
+  (check-or-create-obj-directory)
   (set (make-local-variable 'compile-command)
        (concat "g++ -std=c++11 " buffer-file-name " -Wall -g -o "
                (file-name-directory buffer-file-name) "obj/"
@@ -84,6 +90,7 @@
 (defun compile-single-java-program ()
   "Compile Java file with `javac'."
   (interactive)
+  (check-or-create-obj-directory)
   (set (make-local-variable 'compile-command)
        (concat "javac " buffer-file-name " -d "
                (file-name-directory buffer-file-name) "obj/"))
