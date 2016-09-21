@@ -116,9 +116,10 @@
 (defun execute-java-program ()
   "Execute Java class, just for practice purpose."
   (interactive)
-  (defvar execute-java-program-prefix
-    (concat (file-name-directory buffer-file-name) "obj/"))
-  (defvar execute-java-program-run)
+  (set (make-local-variable 'execute-java-program-prefix)
+       (concat (file-name-directory buffer-file-name) "obj/"))
+  (defvar execute-java-program-run nil
+    "Executable java class path.")
   (if (file-exists-p (concat execute-java-program-prefix "Main.class"))
       (setq execute-java-program-run
             (concat "java -cp " execute-java-program-prefix " Main"))

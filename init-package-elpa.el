@@ -272,6 +272,8 @@
 (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
 ;; Alternatively use Control-c + tab
 (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
+;; push yasnippet into auto complete sources
+(setq ac-sources (append '(ac-source-yasnippet) ac-sources))
 
 (provide 'init-package-elpa)
 ;;; init-package-elpa.el ends here
