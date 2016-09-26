@@ -72,6 +72,7 @@
     smart-mode-line
     smart-mode-line-powerline-theme
     sr-speedbar
+    swiper
     switch-window
     tabbar
     vimrc-mode
@@ -157,6 +158,9 @@
 
 ;; flyspell-popup
 (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
+
+;; icicle-mode
+(icy-mode 1)
 
 ;; irony-mode
 (add-hook 'c++-mode-hook 'irony-mode)
