@@ -28,12 +28,13 @@
     anzu
     auctex
     auto-complete
-	auto-complete-clang
-	auto-complete-c-headers
+    auto-complete-clang
+    auto-complete-c-headers
     auto-highlight-symbol
     autopair
     blank-mode
     bm
+    bookmark+
     cal-china-x
     chinese-fonts-setup
     cmake-mode
@@ -120,6 +121,10 @@
 (global-set-key (kbd "<C-f2>") 'bm-toggle)
 (global-set-key (kbd "<f2>")   'bm-next)
 (global-set-key (kbd "<S-f2>") 'bm-previous)
+
+;; bookmark+
+; rebind bmkp prefix key to "C x /"
+(setq bmkp-bookmark-map-prefix-keys (quote ("/")))
 
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
