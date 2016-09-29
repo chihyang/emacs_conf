@@ -33,7 +33,6 @@
     auto-highlight-symbol
     autopair
     blank-mode
-    bm
     bookmark+
     cal-china-x
     chinese-fonts-setup
@@ -117,14 +116,10 @@
 ;; blank-mode
 (global-set-key (kbd "C-c C-b") 'whitespace-mode) ; show whitespace
 
-;; bm
-(global-set-key (kbd "<C-f2>") 'bm-toggle)
-(global-set-key (kbd "<f2>")   'bm-next)
-(global-set-key (kbd "<S-f2>") 'bm-previous)
-
 ;; bookmark+
 ; rebind bmkp prefix key to "C x /"
 (setq bmkp-bookmark-map-prefix-keys (quote ("/")))
+(setq bmkp-last-as-first-bookmark-file nil)
 
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
