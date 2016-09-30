@@ -20,6 +20,8 @@
 (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
 ;; org repository for completeness
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+;; marmalade packages
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (package-initialize)
 
@@ -47,6 +49,7 @@
     csharp-mode
     cursor-chg
     dired-single
+    everything
     fish-mode
     flycheck
     flyspell-popup
@@ -145,6 +148,10 @@
               (lambda ()
                 (interactive)
                 (dired-single-buffer "..")))))
+
+;; everything
+(if (eq system-type 'windows-nt)
+    (setq everything-cmd "D:/Program Files/Everything/es.exe"))
 
 ;; flycheck-mode
 (global-flycheck-mode)
