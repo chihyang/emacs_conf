@@ -48,6 +48,7 @@
     cpputils-cmake
     csharp-mode
     cursor-chg
+    dired+
     dired-single
     everything
     fish-mode
@@ -123,6 +124,12 @@
 ; rebind bmkp prefix key to "C x /"
 (setq bmkp-bookmark-map-prefix-keys (quote ("/")))
 (setq bmkp-last-as-first-bookmark-file nil)
+; change annoying bookmark name face color in terminal mode
+(require 'bookmark+-bmu)
+(when (not (display-graphic-p))
+  (set-face-attribute
+   'bmkp-local-file-without-region nil
+   :foreground "green"))
 
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
