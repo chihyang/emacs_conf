@@ -55,6 +55,7 @@
     flycheck
     flyspell-popup
     haskell-mode
+    hide-lines
     icicles
     irony
     indent-guide
@@ -130,6 +131,8 @@
   (set-face-attribute
    'bmkp-local-file-without-region nil
    :foreground "green"))
+; automatically save change
+(setq bookmark-save-flag 1)
 
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
