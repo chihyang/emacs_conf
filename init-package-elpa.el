@@ -50,6 +50,7 @@
     cursor-chg
     dired+
     dired-single
+    dired-sort-menu+
     everything
     fish-mode
     flycheck
