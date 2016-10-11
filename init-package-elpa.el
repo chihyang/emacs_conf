@@ -67,6 +67,7 @@
     markdown-mode
     markdown-preview-mode
     minimap
+    origami
     pandoc-mode
     paredit
     plantuml-mode
@@ -230,6 +231,12 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\README*" . markdown-mode))
 
+;; origami
+(dolist (hook '(
+                prog-mode-hook
+                ))
+  (add-hook hook 'origami-mode))
+
 ;; paredit
 (dolist (hook '(emacs-lisp-mode-hook
                 eval-expression-minibuffer-setup-hook
@@ -238,6 +245,8 @@
                 lisp-interaction-mode-hook
                 scheme-mode-hook))
   (add-hook hook 'enable-paredit-mode))
+(global-set-key (kbd "C-c C-f") 'origami-toggle-node)
+(global-set-key (kbd "C-c M-f") 'origami-toggle-all-nodes)
 
 ;; plantuml-mode
 (add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
