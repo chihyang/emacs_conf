@@ -40,7 +40,7 @@
       `(("." . "~/.saves")))              ; change backup directory
 (setq visible-bell 1)                     ; turn of audible belling
 (global-linum-mode 1)                     ; enable linum-mode
-(setq hs-allow-nesting t)                 ; hide-show
+
 (setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
 (delete-selection-mode 1)                 ; delete selection mode
 (setq column-number-mode t)               ; enable column-number-mode
@@ -48,6 +48,13 @@
 
 (add-hook 'foo-mode-hook
           (lambda () (interactive) (column-marker-1 80))) ; Highlight column 80 in foo mode
+
+;; hide-show
+(setq hs-allow-nesting t)
+(dolist (hook '(
+                prog-mode-hook
+                ))
+  (add-hook hook 'hs-minor-mode))
 
 ;; change hot-key
 (global-set-key (kbd "M-9") 'kill-whole-line)  ; delete a whole line with M-9

@@ -236,6 +236,8 @@
                 prog-mode-hook
                 ))
   (add-hook hook 'origami-mode))
+(global-set-key (kbd "C-c C-f") 'origami-toggle-node)
+(global-set-key (kbd "C-c M-f") 'origami-toggle-all-nodes)
 
 ;; paredit
 (dolist (hook '(emacs-lisp-mode-hook
@@ -245,8 +247,6 @@
                 lisp-interaction-mode-hook
                 scheme-mode-hook))
   (add-hook hook 'enable-paredit-mode))
-(global-set-key (kbd "C-c C-f") 'origami-toggle-node)
-(global-set-key (kbd "C-c M-f") 'origami-toggle-all-nodes)
 
 ;; plantuml-mode
 (add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
