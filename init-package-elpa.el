@@ -27,6 +27,7 @@
 
 (defconst required-packages
   '(
+    adaptive-wrap
     anzu
     auctex
     auto-complete
@@ -100,6 +101,9 @@
 (ensure-packages)
 
 ;;; configuration of packages, ordered alphabetically
+
+;; adaptive-wrap
+(add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)
 
 ;; anzu
 (global-anzu-mode +1)
