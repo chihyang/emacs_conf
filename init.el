@@ -3,69 +3,44 @@
 ;;; load packages and customized functions
 ;;; Code:
 
+
 (load "~/.emacs.d/init-package-elpa.el")
+(load "~/.emacs.d/init-package-builtin.el")
 (load "~/.emacs.d/auto-complete-clang-extension.el")
-(if (file-exists-p "~/.emacs.d/init-package-manual.el")
-    (load "~/.emacs.d/init-package-manual.el")) ; load manually managed packages existed
 (load "~/.emacs.d/init-night-mode.el")
+(if (file-exists-p "~/.emacs.d/init-package-manual.el")
+    (load "~/.emacs.d/init-package-manual.el"))
 
 (server-start)
 
 ;;; encoding system
-(prefer-coding-system 'utf-8)             ; set default encoding as utf-8
+(prefer-coding-system 'utf-8)           ; set default encoding as utf-8
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (if (eq system-type 'windows-nt)
     (setq file-name-coding-system 'gbk))
-(setq-default cursor-type 'bar)
-;; backwards compatibility as default-buffer-file-coding-system
-;; is deprecated in 23.2.
-(if (boundp 'buffer-file-coding-system)
-    (setq-default buffer-file-coding-system 'utf-8)
-  (setq default-buffer-file-coding-system 'utf-8))
+(if (boundp 'buffer-file-coding-system)             ; backward compatibility as
+    (setq-default buffer-file-coding-system 'utf-8) ; default-buffer-file-coding-system
+  (setq default-buffer-file-coding-system 'utf-8))  ; is deprecated in 23.2.
 ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
-;;; set parameters of built-in functions
-(show-paren-mode 1)                       ; highlight paired brackets
-(setq default-tab-width 4)                ; set tab as 4 spaces
-(setq-default c-basic-offset 4)           ; set indentation for cc mode
-(setq c-default-style "bsd"
-      c-basic-offset 4)                   ; set tab width as four spaces
+(setq delete-by-moving-to-trash t)      ; delete files by moving to system trash
 (setq-default indent-tabs-mode nil)
-(fset 'yes-or-no-p 'y-or-n-p)             ; substitue y/n for yes/no
+(setq-default cursor-type 'bar)
 (setq backup-by-copying nil)              ; do not copy
-(setq backup-directory-alist
-      `(("." . "~/.saves")))              ; change backup directory
+(setq backup-directory-alist `(("." . "~/.saves"))) ; change backup directory
 (setq visible-bell 1)                     ; turn of audible belling
-(global-linum-mode 1)                     ; enable linum-mode
+(fset 'yes-or-no-p 'y-or-n-p)             ; substitue y/n for yes/no
 
 (setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
-(delete-selection-mode 1)                 ; delete selection mode
-(setq column-number-mode t)               ; enable column-number-mode
-(setq compilation-scroll-output t)        ; auto-scroll the compilation buffer
 
-(add-hook 'foo-mode-hook
-          (lambda () (interactive) (column-marker-1 80))) ; Highlight column 80 in foo mode
-
-;; hide-show
-(setq hs-allow-nesting t)
-(dolist (hook '(
-                prog-mode-hook
-                ))
-  (add-hook hook 'hs-minor-mode))
-
-;; change hot-key
 (global-set-key (kbd "M-9") 'kill-whole-line)  ; delete a whole line with M-9
 
-;; auto-fill
-(global-set-key (kbd "C-c q") 'auto-fill-mode) ; auto-fill mode by C-c q
-(setq-default fill-column 80)                  ;set auto-fill at 80
-(setq comment-auto-fill-only-comments t)
-(dolist (hook '(text-mode-hook
-                prog-mode-hook))
-  (add-hook hook 'turn-on-auto-fill))
+;; bind `C-x n' to next-multiframe-window
+(global-set-key (kbd "C-x n") 'next-multiframe-window)
+(global-set-key (kbd "C-x p") 'previous-multiframe-window)
 
 ;; compile command
 (defun check-or-create-obj-directory ()
@@ -164,8 +139,6 @@
 (add-hook 'java-mode-hook
           (lambda ()
             (bind-java-exercise-key)))
-;; CC-mode
-(setq gdb-show 1)
 
 ;; comment line or region with the shortcut `C-q'
 (defun comment-or-uncomment-line-or-region ()
@@ -175,6 +148,7 @@
       (comment-or-uncomment-region (region-beginning) (region-end))
     (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
 (defun comment-shortcut-for-coding-mode-hook ()
+  "Comment/uncomment a line or a region hook."
   (local-set-key (kbd "C-q") 'comment-or-uncomment-line-or-region))
 (dolist (hook '(prog-mode-hook
                 latex-mode-hook
@@ -186,12 +160,9 @@
 ;;; cedet implementation
 ;; cedet
 (require 'cedet)
-(defun my-c-mode-cedet-hook ()
-  "Set auto complete for c/c++ mode."
-  (local-set-key (kbd "RET") 'newline-and-indent)
-  ;; (setq ac-sources (append '(ac-source-semantic) ac-sources))
-  )
-(add-hook 'c-mode-common-hook 'my-c-mode-cedet-hook)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (local-set-key (kbd "RET") 'newline-and-indent)))
 (semantic-mode 1)
 ;; semantic/ia
 (require 'semantic/ia)
@@ -218,16 +189,6 @@
 ;; ede
 (global-ede-mode 1)                      ; Enable the Project management system
 (ede-enable-generic-projects)
-
-;; recentf-mode
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
-(global-set-key (kbd "C-x C-r") 'recentf-open-files)
-
-;; hl-line-mode
-(global-hl-line-mode)
-(if  (not (window-system))
-    (set-face-background 'hl-line "brightblack"))
 
 ;; copy a word and a line with shortcut
 (defun get-point (symbol &optional arg)
@@ -278,26 +239,6 @@
 (global-set-key (kbd "C-c w") (quote copy-word))
 (global-set-key (kbd "C-c l") (quote copy-line))
 
-;; display-time
-(setq display-time-24hr-format t)
-(setq display-time-day-and-date t)
-(display-time-mode t)
-
-;; configuration mode
-(add-to-list 'auto-mode-alist '("\\.rc\\'" . conf-mode))
-
-;; bind `C-x n' to next-multiframe-window
-(global-set-key (kbd "C-x n") 'next-multiframe-window)
-(global-set-key (kbd "C-x p") 'previous-multiframe-window)
-
-;; tramp-mode
-(require 'tramp)
-(if (eq system-type 'windows-nt)
-    (setq tramp-default-method "plink"))
-
-;; delete files by moving to system trash
-(setq delete-by-moving-to-trash t)
-
 ;; hide mixed line ending
 (defun hide-mixed-eol ()
   "Do not show ^M in files containing mixed UNIX and DOS line endings."
@@ -309,13 +250,6 @@
   "Show ^M in files containing mixed UNIX and DOS line endings."
   (interactive)
   (setq buffer-display-table nil))
-
-;; read-only-mode hot key
-(global-set-key (kbd "C-c C-r") 'read-only-mode)
-
-;; org-mode
-(setq org-startup-indented t)           ; enable auto-indent
-(setq org-src-fontify-natively t)       ; enable source code highlight
 
 ;; custom parameter
 (custom-set-variables
