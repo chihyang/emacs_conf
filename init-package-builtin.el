@@ -1,4 +1,4 @@
-;;; init-package-builtin --- Configuration for built Emacs packages
+;;; init-package-builtin --- Configuration for built-in Emacs packages
 
 ;;; Commentary:
 
@@ -16,9 +16,6 @@
 
 ;; column-number-mode
 (setq column-number-mode t)             ; enable column-number-mode
-(add-hook 'prog-mode-hook
-          (lambda () (interactive) (column-marker-1 80))) ; Highlight column 80
-                                        ; in foo mode
 
 ;; cc-mode
 (require 'cc-mode)

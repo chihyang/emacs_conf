@@ -53,6 +53,7 @@
     dired-single
     dired-sort-menu+
     everything
+    fill-column-indicator
     fish-mode
     flycheck
     flyspell-popup
@@ -149,6 +150,9 @@
 (if (window-system)
     (load-theme 'solarized t))
 
+;; column-marker
+(column-marker-1 80)                    ; column marker width
+
 ;; cpputils-cmake
 (add-hook 'c-mode-common-hook
           (lambda ()
@@ -168,6 +172,10 @@
 ;; everything
 (if (eq system-type 'windows-nt)
     (setq everything-cmd "D:/Program Files/Everything/es.exe"))
+
+;; fill-column-indicator
+(setq fci-rule-width 1)
+(setq fci-rule-color "darkblue")
 
 ;; flycheck-mode
 (global-flycheck-mode)

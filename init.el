@@ -55,8 +55,10 @@
          (concat "gcc " buffer-file-name " -Wall -g -o "
                  (file-name-directory buffer-file-name) "obj/"
                  (file-name-sans-extension (file-name-nondirectory
-                                            buffer-file-name))
-                 ".exe"))
+                                            buffer-file-name))))
+  (if (eq system-type 'windows-nt)
+      (setq compile-command
+            (concat compile-command ".exe")))
   (compile compile-command))
 (defun compile-single-c++-program ()
   "Compile C++ file with `g++'."
@@ -66,8 +68,10 @@
        (concat "g++ -std=c++11 " buffer-file-name " -Wall -g -o "
                (file-name-directory buffer-file-name) "obj/"
                (file-name-sans-extension (file-name-nondirectory
-                                          buffer-file-name))
-               ".exe"))
+                                          buffer-file-name))))
+  (if (eq system-type 'windows-nt)
+      (setq compile-command
+            (concat compile-command ".exe")))
   (compile compile-command))
 (defun compile-single-java-program ()
   "Compile Java file with `javac'."
