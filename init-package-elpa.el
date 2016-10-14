@@ -144,6 +144,7 @@
 
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
+(chinese-fonts-setup-enable)
 
 ;; color-theme-solarized
 (set-terminal-parameter nil 'background-mode 'dark)
