@@ -24,6 +24,10 @@
 (setq c-default-style "bsd")
 (setq c-basic-offset 4)
 (setq gdb-show 1)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (if (derived-mode-p 'c-mode 'c++-mode)
+                (c-toggle-auto-newline))))
 
 ;; compile
 (require 'compile)
@@ -77,6 +81,10 @@
 (require 'tramp)
 (if (eq system-type 'windows-nt)
     (setq tramp-default-method "plink"))
+
+;; winner-mode
+(when (fboundp 'winner-mode)
+  (winner-mode 1))
 
 (provide 'init-package-builtin)
 ;;; init-package-builtin.el ends here

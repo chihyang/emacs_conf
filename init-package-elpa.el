@@ -60,6 +60,7 @@
     haskell-mode
     hide-lines
     icicles
+    iedit
     irony
     indent-guide
     java-snippets
