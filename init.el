@@ -4,10 +4,8 @@
 ;;; Code:
 
 
-(load "~/.emacs.d/init-package-elpa.el")
 (load "~/.emacs.d/init-package-builtin.el")
-(load "~/.emacs.d/auto-complete-clang-extension.el")
-(load "~/.emacs.d/init-night-mode.el")
+(load "~/.emacs.d/init-package-elpa.el")
 (if (file-exists-p "~/.emacs.d/init-package-manual.el")
     (load "~/.emacs.d/init-package-manual.el"))
 
@@ -52,10 +50,10 @@
   (interactive)
   (check-or-create-obj-directory)
   (set (make-local-variable 'compile-command)
-         (concat "gcc " buffer-file-name " -Wall -g -o "
-                 (file-name-directory buffer-file-name) "obj/"
-                 (file-name-sans-extension (file-name-nondirectory
-                                            buffer-file-name))))
+       (concat "gcc " buffer-file-name " -Wall -g -o "
+               (file-name-directory buffer-file-name) "obj/"
+               (file-name-sans-extension (file-name-nondirectory
+                                          buffer-file-name))))
   (if (eq system-type 'windows-nt)
       (setq compile-command
             (concat compile-command ".exe")))
@@ -164,9 +162,9 @@
 ;;; cedet implementation
 ;; cedet
 (require 'cedet)
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (local-set-key (kbd "RET") 'newline-and-indent)))
+(require 'semantic)
+(add-to-list 'semantic-inhibit-functions
+             (lambda () (not (member major-mode '(c-mode c++-mode)))))
 (semantic-mode 1)
 ;; semantic/ia
 (require 'semantic/ia)
@@ -181,6 +179,8 @@
 ;; C/C++ headers
 (require 'semantic/bovine/gcc)
 (require 'semantic/bovine/c)
+(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+(require 'auto-complete-clang-extension)
 (setq semantic-c-dependency-system-include-path
       ac-clang-extension-all-include-dirs)
 (mapc (lambda (dir)
@@ -194,66 +194,9 @@
 (global-ede-mode 1)                      ; Enable the Project management system
 (ede-enable-generic-projects)
 
-;; copy a word and a line with shortcut
-(defun get-point (symbol &optional arg)
-  "Get the point."
-  (funcall symbol arg)
-  (point)
-  )
-
-(defun copy-thing (begin-of-thing end-of-thing &optional arg)
-  "Copy thing between beg & end into kill ring."
-  (save-excursion
-    (let ((beg (get-point begin-of-thing 1))
-          (end (get-point end-of-thing arg)))
-      (copy-region-as-kill beg end)))
-  )
-
-(defun paste-to-mark(&optional arg)
-  "Paste things to mark, or to the prompt in shell-mode."
-  (let ((pasteMe
-         (lambda()
-           (if (string= "shell-mode" major-mode)
-               (progn (comint-next-prompt 25535) (yank))
-             (progn (goto-char (mark)) (yank) )))))
-    (if arg
-        (if (= arg 1)
-            nil
-          (funcall pasteMe))
-      (funcall pasteMe))
-    ))
-
-;; copy a word
-(defun copy-word (&optional arg)
-  "Copy words at point into kill-ring."
-  (interactive "P")
-  (copy-thing 'backward-word 'forward-word arg)
-  ;;(paste-to-mark arg)
-  )
-
-;; copy a line
-(defun copy-line (&optional arg)
-  "Save current line into Kill-Ring without mark the line "
-  (interactive "P")
-  (copy-thing 'beginning-of-line 'end-of-line arg)
-  ;; (paste-to-mark arg)
-  )
-
-;; Key binding
-(global-set-key (kbd "C-c w") (quote copy-word))
-(global-set-key (kbd "C-c l") (quote copy-line))
-
-;; hide mixed line ending
-(defun hide-mixed-eol ()
-  "Do not show ^M in files containing mixed UNIX and DOS line endings."
-  (interactive)
-  (setq buffer-display-table (make-display-table))
-  (aset buffer-display-table ?\^M []))
-;; show mixed line ending
-(defun show-mixed-eol ()
-  "Show ^M in files containing mixed UNIX and DOS line endings."
-  (interactive)
-  (setq buffer-display-table nil))
+(load "~/.emacs.d/easy-copy.el")
+(load "~/.emacs.d/hide-show-mixed-eol.el")
+(load "~/.emacs.d/night-mode.el")
 
 ;; custom parameter
 (custom-set-variables

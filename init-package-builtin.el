@@ -14,20 +14,20 @@
                 prog-mode-hook))
   (add-hook hook 'turn-on-auto-fill))
 
-;; column-number-mode
-(setq column-number-mode t)             ; enable column-number-mode
-
 ;; cc-mode
 (require 'cc-mode)
 (setq-default c-basic-offset 4)         ; set indentation for cc mode
 (setq-default tab-width 4)              ; set tab as 4 spaces
 (setq c-default-style "bsd")
 (setq c-basic-offset 4)
-(setq gdb-show 1)
 (add-hook 'c-mode-common-hook
           (lambda ()
             (if (derived-mode-p 'c-mode 'c++-mode)
-                (c-toggle-auto-newline))))
+                (c-toggle-auto-newline))
+            (local-set-key (kbd "RET") 'newline-and-indent)))
+
+;; column-number-mode
+(setq column-number-mode t)             ; enable column-number-mode
 
 ;; compile
 (require 'compile)
