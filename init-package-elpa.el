@@ -35,6 +35,7 @@
     auto-complete-c-headers
     auto-highlight-symbol
     autopair
+    avy
     blank-mode
     bookmark+
     cal-china-x
@@ -125,6 +126,9 @@
 
 ;; autopair
 (autopair-global-mode 1)                        ; enable autopair in all buffers
+;; avy
+(global-set-key (kbd "M-g f") 'avy-goto-line)
+(avy-setup-default)
 
 ;; blank-mode
 (global-set-key (kbd "C-c C-b") 'whitespace-mode) ; show whitespace

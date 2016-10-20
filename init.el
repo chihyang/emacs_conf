@@ -179,8 +179,7 @@
 ;; C/C++ headers
 (require 'semantic/bovine/gcc)
 (require 'semantic/bovine/c)
-(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
-(require 'auto-complete-clang-extension)
+(load (expand-file-name "~/.emacs.d/auto-complete-clang-extension"))
 (setq semantic-c-dependency-system-include-path
       ac-clang-extension-all-include-dirs)
 (mapc (lambda (dir)
