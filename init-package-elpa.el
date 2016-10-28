@@ -82,6 +82,7 @@
     session
     smart-mode-line
     smart-mode-line-powerline-theme
+    sos
     sr-speedbar
     swiper
     switch-window
