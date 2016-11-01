@@ -91,6 +91,7 @@
     websocket
     workgroups2
     yasnippet
+    ztree
     ))
 
 (defun ensure-packages ()
