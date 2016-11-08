@@ -39,6 +39,9 @@
 ;; delete-selection-mode
 (delete-selection-mode 1)
 
+;; ediff
+(setq ediff-diff-options "-w")
+
 ;; hide-show-mode
 (require 'hideshow)
 (setq hs-allow-nesting t)

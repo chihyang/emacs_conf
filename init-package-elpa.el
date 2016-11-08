@@ -71,6 +71,7 @@
     markdown-mode
     markdown-preview-mode
     minimap
+    multiple-cursors
     origami
     pandoc-mode
     paredit
@@ -250,6 +251,9 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\README*" . markdown-mode))
+
+;; multiple-cursors
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 
 ;; origami
 (dolist (hook '(
