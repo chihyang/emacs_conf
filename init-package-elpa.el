@@ -200,8 +200,9 @@
   "Shorten mode line major/minor modes names."
   (dim-major-names
    '(
-     (emacs-lisp-mode "Eλ")
-     (scheme-mode     "λ")
+     (emacs-lisp-mode     "Eλ")
+     (makefile-gmake-mode "GM")
+     (scheme-mode         "λ")
      ))
   (dim-minor-names
    '(
