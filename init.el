@@ -3,11 +3,9 @@
 ;;; load packages and customized functions
 ;;; Code:
 
-
-(load "~/.emacs.d/init-package-builtin.el")
-(load "~/.emacs.d/init-package-elpa.el")
-(if (file-exists-p "~/.emacs.d/init-package-manual.el")
-    (load "~/.emacs.d/init-package-manual.el"))
+;; load newer bytecodes
+(setq load-prefer-newer t)
+(require 'package)
 
 (server-start)
 
@@ -166,6 +164,7 @@
 (add-to-list 'semantic-inhibit-functions
              (lambda () (not (member major-mode '(c-mode c++-mode)))))
 (semantic-mode 1)
+
 ;; semantic/ia
 (require 'semantic/ia)
 (setq-mode-local c-mode semanticdb-find-default-throttle
@@ -176,23 +175,18 @@
 (global-semantic-idle-scheduler-mode 1)
 (global-semantic-idle-summary-mode 1)
 (global-set-key [f12] 'semantic-ia-fast-jump)
-;; C/C++ headers
-(require 'semantic/bovine/gcc)
-(require 'semantic/bovine/c)
-(load (expand-file-name "~/.emacs.d/auto-complete-clang-extension"))
-(setq semantic-c-dependency-system-include-path
-      ac-clang-extension-all-include-dirs)
-(mapc (lambda (dir)
-        (semantic-add-system-include dir 'c++-mode)
-        (semantic-add-system-include dir 'c-mode))
-      ac-clang-extension-all-include-dirs)
+
+;; semantic/db-global
 (require 'semantic/db-global)
 (semanticdb-enable-gnu-global-databases 'c-mode)
 (semanticdb-enable-gnu-global-databases 'c++-mode)
+
 ;; ede
 (global-ede-mode 1)                      ; Enable the Project management system
 (ede-enable-generic-projects)
 
+(load "~/.emacs.d/init-package-builtin.el")
+(load "~/.emacs.d/init-package-elpa.el")
 (load "~/.emacs.d/easy-copy.el")
 (load "~/.emacs.d/hide-show-mixed-eol.el")
 (load "~/.emacs.d/night-mode.el")

@@ -10,10 +10,6 @@
 
 ;;; Code:
 
-;; load newer bytecodes
-(setq load-prefer-newer t)
-(require 'package)
-
 ;;; Standard package repositories
 ;; melpa for most packages
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
@@ -50,6 +46,7 @@
     cpputils-cmake
     csharp-mode
     cursor-chg
+    dim
     dired+
     dired-single
     dired-sort-menu+
@@ -123,6 +120,17 @@
 (global-auto-complete-mode t)                   ; enable auto-complete-mode  globally
 (add-hook 'prog-mode-hook 'auto-complete-mode)
 (add-hook 'text-mode-hook 'auto-complete-mode)
+(require 'semantic/bovine/gcc)
+(require 'semantic/bovine/c)
+(load (expand-file-name "~/.emacs.d/auto-complete-clang-extension"))
+(setq semantic-c-dependency-system-include-path
+      ac-clang-extension-all-include-dirs)
+(mapc (lambda (dir)
+        (semantic-add-system-include dir 'c++-mode)
+        (semantic-add-system-include dir 'c-mode))
+      ac-clang-extension-all-include-dirs)
+(if (file-exists-p "~/.emacs.d/init-package-manual.el")
+    (load "~/.emacs.d/init-package-manual.el"))
 
 ;; auto-highlight-symbol-mode
 (global-auto-highlight-symbol-mode)
@@ -167,6 +175,38 @@
           (lambda ()
             (if (derived-mode-p 'c-mode 'c++-mode)
                 (cppcm-reload-all))))
+
+;; dim
+(defun simplify-mode-alias ()
+  "Shorten mode line major/minor modes names."
+  (dim-major-names
+   '(
+     (emacs-lisp-mode "Eλ")
+     (scheme-mode     "λ")
+     ))
+  (dim-minor-names
+   '(
+     (auto-complete-mode         "")
+     (auto-fill-function         " ↵")
+     (auto-highlight-symbol-mode "")
+     (auto-revert-mode           " ^")
+     (autopair-mode              "")
+     (anzu-mode                  "")
+     (hs-minor-mode              "")
+     )))
+(eval-after-load "~/.emacs.d/init.el" (simplify-mode-alias))
+(add-hook 'workgroups-mode-hook
+          (lambda ()
+            (dim-minor-name 'workgroups-mode "")))
+(add-hook 'yas-minor-mode-hook
+          (lambda ()
+            (dim-minor-name 'yas-minor-mode  " ->")))
+(add-hook 'paredit-mode-hook
+          (lambda ()
+            (dim-minor-name 'paredit-mode    " ()")))
+(add-hook 'flyspell-mode-hook
+          (lambda ()
+            (dim-minor-name 'flyspell-mode   " √")))
 
 ;; dired-single
 (add-hook 'dired-mode-hook
