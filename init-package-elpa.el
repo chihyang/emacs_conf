@@ -23,6 +23,7 @@
 
 (defconst required-packages
   '(
+    ac-ispell
     adaptive-wrap
     anzu
     auctex
@@ -105,6 +106,22 @@
 
 ;;; configuration of packages, ordered alphabetically
 
+;; ac-ispell
+;; Completion words longer than 4 characters
+(custom-set-variables
+ '(ac-ispell-requires 4)
+ '(ac-ispell-fuzzy-limit 2))
+
+(eval-after-load "auto-complete"
+  '(progn
+     (ac-ispell-setup)))
+
+(add-hook 'git-commit-mode-hook 'ac-ispell-ac-setup)
+(add-hook 'mail-mode-hook 'ac-ispell-ac-setup)
+(add-hook 'prog-mode-hook 'ac-ispell-ac-setup)
+(add-hook 'text-mode-hook 'ac-ispell-ac-setup)
+(add-hook 'org-mode-hook 'ac-ispell-ac-setup)
+
 ;; adaptive-wrap
 (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)
 
@@ -117,9 +134,10 @@
 (ac-config-default)                             ; auto-complete
 (ac-flyspell-workaround)                        ; fix collisions with flyspell
 (ac-linum-workaround)                           ; fix collisions with linum
-(global-auto-complete-mode t)                   ; enable auto-complete-mode  globally
+(global-auto-complete-mode t)                   ; enable auto-complete-mode globally
 (add-hook 'prog-mode-hook 'auto-complete-mode)
 (add-hook 'text-mode-hook 'auto-complete-mode)
+(add-hook 'org-mode-hook 'auto-complete-mode)
 (require 'semantic/bovine/gcc)
 (require 'semantic/bovine/c)
 (load (expand-file-name "~/.emacs.d/auto-complete-clang-extension"))
@@ -137,6 +155,7 @@
 
 ;; autopair
 (autopair-global-mode 1)                        ; enable autopair in all buffers
+
 ;; avy
 (global-set-key (kbd "M-g f") 'avy-goto-line)
 (avy-setup-default)

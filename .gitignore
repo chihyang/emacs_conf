@@ -21,3 +21,4 @@ tramp
 # ignore platform dependent configuration files
 init-package-manual.el
 manual/*
+.mc-lists.el
