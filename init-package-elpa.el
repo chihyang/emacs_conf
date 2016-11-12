@@ -250,6 +250,11 @@
 (global-flycheck-mode)
 
 ;; flyspell-mode
+(require 'ispell)
+(setq ispell-local-dictionary-alist
+      '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))
+(if (eq system-type 'windows-nt)
+    (setq ispell-alternate-dictionary "~/.emacs.d/windows/dict.txt"))
 (ispell-change-dictionary "american" t)
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
