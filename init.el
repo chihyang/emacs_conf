@@ -19,6 +19,7 @@
 (if (boundp 'buffer-file-coding-system)             ; backward compatibility as
     (setq-default buffer-file-coding-system 'utf-8) ; default-buffer-file-coding-system
   (setq default-buffer-file-coding-system 'utf-8))  ; is deprecated in 23.2.
+(setq default-process-coding-system '((utf-8-unix . utf-8-unix)))
 ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
