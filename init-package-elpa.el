@@ -213,6 +213,7 @@
      (autopair-mode              "")
      (anzu-mode                  "")
      (hs-minor-mode              "")
+     (abbrev-mode                "")
      )))
 (eval-after-load "~/.emacs.d/init.el" (simplify-mode-alias))
 (add-hook 'workgroups-mode-hook

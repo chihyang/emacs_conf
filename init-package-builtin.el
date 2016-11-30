@@ -112,5 +112,8 @@
 (when (fboundp 'winner-mode)
   (winner-mode 1))
 
+;; which-function-mode
+(which-function-mode 1)
+
 (provide 'init-package-builtin)
 ;;; init-package-builtin.el ends here
