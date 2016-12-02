@@ -60,12 +60,12 @@
             (set (make-local-variable 'sgml-basic-offset) 4)))
 (add-hook 'sgml-mode-hook
           (lambda ()
-            ;; Default indentation to 2, but let SGML mode guess, too.
+            ;; Default indentation to 4, but let SGML mode guess, too.
             (set (make-local-variable 'sgml-basic-offset) 4)
             (sgml-guess-indent)))
 
 ;; linum-mode
-(global-linum-mode 1)
+(require 'linum)
 (defun linum-update-window-scale-fix (win)
   "fix linum for scaled text"
   (set-window-margins
@@ -78,6 +78,13 @@
                    (car (window-margins)) 1)
                ))))
 (advice-add #'linum-update-window :after #'linum-update-window-scale-fix)
+(defun linum-format-func (line)
+  "Add padding for line number in terminal mode"
+  (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+    (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+(when (not (display-graphic-p))
+  (setq linum-format 'linum-format-func))
+(global-linum-mode 1)
 
 ;; org-mode
 (require 'org)
