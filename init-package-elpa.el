@@ -362,11 +362,6 @@
 ;; smart-mode-line
 (setq sml/no-confirm-load-theme t)
 
-;; session restore
-(setq desktop-files-not-to-save "^$")     ; reload tramp path
-(desktop-save-mode 1)                     ; save session
-;; (add-hook 'after-init-hook 'session-initialize) ; restore session
-
 ;; sr-speedbar
 (custom-set-variables
  '(sr-speedbar-default-width 100)

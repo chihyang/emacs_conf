@@ -39,6 +39,15 @@
 ;; delete-selection-mode
 (delete-selection-mode 1)
 
+;; desktop
+(setq desktop-files-not-to-save "^$")     ; reload tramp path
+(desktop-save-mode 1)                     ; save session
+(setq desktop-buffers-not-to-save
+      (concat "\\("
+              "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
+              "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
+              "\\)$"))
+
 ;; ediff
 (setq ediff-diff-options "-w")
 
