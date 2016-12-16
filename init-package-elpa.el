@@ -60,9 +60,11 @@
     hide-lines
     icicles
     iedit
-    irony
     indent-guide
+    irony
+    ivy
     java-snippets
+    linum-relative
     logview
     lua-mode
     magit
@@ -302,6 +304,10 @@
 
 ;; indent-guide
 (setq indent-guide-recursive t)
+
+;; ivy
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
 
 ;; logview-mode
 (setq
