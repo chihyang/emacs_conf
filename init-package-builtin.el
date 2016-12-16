@@ -119,6 +119,9 @@
 (setq display-time-day-and-date t)
 (display-time-mode t)
 
+;; tool-bar-mode
+(tool-bar-mode 0)
+
 ;; tramp-mode
 (require 'tramp)
 (if (eq system-type 'windows-nt)

@@ -151,7 +151,7 @@
     (load "~/.emacs.d/init-package-manual.el"))
 
 ;; auto-highlight-symbol-mode
-(global-auto-highlight-symbol-mode)
+(add-hook 'prog-mode-hook 'auto-highlight-symbol-mode)
 
 ;; autopair
 (autopair-global-mode 1)                        ; enable autopair in all buffers
@@ -361,6 +361,7 @@
 
 ;; smart-mode-line
 (setq sml/no-confirm-load-theme t)
+(sml/setup)
 
 ;; sr-speedbar
 (custom-set-variables
