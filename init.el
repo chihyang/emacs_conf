@@ -33,6 +33,7 @@
 (setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
 
 (global-set-key (kbd "M-9") 'kill-whole-line)  ; delete a whole line with M-9
+(global-set-key (kbd "C-x _") 'shrink-window)  ; shrink window vertically
 
 ;; bind `C-x n' to next-multiframe-window
 (global-set-key (kbd "C-x n") 'next-multiframe-window)
@@ -171,7 +172,7 @@
                  '(project unloaded system recursive))
 (setq-mode-local c++-mode semanticdb-find-default-throttle
                  '(project unloaded system recursive))
-(global-semanticdb-minor-mode)
+(global-semanticdb-minor-mode 1)
 (global-semantic-idle-scheduler-mode 1)
 (global-semantic-idle-summary-mode 1)
 (global-set-key [f12] 'semantic-ia-fast-jump)
