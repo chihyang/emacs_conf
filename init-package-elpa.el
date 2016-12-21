@@ -327,10 +327,14 @@
 (setq
  logview-additional-submodes
  (quote (("Android"
-          (format . "TIMESTAMP THREAD NAME:")
+          (format . "TIMESTAMP LEVEL NAME THREAD:")
           (levels . "Logcat")
           (timestamp "Android Logcat Time Format")
-          (aliases "logcat")))))
+          (aliases "logcat"))
+         ("Android-nontime"
+          (format . "LEVEL NAME THREAD:")
+          (levels . "Logcat")
+          (aliases "logcat-n")))))
 
 ;; lua-mode
 (setq lua-indent-level 4)
