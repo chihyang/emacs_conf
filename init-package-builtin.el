@@ -99,6 +99,11 @@
 (require 'org)
 (setq org-startup-indented t)           ; enable auto-indent
 (setq org-src-fontify-natively t)       ; enable source code highlight
+(setq org-src-tab-acts-natively t)      ; enable tab indent
+(setq org-src-preserve-indentation t)   ; preserve indentation, no padding
+                                        ; blanks
+(setq org-src-strip-leading-and-trailing-blank-lines t)
+(setq org-src-window-setup 'current-window)
 
 ;; read-only-mode
 (global-set-key (kbd "C-c C-r") 'read-only-mode)
