@@ -268,6 +268,14 @@
 (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
 
 ;; icicle-mode
+(eval-after-load "icicles-opt.el"
+  (add-hook 'icicle-mode-hook
+            (lambda ()
+              (setq my-icicle-top-level-key-bindings
+                    (mapcar (lambda (lst)
+                              (unless (string= "icicle-occur" (nth 1 lst)) lst))
+                            icicle-top-level-key-bindings))
+              (setq icicle-top-level-key-bindings my-icicle-top-level-key-bindings) )))
 (icy-mode 1)
 
 ;; iedit-mode
