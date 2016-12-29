@@ -51,6 +51,10 @@
 ;; ediff
 (setq ediff-diff-options "-w")
 
+;; electric-pair-mode
+(if (not (version< emacs-version "24.4"))
+    (electric-pair-mode 1))
+
 ;; hide-show-mode
 (require 'hideshow)
 (setq hs-allow-nesting t)
@@ -104,6 +108,19 @@
                                         ; blanks
 (setq org-src-strip-leading-and-trailing-blank-lines t)
 (setq org-src-window-setup 'current-window)
+;; remove blanks between Chinese characters
+(defadvice org-html-paragraph
+    (before org-html-paragraph-advice
+            (paragraph contents info) activate)
+  "Join consecutive Chinese lines into a single long line without
+unwanted space when exporting org-mode to html."
+  (let* ((origin-contents (ad-get-arg 1))
+         (fix-regexp "[[:multibyte:]]")
+         (fixed-contents
+          (replace-regexp-in-string
+           (concat
+            "\\(" fix-regexp "\\) *\n *\\(" fix-regexp "\\)") "\\1\\2" origin-contents)))
+    (ad-set-arg 1 fixed-contents)))
 
 ;; read-only-mode
 (global-set-key (kbd "C-c C-r") 'read-only-mode)

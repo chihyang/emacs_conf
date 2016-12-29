@@ -156,7 +156,8 @@
 (add-hook 'prog-mode-hook 'auto-highlight-symbol-mode)
 
 ;; autopair
-(autopair-global-mode 1)                        ; enable autopair in all buffers
+(if (version< emacs-version "24.4")
+    (autopair-global-mode 1))
 
 ;; avy
 (global-set-key (kbd "M-g f") 'avy-goto-line)
@@ -208,14 +209,15 @@
      ))
   (dim-minor-names
    '(
-     (auto-complete-mode         "")
-     (auto-fill-function         " ↵")
-     (auto-highlight-symbol-mode "")
+     (auto-fill-function         " _")
      (auto-revert-mode           " ^")
+     (auto-complete-mode         "")
+     (auto-highlight-symbol-mode "")
      (autopair-mode              "")
      (anzu-mode                  "")
-     (hs-minor-mode              "")
      (abbrev-mode                "")
+     (hs-minor-mode              "")
+     (ivy-mode                   "")
      )))
 (eval-after-load "~/.emacs.d/init.el" (simplify-mode-alias))
 (add-hook 'workgroups-mode-hook
@@ -268,6 +270,7 @@
 (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
 
 ;; icicle-mode
+(require 'icicles)
 (eval-after-load "icicles-opt.el"
   (add-hook 'icicle-mode-hook
             (lambda ()
@@ -314,10 +317,12 @@
 (setq indent-guide-recursive t)
 
 ;; ivy
-(ivy-mode 1)
+(require 'ivy)
 (setq ivy-use-virtual-buffers t)
+(ivy-mode 1)
 
 ;; logview-mode
+(require 'logview)
 (setq
  logview-additional-timestamp-formats
  (quote (("Android Logcat Time Format"
@@ -378,7 +383,11 @@
 (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
 
 ;; smart-mode-line
+(require 'smart-mode-line)
 (setq sml/no-confirm-load-theme t)
+(setq sml/shorten-directory t)
+(setq sml/shorten-modes t)
+(setq sml/name-width 40)
 (sml/setup)
 
 ;; sr-speedbar
@@ -404,6 +413,7 @@
 (add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
 
 ;; workgroups2
+(require 'workgroups2)
 (setq wg-emacs-exit-save-behavior           'save)      ; Options: 'save 'ask nil
 (setq wg-workgroups-mode-exit-save-behavior 'save)      ; Options: 'save 'ask nil
 ;; Mode Line changes

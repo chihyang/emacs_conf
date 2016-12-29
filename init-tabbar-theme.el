@@ -41,6 +41,8 @@
        :box '(:line-width 5 :color "gray80" :style nil))
       (set-face-attribute
        'tabbar-button nil
+       :background "gray90"
+       :foreground "blue"
        :box '(:line-width 1 :color "gray90" :style nil))
       (set-face-attribute
        'tabbar-separator nil
@@ -80,6 +82,8 @@
      :box '(:line-width 5 :color "gray80" :style nil))
     (set-face-attribute
      'tabbar-button nil
+     :background "gray90"
+     :foreground "blue"
      :box '(:line-width 1 :color "gray90" :style nil))
     (set-face-attribute
      'tabbar-separator nil

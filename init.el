@@ -175,6 +175,7 @@
 (global-semanticdb-minor-mode 1)
 (global-semantic-idle-scheduler-mode 1)
 (global-semantic-idle-summary-mode 1)
+(global-semantic-highlight-func-mode 1)
 (global-set-key [f12] 'semantic-ia-fast-jump)
 
 ;; semantic/db-global
