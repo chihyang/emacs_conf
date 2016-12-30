@@ -99,6 +99,10 @@
   (setq linum-format 'linum-format-func))
 (global-linum-mode 1)
 
+;; Man-mode
+(require 'man)
+(add-hook Man-mode-hook #'visual-line-mode)
+
 ;; org-mode
 (require 'org)
 (setq org-startup-indented t)           ; enable auto-indent

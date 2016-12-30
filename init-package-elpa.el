@@ -91,6 +91,7 @@
     vimrc-mode
     websocket
     workgroups2
+    xcscope
     yasnippet
     ztree
     ))
@@ -423,6 +424,9 @@
       wg-mode-line-decor-right-brace "]"  ; how to surround it
       wg-mode-line-decor-divider ":")
 (workgroups-mode 1)
+
+;; xcscope
+(require 'xcscope)
 
 ;; yasnippet
 (yas-global-mode 1)
