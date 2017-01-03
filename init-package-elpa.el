@@ -154,9 +154,11 @@
     (load "~/.emacs.d/init-package-manual.el"))
 
 ;; auto-highlight-symbol-mode
+(require 'auto-highlight-symbol)
 (add-hook 'prog-mode-hook 'auto-highlight-symbol-mode)
 
 ;; autopair
+(require 'autopair)
 (if (version< emacs-version "24.4")
     (autopair-global-mode 1))
 
@@ -318,9 +320,18 @@
 (setq indent-guide-recursive t)
 
 ;; ivy
+; for unknown reasons, Emacs crash in
+; terminal when ivy-mode is enabled, so
+; enable this minor mode only when the
+; Emacs is run under window system
 (require 'ivy)
 (setq ivy-use-virtual-buffers t)
-(ivy-mode 1)
+(if (window-system)
+    (ivy-mode 1)
+  (progn
+    (message "Terminal mode, ivy disabled")
+    (ivy-mode 0)
+    ))
 
 ;; logview-mode
 (require 'logview)

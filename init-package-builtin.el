@@ -14,6 +14,9 @@
                 prog-mode-hook))
   (add-hook hook 'turn-on-auto-fill))
 
+;; auto-revert-mode
+(require 'autorevert)
+
 ;; cc-mode
 (require 'cc-mode)
 (setq-default c-basic-offset 4)         ; set indentation for cc mode
@@ -101,7 +104,7 @@
 
 ;; Man-mode
 (require 'man)
-(add-hook Man-mode-hook #'visual-line-mode)
+(add-hook 'Man-mode-hook 'visual-line-mode)
 
 ;; org-mode
 (require 'org)
