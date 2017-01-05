@@ -71,6 +71,7 @@
     markdown-mode
     markdown-preview-mode
     minimap
+    modern-cpp-font-lock
     multiple-cursors
     origami
     pandoc-mode
@@ -369,6 +370,10 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\README*" . markdown-mode))
+
+;; modern-c++-font-lock
+(require 'modern-cpp-font-lock)
+(modern-c++-font-lock-global-mode t)
 
 ;; multiple-cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
