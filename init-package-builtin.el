@@ -115,6 +115,7 @@
                                         ; blanks
 (setq org-src-strip-leading-and-trailing-blank-lines t)
 (setq org-src-window-setup 'current-window)
+(setq org-catch-invisible-edits 'error)
 ;; remove blanks between Chinese characters
 (defadvice org-html-paragraph
     (before org-html-paragraph-advice
@@ -128,6 +129,10 @@ unwanted space when exporting org-mode to html."
            (concat
             "\\(" fix-regexp "\\) *\n *\\(" fix-regexp "\\)") "\\1\\2" origin-contents)))
     (ad-set-arg 1 fixed-contents)))
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key "\C-ct" 'org-time-stamp)
 
 ;; read-only-mode
 (global-set-key (kbd "C-c C-r") 'read-only-mode)

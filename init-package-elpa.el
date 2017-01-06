@@ -359,7 +359,12 @@
          ("Android-nontime"
           (format . "LEVEL NAME THREAD:")
           (levels . "Logcat")
-          (aliases "logcat-n")))))
+          (aliases "logcat-n"))
+         ("threadtime"
+          (format . "TIMESTAMP THREAD THREAD LEVEL NAME:")
+          (levels . "Logcat")
+          (timestamp "Android Logcat Time Format")
+          (aliases "logcat")))))
 
 ;; lua-mode
 (setq lua-indent-level 4)
