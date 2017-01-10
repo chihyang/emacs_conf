@@ -132,7 +132,9 @@ unwanted space when exporting org-mode to html."
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-cb" 'org-iswitchb)
-(global-set-key "\C-ct" 'org-time-stamp)
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key "\C-ct" 'org-time-stamp)))
 
 ;; read-only-mode
 (global-set-key (kbd "C-c C-r") 'read-only-mode)

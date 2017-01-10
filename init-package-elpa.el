@@ -448,6 +448,7 @@
 
 ;; xcscope
 (require 'xcscope)
+(setq cscope-option-do-not-update-database t)
 
 ;; yasnippet
 (yas-global-mode 1)
