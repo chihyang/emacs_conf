@@ -116,12 +116,21 @@
 (setq org-src-strip-leading-and-trailing-blank-lines t)
 (setq org-src-window-setup 'current-window)
 (setq org-catch-invisible-edits 'error)
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "WAIT(w@/!)" "DOING(o@/!)" "|" "DONE(d@/!)" "CANCELED(c@/!)")))
+(setq org-todo-keyword-faces
+      '(("TODO" :foreground "red" :background 'unspecified)
+        ("WAIT" :foreground "orange" :background 'unspecified)
+        ("DOING" :foreground "blue" :background 'unspecified)
+        ("CANCELED" :foreground "gray50" :background 'unspecified)
+        ("DONE" :foreground "green" :background 'unspecified)))
 ;; remove blanks between Chinese characters
 (defadvice org-html-paragraph
     (before org-html-paragraph-advice
             (paragraph contents info) activate)
-  "Join consecutive Chinese lines into a single long line without
-unwanted space when exporting org-mode to html."
+  "Exclude surplus whitespace when exporting to html.
+Join consecutive Chinese lines into a single long line without
+unwanted space when exporting `org-mode' to html."
   (let* ((origin-contents (ad-get-arg 1))
          (fix-regexp "[[:multibyte:]]")
          (fixed-contents

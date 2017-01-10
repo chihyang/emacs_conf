@@ -1,0 +1,9 @@
+# key: #+T
+# name: dailywork
+# --
+#+TITLE: <`(format-time-string "%Y-%m-%d %a")`> 工作
+#+TODO: TODO(t) WAIT(w@/!) DOING(o@/!) | DONE(d@/!) CANCELED(c@/!)
+
+* 今日工作 <`(format-time-string "%Y-%m-%d %a")`>
+
+* 明日工作
