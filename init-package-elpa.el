@@ -449,6 +449,8 @@
 ;; xcscope
 (require 'xcscope)
 (setq cscope-option-do-not-update-database t)
+(cscope-setup)
+(add-hook 'java-mode-hook #'cscope-minor-mode)
 
 ;; yasnippet
 (yas-global-mode 1)
