@@ -86,13 +86,15 @@
 ;;; Code:
 
 (defun get-include-dirs ()
-  (let* ((command-result (shell-command-to-string "echo \"\" | g++ -v -x c++ -E -"))
-         (start-string "#include <...> search starts here:\n")
-         (end-string "End of search list.\n")
-         (start-pos (string-match start-string command-result))
-         (end-pos (string-match end-string command-result))
-         (include-string (substring command-result (+ start-pos (length start-string)) end-pos)))
-    (split-string include-string)))
+  "Get header files from output of g++ results."
+  (when (executable-find "g++")
+    (let* ((command-result (shell-command-to-string "echo \"\" | g++ -v -x c++ -E -"))
+           (start-string "#include <...> search starts here:\n")
+           (end-string "End of search list.\n")
+           (start-pos (string-match start-string command-result))
+           (end-pos (string-match end-string command-result))
+           (include-string (substring command-result (+ start-pos (length start-string)) end-pos)))
+      (split-string include-string))))
 
 (defvar ac-clang-extension-user-include-dirs
   (list ".." "../include" "../inc" "../common" "../public" "."

@@ -183,6 +183,16 @@
 ; automatically save change
 (setq bookmark-save-flag 1)
 
+;; cal-china-x
+(require 'cal-china-x)
+(setq mark-holidays-in-calendar t)
+(setq cal-china-x-important-holiday
+      cal-china-x-chinese-holidays)
+(setq calendar-holidays
+      (append cal-china-x-important-holidays
+              cal-china-x-general-holidays
+              other-holidays))
+
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
 (chinese-fonts-setup-enable)
@@ -263,7 +273,9 @@
 (setq ispell-local-dictionary-alist
       '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))
 (if (eq system-type 'windows-nt)
-    (setq ispell-alternate-dictionary "~/.emacs.d/windows/dict.txt"))
+    (progn
+      (setq ispell-program-name "aspell")
+      (setq ispell-alternate-dictionary "~/.emacs.d/windows/dict.txt")))
 (ispell-change-dictionary "american" t)
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -286,6 +298,7 @@
 (icy-mode 1)
 
 ;; iedit-mode
+(require 'iedit)
 (defun iedit-dwim (arg)
   "Starts iedit but uses \\[narrow-to-defun] to limit its scope."
   (interactive "P")
@@ -301,6 +314,7 @@
           ;; functions.
           (narrow-to-defun)
           (iedit-start (current-word) (point-min) (point-max)))))))
+(global-set-key (kbd "C-c ; s") 'iedit-dwim)
 
 ;; irony-mode
 (add-hook 'c++-mode-hook 'irony-mode)

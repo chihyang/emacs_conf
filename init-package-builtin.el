@@ -159,7 +159,7 @@ unwanted space when exporting `org-mode' to html."
 
 ;; time
 (require 'time)
-(setq display-time-format "%Y/%m/%e %H:%M")
+(setq display-time-format "%Y/%m/%d %H:%M")
 (setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
 (display-time-mode t)
