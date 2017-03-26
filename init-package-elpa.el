@@ -94,6 +94,7 @@
     workgroups2
     xcscope
     yasnippet
+    youdao-dictionary
     ztree
     ))
 
@@ -348,6 +349,28 @@
     (ivy-mode 0)
     ))
 
+;; langtool
+(require 'langtool)
+(setq langtool-mother-tongue "en-US")
+(setq langtool-language-tool-jar
+      "~/languagetool/languagetool-commandline.jar")
+(global-set-key "\C-x4w" 'langtool-check)
+(global-set-key "\C-x4W" 'langtool-check-done)
+(global-set-key "\C-x4l" 'langtool-switch-default-language)
+(global-set-key "\C-x44" 'langtool-show-message-at-point)
+(global-set-key "\C-x4c" 'langtool-correct-buffer)
+(defun langtool-autoshow-detail-popup (overlays)
+  "Show langtool check result automatically."
+  (when (require 'popup nil t)
+    ;; Do not interrupt current popup
+    (unless (or popup-instances
+                ;; suppress popup after type `C-g` .
+                (memq last-command '(keyboard-quit)))
+      (let ((msg (langtool-details-error-message overlays)))
+        (popup-tip msg)))))
+(setq langtool-autoshow-message-function
+      'langtool-autoshow-detail-popup)
+
 ;; logview-mode
 (require 'logview)
 (setq
@@ -478,6 +501,10 @@
 (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
 ;; push yasnippet into auto complete sources
 (setq ac-sources (append '(ac-source-yasnippet) ac-sources))
+
+;; youdao-dictionary
+(require 'youdao-dictionary)
+(global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point)
 
 (provide 'init-package-elpa)
 ;;; init-package-elpa.el ends here

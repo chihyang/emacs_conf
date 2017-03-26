@@ -13,6 +13,15 @@
 (dolist (hook '(text-mode-hook
                 prog-mode-hook))
   (add-hook hook 'turn-on-auto-fill))
+(defun unfill-paragraph ()
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
+(defun unfill-region ()
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-region (region-beginning) (region-end) nil)))
+(global-set-key (kbd "C-c M-q") 'unfill-paragraph)
 
 ;; auto-revert-mode
 (require 'autorevert)
