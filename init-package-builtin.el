@@ -60,6 +60,10 @@
               "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
               "\\)$"))
 
+;; dried omit mode
+(require 'dired-x)
+(setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
+
 ;; ediff
 (setq ediff-diff-options "-w")
 

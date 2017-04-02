@@ -34,13 +34,11 @@
 
 (global-set-key (kbd "M-9") 'kill-whole-line)  ; delete a whole line with M-9
 (global-set-key (kbd "C-x _") 'shrink-window)  ; shrink window vertically
-
-;; bind `C-x n' to next-multiframe-window
 (global-set-key (kbd "C-x n") 'next-multiframe-window)
 (global-set-key (kbd "C-x p") 'previous-multiframe-window)
-;; rebind `C-x C-b' to buffer-menu
-(global-unset-key "\C-x\C-b")
+(global-unset-key "\C-x\C-b")           ; rebind `C-x C-b' to buffer-menu
 (global-set-key "\C-x\C-b" 'buffer-menu)
+(global-set-key "\C-\M-^" 'scroll-other-window-down)
 
 ;; compile command
 (defun check-or-create-obj-directory ()

@@ -71,6 +71,7 @@
     markdown-mode
     markdown-preview-mode
     minimap
+    modeline-posn
     modern-cpp-font-lock
     multiple-cursors
     origami
@@ -490,6 +491,7 @@
 (add-hook 'java-mode-hook #'cscope-minor-mode)
 
 ;; yasnippet
+(require 'yasnippet)
 (yas-global-mode 1)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
 ;; Remove Yasnippet's default tab key binding
