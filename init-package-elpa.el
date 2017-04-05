@@ -173,16 +173,16 @@
 (global-set-key (kbd "C-c C-b") 'whitespace-mode) ; show whitespace
 
 ;; bookmark+
-; rebind bmkp prefix key to "C x /"
+                                        ; rebind bmkp prefix key to "C x /"
 (setq bmkp-bookmark-map-prefix-keys (quote ("/")))
 (setq bmkp-last-as-first-bookmark-file nil)
-; change annoying bookmark name face color in terminal mode
+                                        ; change annoying bookmark name face color in terminal mode
 (require 'bookmark+-bmu)
 (when (not (display-graphic-p))
   (set-face-attribute
    'bmkp-local-file-without-region nil
    :foreground "green"))
-; automatically save change
+                                        ; automatically save change
 (setq bookmark-save-flag 1)
 
 ;; cal-china-x
@@ -337,10 +337,10 @@
 (setq indent-guide-recursive t)
 
 ;; ivy
-; for unknown reasons, Emacs crash in
-; terminal when ivy-mode is enabled, so
-; enable this minor mode only when the
-; Emacs is run under window system
+                                        ; for unknown reasons, Emacs crash in
+                                        ; terminal when ivy-mode is enabled, so
+                                        ; enable this minor mode only when the
+                                        ; Emacs is run under window system
 (require 'ivy)
 (setq ivy-use-virtual-buffers t)
 (if (window-system)
@@ -449,6 +449,8 @@
 (setq sml/shorten-modes t)
 (setq sml/name-width 40)
 (sml/setup)
+(require 'modeline-posn)                ; modeline-posn must be loaded after sml
+                                        ; to take effect
 
 ;; sr-speedbar
 (custom-set-variables
