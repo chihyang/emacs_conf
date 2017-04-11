@@ -287,17 +287,30 @@
 ;; flyspell-popup
 (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
 
-;; icicle-mode
+;; icicle-mode & ivy-mode configuration
+;; for unknown reasons, Emacs crash in terminal when ivy-mode is enabled, so
+;; enable this minor mode only when the Emacs is run under window system
 (require 'icicles)
 (eval-after-load "icicles-opt.el"
   (add-hook 'icicle-mode-hook
             (lambda ()
-              (setq my-icicle-top-level-key-bindings
-                    (mapcar (lambda (lst)
-                              (unless (string= "icicle-occur" (nth 1 lst)) lst))
-                            icicle-top-level-key-bindings))
-              (setq icicle-top-level-key-bindings my-icicle-top-level-key-bindings) )))
-(icy-mode 1)
+              (let (my-icicle-top-level-key-bindings)
+                (setq my-icicle-top-level-key-bindings
+                      (mapcar (lambda (lst)
+                                (unless (string= "icicle-occur" (nth 1 lst)) lst))
+                              icicle-top-level-key-bindings))
+                (setq icicle-top-level-key-bindings my-icicle-top-level-key-bindings)) )))
+(require 'ivy)
+(setq ivy-use-virtual-buffers t)
+(if (window-system)
+    (progn
+      (ivy-mode 1)
+      (icy-mode 0))
+  (progn
+    (message "Terminal mode, ivy disabled, icy enabled.")
+    (ivy-mode 0)
+    (icy-mode 1)
+    ))
 
 ;; iedit-mode
 (require 'iedit)
@@ -336,19 +349,7 @@
 ;; indent-guide
 (setq indent-guide-recursive t)
 
-;; ivy
-                                        ; for unknown reasons, Emacs crash in
-                                        ; terminal when ivy-mode is enabled, so
-                                        ; enable this minor mode only when the
-                                        ; Emacs is run under window system
-(require 'ivy)
-(setq ivy-use-virtual-buffers t)
-(if (window-system)
-    (ivy-mode 1)
-  (progn
-    (message "Terminal mode, ivy disabled")
-    (ivy-mode 0)
-    ))
+
 
 ;; langtool
 (require 'langtool)
