@@ -12,7 +12,7 @@
 ;; period of the night mode.
 (setq ring-bell-function 
       (lambda ()
-        (unless (night-mode)
+        (unless (night-mode-p)
           (ding))))
 (defvar night-start 21
   "The hour that people go to sleep.")
@@ -22,7 +22,7 @@
   "The hour that people go to sleep.")
 (defvar noon-end 16
   "The hour that people wake up.")  
-(defun night-mode ()
+(defun night-mode-p ()
   "Check if it is night."
   (let ((hr (nth 2 (decode-time (current-time)))))
     (or (< hr night-end)

@@ -3,9 +3,10 @@
 ;;; load packages and customized functions
 ;;; Code:
 
-;; load newer bytecodes
-(setq load-prefer-newer t)
 (require 'package)
+(package-initialize)
+
+(setq load-prefer-newer t)
 
 (server-start)
 

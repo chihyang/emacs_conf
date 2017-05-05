@@ -193,7 +193,7 @@
 (setq calendar-holidays
       (append cal-china-x-important-holidays
               cal-china-x-general-holidays
-              other-holidays))
+              holiday-other-holidays))
 
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
@@ -268,7 +268,8 @@
 (setq fci-rule-color "darkblue")
 
 ;; flycheck-mode
-(global-flycheck-mode)
+(add-hook 'prog-mode-hook 'flycheck-mode)
+(add-hook 'tex-mode-hook 'flycheck-mode)
 
 ;; flyspell-mode
 (require 'ispell)
