@@ -198,6 +198,17 @@
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
 (chinese-fonts-setup-enable)
+(defun my-set-symbol-fonts (fontsizes-list)
+  (let* ((fontname "Segoe UI Symbol")
+         (fontsize (nth 0 fontsizes-list))
+         (fontspec (font-spec :name fontname
+                              :size fontsize
+                              :weight 'normal
+                              :slant 'normal)))
+    (if (cfs--fontspec-valid-p fontspec)
+        (set-fontset-font "fontset-default" 'symbol fontspec nil 'append)
+      (message "字体 %S 不存在！" fontname))))
+(add-hook 'cfs-set-font-finish-hook 'my-set-symbol-fonts)
 
 ;; color-theme-solarized
 (set-terminal-parameter nil 'background-mode 'dark)
@@ -225,8 +236,8 @@
      ))
   (dim-minor-names
    '(
-     (auto-fill-function         " _")
-     (auto-revert-mode           " ^")
+     (auto-fill-function         " ¶")
+     (auto-revert-mode           "")
      (auto-complete-mode         "")
      (auto-highlight-symbol-mode "")
      (autopair-mode              "")
@@ -241,7 +252,7 @@
             (dim-minor-name 'workgroups-mode "")))
 (add-hook 'yas-minor-mode-hook
           (lambda ()
-            (dim-minor-name 'yas-minor-mode  " ->")))
+            (dim-minor-name 'yas-minor-mode  " →")))
 (add-hook 'paredit-mode-hook
           (lambda ()
             (dim-minor-name 'paredit-mode    " ()")))

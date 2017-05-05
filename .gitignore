@@ -7,6 +7,7 @@ tutorial/*
 emms/*
 semanticdb/*
 irony/*
+url/*
 # ignore auto generated files
 *.*~
 *.dat
@@ -19,6 +20,6 @@ bookmarks
 srecode-map.el
 tramp
 # ignore platform dependent configuration files
-init-package-manual.el
 manual/*
+init-package-manual.el
 .mc-lists.el
