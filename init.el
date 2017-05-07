@@ -205,7 +205,6 @@
  '(column-number-mode t)
  '(ecb-options-version "2.40")
  '(markdown-command "pandoc -f markdown_github")
- '(scheme-program-name "petite")
  '(session-use-package t nil (session))
  '(show-paren-mode t)
  '(size-indication-mode t)

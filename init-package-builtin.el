@@ -167,6 +167,11 @@ unwanted space when exporting `org-mode' to html."
 (recentf-mode 1)
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
+;; set program to run scheme
+(require 'scheme)
+(if (eq system-type 'window-nt)
+    (setq scheme-program-name "petite"))
+
 ;; show-paren-mode
 (show-paren-mode 1)                       ; highlight paired brackets
 
