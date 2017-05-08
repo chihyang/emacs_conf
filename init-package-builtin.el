@@ -169,7 +169,7 @@ unwanted space when exporting `org-mode' to html."
 
 ;; set program to run scheme
 (require 'scheme)
-(if (eq system-type 'window-nt)
+(if (eq system-type 'windows-nt)
     (setq scheme-program-name "petite"))
 
 ;; show-paren-mode
