@@ -211,10 +211,11 @@
 (add-hook 'cfs-set-font-finish-hook 'my-set-symbol-fonts)
 
 ;; color-theme-solarized
-(set-terminal-parameter nil 'background-mode 'dark)
-(set-frame-parameter nil 'background-mode 'dark)
-(if (window-system)
-    (load-theme 'solarized t))
+(if (display-graphic-p)
+    (progn
+      (set-frame-parameter nil 'background-mode 'dark)
+      (enable-theme 'solarized))
+  (disable-theme 'solarized))
 
 ;; column-marker
 (column-marker-1 80)                    ; column marker width
@@ -322,6 +323,7 @@
     (message "Terminal mode, ivy disabled, icy enabled.")
     (ivy-mode 0)
     (icy-mode 1)
+    (setq icicle-Completions-text-scale-decrease 0.0)
     ))
 
 ;; iedit-mode
