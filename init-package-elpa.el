@@ -211,10 +211,12 @@
 (add-hook 'cfs-set-font-finish-hook 'my-set-symbol-fonts)
 
 ;; color-theme-solarized
+(require 'color-theme)
+(require 'color-theme-solarized)
 (if (display-graphic-p)
     (progn
       (set-frame-parameter nil 'background-mode 'dark)
-      (enable-theme 'solarized))
+      (load-theme 'solarized t))
   (disable-theme 'solarized))
 
 ;; column-marker
