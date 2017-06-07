@@ -435,10 +435,14 @@
 (setq lua-indent-level 4)
 
 ;; markdown-mode
+;; Note: \' matches the end of a string, while $ matches the empty string before
+;; a newline. Thus, $ may lead to unexpected behavior when dealing with
+;; filenames containing newlines. See the following link:
+;; https://www.emacswiki.org/emacs/AutoModeAlist
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("[^M]\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\README.*" . gfm-mode))
+(add-to-list 'auto-mode-alist '("[^Mm]\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("README.*" . gfm-mode))
 
 ;; modern-c++-font-lock
 (require 'modern-cpp-font-lock)
