@@ -51,6 +51,7 @@
     dired+
     dired-single
     dired-sort-menu+
+    elpy
     everything
     fill-column-indicator
     fish-mode
@@ -81,6 +82,7 @@
     powerline-evil
     protobuf-mode
     psvn
+    py-autopep8
     rainbow-mode
     session
     smart-mode-line
@@ -273,6 +275,13 @@
                 (interactive)
                 (dired-single-buffer "..")))))
 
+;; elpy
+(require 'elpy)
+(elpy-enable)
+(setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+(add-hook 'python-mode-hook (lambda () (auto-complete-mode -1)))
+
 ;; everything
 (if (eq system-type 'windows-nt)
     (setq everything-cmd "D:/Program Files/Everything/es.exe"))
@@ -428,8 +437,8 @@
 ;; markdown-mode
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\README*" . gfm-mode))
+(add-to-list 'auto-mode-alist '("[^M]\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\README.*" . gfm-mode))
 
 ;; modern-c++-font-lock
 (require 'modern-cpp-font-lock)
