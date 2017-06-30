@@ -521,6 +521,7 @@
 (setq cscope-option-do-not-update-database t)
 (cscope-setup)
 (add-hook 'java-mode-hook #'cscope-minor-mode)
+(add-hook 'c-mode-common-hook #'cscope-minor-mode)
 
 ;; yasnippet
 (require 'yasnippet)
