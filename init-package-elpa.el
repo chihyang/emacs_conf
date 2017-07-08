@@ -141,15 +141,23 @@
 (add-hook 'prog-mode-hook 'auto-complete-mode)
 (add-hook 'text-mode-hook 'auto-complete-mode)
 (add-hook 'org-mode-hook 'auto-complete-mode)
-(require 'semantic/bovine/gcc)
-(require 'semantic/bovine/c)
+(require 'auto-complete-c-headers)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (add-to-list 'ac-sources 'ac-source-c-headers)))
+(require 'auto-complete-clang)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (add-to-list 'ac-sources 'ac-source-clang)))
 (load (expand-file-name "~/.emacs.d/auto-complete-clang-extension"))
-(setq semantic-c-dependency-system-include-path
-      ac-clang-extension-all-include-dirs)
-(mapc (lambda (dir)
-        (semantic-add-system-include dir 'c++-mode)
-        (semantic-add-system-include dir 'c-mode))
-      ac-clang-extension-all-include-dirs)
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (setq achead:include-directories
+                  (append achead:include-directories
+                          ac-clang-extension-all-include-dirs))
+            (setq ac-clang-flags
+                  (mapcar (lambda (item) (concat "-I" item))
+                          ac-clang-extension-all-include-dirs))))
 (if (file-exists-p "~/.emacs.d/init-package-manual.el")
     (load "~/.emacs.d/init-package-manual.el"))
 
@@ -218,12 +226,6 @@
 
 ;; column-marker
 (column-marker-1 80)                    ; column marker width
-
-;; cpputils-cmake
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (if (derived-mode-p 'c-mode 'c++-mode)
-                (cppcm-reload-all))))
 
 ;; dim
 (defun simplify-mode-alias ()

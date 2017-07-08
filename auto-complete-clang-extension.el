@@ -113,16 +113,16 @@
   "All of the included path."
   )
 
-(add-hook
- 'c-mode-common-hook
- '(lambda ()
-    (when (derived-mode-p 'c-mode 'c++-mode)
-      (require 'auto-complete-c-headers)
-      (require 'auto-complete-clang)
-      (setq ac-sources (append '(ac-source-c-headers ac-source-clang) ac-sources))
-      (setq ac-clang-flags
-            (mapcar (lambda (item) (concat "-I" item)) (get-include-dirs))))
-    ))
+;; (add-hook
+;;  'c-mode-common-hook
+;;  '(lambda ()
+;;     (when (derived-mode-p 'c-mode 'c++-mode)
+;;       (require 'auto-complete-c-headers)
+;;       (require 'auto-complete-clang)
+;;       (setq ac-sources (append '(ac-source-c-headers ac-source-clang) ac-sources))
+      ;; (setq ac-clang-flags
+            ;; (mapcar (lambda (item) (concat "-I" item)) (get-include-dirs))))
+;;     ))
 
 (provide 'auto-complete-clang-extension)
 
