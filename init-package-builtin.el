@@ -26,6 +26,30 @@
 ;; auto-revert-mode
 (require 'autorevert)
 
+;;; cedet implementation
+;; cedet
+(require 'cedet)
+(require 'semantic)
+(add-to-list 'semantic-inhibit-functions
+             (lambda () (not (member major-mode '(c-mode c++-mode)))))
+(semantic-mode 1)
+
+;; semantic/ia
+(require 'semantic/ia)
+(setq-mode-local c-mode semanticdb-find-default-throttle
+                 '(project unloaded system recursive))
+(setq-mode-local c++-mode semanticdb-find-default-throttle
+                 '(project unloaded system recursive))
+(global-semanticdb-minor-mode 1)
+(global-semantic-idle-scheduler-mode 1)
+(global-semantic-idle-summary-mode 1)
+(global-set-key [f12] 'semantic-ia-fast-jump)
+
+;; semantic/db-global
+(require 'semantic/db-global)
+(semanticdb-enable-gnu-global-databases 'c-mode)
+(semanticdb-enable-gnu-global-databases 'c++-mode)
+
 ;; cc-mode
 (require 'cc-mode)
 (setq-default c-basic-offset 4)         ; set indentation for cc mode
@@ -65,6 +89,10 @@
 ;; dried omit mode
 (require 'dired-x)
 (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
+
+;; ede
+(global-ede-mode 1)                      ; Enable the Project management system
+(ede-enable-generic-projects)
 
 ;; ediff
 (setq ediff-diff-options "-w")

@@ -160,35 +160,6 @@
                 ))
   (add-hook hook 'comment-shortcut-for-coding-mode-hook))
 
-;;; cedet implementation
-;; cedet
-(require 'cedet)
-(require 'semantic)
-(add-to-list 'semantic-inhibit-functions
-             (lambda () (not (member major-mode '(c-mode c++-mode)))))
-(semantic-mode 1)
-
-;; semantic/ia
-(require 'semantic/ia)
-(setq-mode-local c-mode semanticdb-find-default-throttle
-                 '(project unloaded system recursive))
-(setq-mode-local c++-mode semanticdb-find-default-throttle
-                 '(project unloaded system recursive))
-(global-semanticdb-minor-mode 1)
-(global-semantic-idle-scheduler-mode 1)
-(global-semantic-idle-summary-mode 1)
-(global-semantic-highlight-func-mode 1)
-(global-set-key [f12] 'semantic-ia-fast-jump)
-
-;; semantic/db-global
-(require 'semantic/db-global)
-(semanticdb-enable-gnu-global-databases 'c-mode)
-(semanticdb-enable-gnu-global-databases 'c++-mode)
-
-;; ede
-(global-ede-mode 1)                      ; Enable the Project management system
-(ede-enable-generic-projects)
-
 (load "~/.emacs.d/init-package-builtin.el")
 (load "~/.emacs.d/init-package-elpa.el")
 (load "~/.emacs.d/easy-copy.el")
