@@ -55,11 +55,13 @@
     flyspell-popup
     haskell-mode
     hide-lines
+    htmlize
     icicles
     iedit
     indent-guide
     ivy
     java-snippets
+    json-mode
     linum-relative
     logview
     lua-mode
