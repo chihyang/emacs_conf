@@ -165,6 +165,8 @@
 (load "~/.emacs.d/easy-copy.el")
 (load "~/.emacs.d/hide-show-mixed-eol.el")
 (load "~/.emacs.d/night-mode.el")
+(if (file-exists-p "~/.emacs.d/init-package-manual.el")
+    (load "~/.emacs.d/init-package-manual.el"))
 
 ;; custom parameter
 (custom-set-variables

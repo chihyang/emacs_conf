@@ -188,6 +188,13 @@ unwanted space when exporting `org-mode' to html."
           (lambda ()
             (local-set-key "\C-ct" 'org-time-stamp)))
 
+(require 'ob-plantuml)
+(setq org-plantuml-jar-path
+      (expand-file-name "~/plantuml.jar"))
+(defun my-org-confirm-babel-evaluate (lang body)
+  (not (string= lang "plantuml")))      ; don't ask for ditaa
+(setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+
 ;; read-only-mode
 (global-set-key (kbd "C-c C-r") 'read-only-mode)
 

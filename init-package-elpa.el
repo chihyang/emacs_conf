@@ -14,10 +14,8 @@
 ;; melpa for most packages
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
-;; org repository for completeness
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-;; marmalade packages
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/")) ; marmalade
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/")) ; org
 
 (package-initialize)
 
@@ -160,8 +158,6 @@
             (setq ac-clang-flags
                   (mapcar (lambda (item) (concat "-I" item))
                           ac-clang-extension-all-include-dirs))))
-(if (file-exists-p "~/.emacs.d/init-package-manual.el")
-    (load "~/.emacs.d/init-package-manual.el"))
 
 ;; auto-highlight-symbol-mode
 (require 'auto-highlight-symbol)
@@ -173,24 +169,27 @@
     (autopair-global-mode 1))
 
 ;; avy
+(global-set-key (kbd "C-:") 'avy-goto-char)
+(global-set-key (kbd "C-'") 'avy-goto-char-2)
 (global-set-key (kbd "M-g f") 'avy-goto-line)
+(global-set-key (kbd "M-g w") 'avy-goto-word-1)
+(global-set-key (kbd "M-g e") 'avy-goto-word-0)
 (avy-setup-default)
 
 ;; blank-mode
 (global-set-key (kbd "C-c C-b") 'whitespace-mode) ; show whitespace
 
 ;; bookmark+
-                                        ; rebind bmkp prefix key to "C x /"
+; rebind bmkp prefix key to "C x /"
 (setq bmkp-bookmark-map-prefix-keys (quote ("/")))
 (setq bmkp-last-as-first-bookmark-file nil)
-                                        ; change annoying bookmark name face color in terminal mode
 (require 'bookmark+-bmu)
+; change annoying bookmark name face
 (when (not (display-graphic-p))
   (set-face-attribute
    'bmkp-local-file-without-region nil
-   :foreground "green"))
-                                        ; automatically save change
-(setq bookmark-save-flag 1)
+   :foreground "green"))                ; color in terminal mode
+(setq bookmark-save-flag 1)             ; automatically save change
 
 ;; cal-china-x
 (require 'cal-china-x)
