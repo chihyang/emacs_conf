@@ -460,7 +460,7 @@
 (setq sml/no-confirm-load-theme t)
 (setq sml/shorten-directory t)
 (setq sml/shorten-modes t)
-(setq sml/name-width 40)
+(setq sml/name-width 20)
 (sml/setup)
 (require 'modeline-posn)                ; modeline-posn must be loaded after sml
                                         ; to take effect
