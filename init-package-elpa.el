@@ -27,6 +27,7 @@
     auctex
     auto-complete
     auto-complete-clang
+    auto-complete-clang-async
     auto-complete-c-headers
     auto-highlight-symbol
     autopair
@@ -145,10 +146,18 @@
 (add-hook 'c-mode-common-hook
           (lambda ()
             (add-to-list 'ac-sources 'ac-source-c-headers)))
-(require 'auto-complete-clang)
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (add-to-list 'ac-sources 'ac-source-clang)))
+(defun ac-cc-mode-setup ()
+  "Set up auto-complete-clang."
+  (if (eq system-type 'windows-nt)
+      (progn
+        (require 'auto-complete-clang)
+        (add-to-list 'ac-sources 'ac-source-clang))
+    (progn
+      (require 'auto-complete-clang-async)
+      (setq ac-clang-complete-executable "~/clang-complete")
+      (add-to-list 'ac-sources 'ac-source-clang-async)
+      (ac-clang-launch-completion-process))))
+(add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
 (load (expand-file-name "~/.emacs.d/auto-complete-clang-extension"))
 (add-hook 'c++-mode-hook
           (lambda ()
