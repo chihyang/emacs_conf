@@ -47,6 +47,7 @@
     dired-single
     dired-sort-menu+
     elpy
+    ethan-wspace
     everything
     fill-column-indicator
     fish-mode
@@ -288,6 +289,14 @@
 (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 (add-hook 'python-mode-hook (lambda () (auto-complete-mode -1)))
+
+;; ethan-wspace
+(require 'ethan-wspace)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (ethan-wspace-mode 1)
+            (ethan-wspace-clean-no-nl-eof-mode -1)
+            (ethan-wspace-highlight-tabs-mode 1)))
 
 ;; everything
 (if (eq system-type 'windows-nt)
