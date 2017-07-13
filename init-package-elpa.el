@@ -416,7 +416,7 @@
 (setq
  logview-additional-submodes
  (quote (("Android"
-          (format . "TIMESTAMP LEVEL NAME THREAD:")
+          (format . "TIMESTAMP LEVEL/NAME( THREAD):")
           (levels . "Logcat")
           (timestamp "Android Logcat Time Format")
           (aliases "logcat"))
@@ -426,6 +426,16 @@
           (aliases "logcat-n"))
          ("threadtime"
           (format . "TIMESTAMP THREAD THREAD LEVEL NAME:")
+          (levels . "Logcat")
+          (timestamp "Android Logcat Time Format")
+          (aliases "logcat"))
+         ("thread-blank"
+          (format . "LEVEL/NAME( THREAD):")
+          (levels . "Logcat")
+          (timestamp "Android Logcat Time Format")
+          (aliases "logcat"))
+         ("thread-nonblank"
+          (format . "LEVEL/NAME(THREAD):")
           (levels . "Logcat")
           (timestamp "Android Logcat Time Format")
           (aliases "logcat")))))
