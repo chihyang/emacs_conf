@@ -90,6 +90,7 @@
     switch-window
     tabbar
     vimrc-mode
+    vlf
     websocket
     workgroups2
     xcscope
@@ -419,26 +420,31 @@
           (format . "TIMESTAMP LEVEL/NAME( THREAD):")
           (levels . "Logcat")
           (timestamp "Android Logcat Time Format")
-          (aliases "logcat"))
+          (aliases "la"))
          ("Android-nontime"
           (format . "LEVEL NAME THREAD:")
           (levels . "Logcat")
-          (aliases "logcat-n"))
+          (aliases "la-n"))
          ("threadtime"
           (format . "TIMESTAMP THREAD THREAD LEVEL NAME:")
           (levels . "Logcat")
           (timestamp "Android Logcat Time Format")
-          (aliases "logcat"))
+          (aliases "tt"))
          ("thread-blank"
           (format . "LEVEL/NAME( THREAD):")
           (levels . "Logcat")
           (timestamp "Android Logcat Time Format")
-          (aliases "logcat"))
+          (aliases "tb"))
          ("thread-nonblank"
           (format . "LEVEL/NAME(THREAD):")
           (levels . "Logcat")
           (timestamp "Android Logcat Time Format")
-          (aliases "logcat")))))
+          (aliases "tn"))
+         ("android-colon"
+          (format . "TIMESTAMP: LEVEL/NAME(THREAD):")
+          (levels . "Logcat")
+          (timestamp "Android Logcat Time Format")
+          (aliases "lac")))))
 
 ;; lua-mode
 (setq lua-indent-level 4)
@@ -514,6 +520,10 @@
 
 ;; vimrc-mode
 (add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
+
+;; vlf
+(require 'vlf-setup)
+(setq vlf-application 'dont-ask)
 
 ;; workgroups2
 (require 'workgroups2)
