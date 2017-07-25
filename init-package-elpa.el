@@ -23,6 +23,7 @@
   '(
     ac-ispell
     adaptive-wrap
+    ample-theme
     anzu
     auctex
     auto-complete
@@ -230,11 +231,26 @@
 ;; color-theme-solarized
 (require 'color-theme)
 (require 'color-theme-solarized)
-(if (display-graphic-p)
+(defun switch-theme (gui-theme terminal-theme)
+  (interactive
+    (list
+     (intern (completing-read "Select custom GUI theme: "
+                              (mapcar 'symbol-name
+                                      (custom-available-themes))))
+     (intern (completing-read "Select custom TERM theme: "
+                               (mapcar 'symbol-name
+                                       (custom-available-themes))))))
+  (if (display-graphic-p)
+      (progn
+        (disable-theme terminal-theme)
+        (set-frame-parameter nil 'background-mode 'dark)
+        (load-theme gui-theme t)
+        (enable-theme gui-theme))
     (progn
-      (set-frame-parameter nil 'background-mode 'dark)
-      (load-theme 'solarized t))
-  (disable-theme 'solarized))
+      (disable-theme gui-theme)
+      (load-theme terminal-theme t t)
+      (enable-theme terminal-theme))))
+(switch-theme 'solarized 'ample-flat)
 
 ;; column-marker
 (column-marker-1 80)                    ; column marker width
