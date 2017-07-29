@@ -215,7 +215,7 @@
 
 ;; chinese-fonts-setup
 (require 'chinese-fonts-setup)
-(chinese-fonts-setup-enable)
+(cnfonts-enable)
 (defun my-set-symbol-fonts (fontsizes-list)
   (let* ((fontname "Segoe UI Symbol")
          (fontsize (nth 0 fontsizes-list))
@@ -223,10 +223,10 @@
                               :size fontsize
                               :weight 'normal
                               :slant 'normal)))
-    (if (cfs--fontspec-valid-p fontspec)
+    (if (cnfonts--fontspec-valid-p fontspec)
         (set-fontset-font "fontset-default" 'symbol fontspec nil 'append)
       (message "字体 %S 不存在！" fontname))))
-(add-hook 'cfs-set-font-finish-hook 'my-set-symbol-fonts)
+(add-hook 'cnfonts-set-font-finish-hook 'my-set-symbol-fonts)
 
 ;; color-theme-solarized
 (require 'color-theme)
