@@ -57,7 +57,6 @@
     haskell-mode
     hide-lines
     htmlize
-    icicles
     iedit
     indent-guide
     ivy
@@ -244,10 +243,13 @@
       (progn
         (disable-theme terminal-theme)
         (set-frame-parameter nil 'background-mode 'dark)
+        (set-terminal-parameter nil 'background-mode 'dark)
         (load-theme gui-theme t)
         (enable-theme gui-theme))
     (progn
       (disable-theme gui-theme)
+      (set-frame-parameter nil 'background-mode 'dark)
+      (set-terminal-parameter nil 'background-mode 'dark)
       (load-theme terminal-theme t t)
       (enable-theme terminal-theme))))
 (switch-theme 'solarized 'ample-flat)
@@ -311,6 +313,8 @@
 (require 'ethan-wspace)
 (add-hook 'c-mode-common-hook
           (lambda ()
+            (setq mode-require-final-newline nil)
+            (setq require-final-newline nil)
             (ethan-wspace-mode 1)
             (ethan-wspace-clean-no-nl-eof-mode -1)
             (ethan-wspace-highlight-tabs-mode 1)))
@@ -344,31 +348,9 @@
 ;; flyspell-popup
 (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
 
-;; icicle-mode & ivy-mode configuration
-;; for unknown reasons, Emacs crash in terminal when ivy-mode is enabled, so
-;; enable this minor mode only when the Emacs is run under window system
-(require 'icicles)
-(eval-after-load "icicles-opt.el"
-  (add-hook 'icicle-mode-hook
-            (lambda ()
-              (let (my-icicle-top-level-key-bindings)
-                (setq my-icicle-top-level-key-bindings
-                      (mapcar (lambda (lst)
-                                (unless (string= "icicle-occur" (nth 1 lst)) lst))
-                              icicle-top-level-key-bindings))
-                (setq icicle-top-level-key-bindings my-icicle-top-level-key-bindings)) )))
 (require 'ivy)
 (setq ivy-use-virtual-buffers t)
-(if (window-system)
-    (progn
-      (ivy-mode 1)
-      (icy-mode 0))
-  (progn
-    (message "Terminal mode, ivy disabled, icy enabled.")
-    (ivy-mode 0)
-    (icy-mode 1)
-    (setq icicle-Completions-text-scale-decrease 0.0)
-    ))
+(ivy-mode 1)
 
 ;; iedit-mode
 (require 'iedit)
@@ -460,7 +442,11 @@
           (format . "TIMESTAMP: LEVEL/NAME(THREAD):")
           (levels . "Logcat")
           (timestamp "Android Logcat Time Format")
-          (aliases "lac")))))
+          (aliases "lac"))
+         ("decoder"
+          (format . "[TIMESTAMP]")
+          (timestamp "ISO 8601 datetime")
+          (aliases "de")))))
 
 ;; lua-mode
 (setq lua-indent-level 4)
