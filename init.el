@@ -33,6 +33,10 @@
 
 (setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
 
+(when (> emacs-major-version 24)
+  (setq jit-lock-defer-time 0)
+  (setq fast-but-imprecise-scrolling t))
+
 (global-set-key (kbd "M-9") 'kill-whole-line)  ; delete a whole line with M-9
 (global-set-key (kbd "C-x _") 'shrink-window)  ; shrink window vertically
 (global-set-key (kbd "C-x n") 'next-multiframe-window)

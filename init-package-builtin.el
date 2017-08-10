@@ -56,6 +56,7 @@
 (setq-default tab-width 4)              ; set tab as 4 spaces
 (setq c-default-style "bsd")
 (setq c-basic-offset 4)
+(c-set-offset 'case-label '+)
 ;;; Seems `c-toggle-auto-newline' takes more trouble than convenience, so it is
 ;;; disabled.
 ;; (add-hook 'c-mode-common-hook
