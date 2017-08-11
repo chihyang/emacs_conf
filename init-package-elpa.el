@@ -10,15 +10,6 @@
 
 ;;; Code:
 
-;;; Standard package repositories
-;; melpa for most packages
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/")) ; marmalade
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/")) ; org
-
-(package-initialize)
-
 (defconst required-packages
   '(
     ac-ispell
@@ -81,7 +72,6 @@
     psvn
     py-autopep8
     rainbow-mode
-    session
     smart-mode-line
     smart-mode-line-powerline-theme
     sos
@@ -89,6 +79,7 @@
     swiper
     switch-window
     tabbar
+    use-package
     vimrc-mode
     vlf
     websocket
@@ -100,7 +91,7 @@
     ))
 
 (defun ensure-packages ()
-  "install lost packages"
+  "Install lost packages."
   (interactive)
   (unless package-archive-contents
     (package-refresh-contents))
@@ -537,7 +528,7 @@
 (setq wg-mode-line-decor-left-brace "["
       wg-mode-line-decor-right-brace "]"  ; how to surround it
       wg-mode-line-decor-divider ":")
-(workgroups-mode 1)
+(add-hook 'after-init-hook (lambda ()  (workgroups-mode 1)))
 
 ;; xcscope
 (require 'xcscope)
