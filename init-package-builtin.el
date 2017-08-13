@@ -157,6 +157,9 @@
 (require 'man)
 (add-hook 'Man-mode-hook 'visual-line-mode)
 
+;; octave-mode
+(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+
 ;; org-mode
 (require 'org)
 (setq org-startup-indented t)           ; enable auto-indent
