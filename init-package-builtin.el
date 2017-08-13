@@ -66,11 +66,11 @@
 ;;             (local-set-key (kbd "RET") 'newline-and-indent)))
 
 ;; column-number-mode
-(setq column-number-mode t)             ; enable column-number-mode
+(column-number-mode t)                  ; enable column-number-mode
 
 ;; compile
 (require 'compile)
-(setq compilation-scroll-output t)        ; auto-scroll the compilation buffer
+(setq compilation-scroll-output t)      ; auto-scroll the compilation buffer
 
 ;; conf-mode
 (add-to-list 'auto-mode-alist '("\\.rc\\'" . conf-mode))
@@ -81,6 +81,7 @@
 ;; desktop
 (use-package desktop
   :init
+  (setq desktop-load-locked-desktop t)
   (setq desktop-files-not-to-save "^$")     ; reload tramp path
   (setq desktop-buffers-not-to-save
         (concat "\\("
@@ -90,7 +91,7 @@
   :config
   (unless (daemonp)
     (eval-after-load "init.el"
-      (desktop-read))))
+      (desktop-save-mode))))
 
 ;; dried omit mode
 (require 'dired-x)

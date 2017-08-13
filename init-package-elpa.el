@@ -204,19 +204,22 @@
               holiday-other-holidays))
 
 ;; chinese-fonts-setup
-(require 'chinese-fonts-setup)
-(cnfonts-enable)
-(defun my-set-symbol-fonts (fontsizes-list)
-  (let* ((fontname "Segoe UI Symbol")
-         (fontsize (nth 0 fontsizes-list))
-         (fontspec (font-spec :name fontname
-                              :size fontsize
-                              :weight 'normal
-                              :slant 'normal)))
-    (if (cnfonts--fontspec-valid-p fontspec)
-        (set-fontset-font "fontset-default" 'symbol fontspec nil 'append)
-      (message "字体 %S 不存在！" fontname))))
-(add-hook 'cnfonts-set-font-finish-hook 'my-set-symbol-fonts)
+(use-package chinese-fonts-setup
+  :init
+  (defun my-set-symbol-fonts (fontsizes-list)
+    (let* ((fontname "Segoe UI Symbol")
+           (fontsize (nth 0 fontsizes-list))
+           (fontspec (font-spec :name fontname
+                                :size fontsize
+                                :weight 'normal
+                                :slant 'normal)))
+      (if (cnfonts--fontspec-valid-p fontspec)
+          (set-fontset-font "fontset-default" 'symbol fontspec nil 'append)
+        (message "字体 %S 不存在！" fontname))))
+  (add-hook 'cnfonts-set-font-finish-hook 'my-set-symbol-fonts)
+  (setq cfs--current-profile-name "profile1")
+    :config
+  (cnfonts-enable))
 
 ;; color-theme-solarized
 (require 'color-theme)
@@ -323,21 +326,24 @@
 (add-hook 'tex-mode-hook 'flycheck-mode)
 
 ;; flyspell-mode
-(require 'ispell)
-(setq ispell-local-dictionary-alist
-      '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))
-(if (eq system-type 'windows-nt)
-    (progn
-      (setq ispell-program-name "aspell")
-      (setq ispell-alternate-dictionary "~/.emacs.d/windows/dict.txt")))
-(ispell-change-dictionary "american" t)
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
-(dolist (hook '(change-log-mode-hook log-edit-mode-hook))
-  (add-hook hook (lambda () (flyspell-mode -1)))) ;disable spell check for log mode
+(use-package ispell
+  :init
+  (ispell-change-dictionary "american" t)
+  (setq ispell-extra-args '("--lang=en_US"))
+  (setq ispell-local-dictionary-alist
+        '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))
+  (if (eq system-type 'windows-nt)
+      (progn
+        (setq ispell-program-name "aspell")
+        (setq ispell-alternate-dictionary "~/.emacs.d/windows/dict.txt")))
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+  :config
+  (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
+    (add-hook hook (lambda () (flyspell-mode -1)))))
 
 ;; flyspell-popup
-(add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
+;; (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
 
 (require 'ivy)
 (setq ivy-use-virtual-buffers t)
@@ -447,10 +453,13 @@
 ;; a newline. Thus, $ may lead to unexpected behavior when dealing with
 ;; filenames containing newlines. See the following link:
 ;; https://www.emacswiki.org/emacs/AutoModeAlist
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("[^Mm]\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("README.*" . gfm-mode))
+(use-package markdown-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("[^Mm]\\.md\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("README.*" . gfm-mode))
+  (setq markdown-command "pandoc -f markdown_github"))
 
 ;; modern-c++-font-lock
 (require 'modern-cpp-font-lock)
@@ -490,12 +499,14 @@
 (setq sml/name-width 20)
 (sml/setup)
 (require 'modeline-posn)                ; modeline-posn must be loaded after sml
-                                        ; to take effect
+(size-indication-mode 1)                ; to take effect
 
 ;; sr-speedbar
-(custom-set-variables
- '(sr-speedbar-default-width 100)
- '(sr-speedbar-max-width 100))
+(use-package sr-speedbar
+  :init
+  (setq speedbar-show-unknown-files t)
+  (setq sr-speedbar-default-width 100)
+  (setq sr-speedbar-max-width 100))
 
 ;; switch-window
 (global-set-key (kbd "C-x o") 'switch-window) ; rebind `C-x o' to switch-window
