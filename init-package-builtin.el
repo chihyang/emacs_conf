@@ -80,6 +80,7 @@
 
 ;; desktop
 (use-package desktop
+  :defer t
   :init
   (setq desktop-load-locked-desktop t)
   (setq desktop-files-not-to-save "^$")     ; reload tramp path

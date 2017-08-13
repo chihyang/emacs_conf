@@ -205,6 +205,7 @@
 
 ;; chinese-fonts-setup
 (use-package chinese-fonts-setup
+  :defer t
   :init
   (defun my-set-symbol-fonts (fontsizes-list)
     (let* ((fontname "Segoe UI Symbol")
@@ -454,6 +455,7 @@
 ;; filenames containing newlines. See the following link:
 ;; https://www.emacswiki.org/emacs/AutoModeAlist
 (use-package markdown-mode
+  :defer t
   :init
   (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
@@ -503,6 +505,7 @@
 
 ;; sr-speedbar
 (use-package sr-speedbar
+  :defer t
   :init
   (setq speedbar-show-unknown-files t)
   (setq sr-speedbar-default-width 100)
