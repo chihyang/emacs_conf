@@ -1,6 +1,7 @@
 # ignore auto generated folders
 auto-save-list/*
 chinese-fonts-setup/*
+cnfonts/*
 elpa/*
 server/*
 tutorial/*
