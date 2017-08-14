@@ -205,7 +205,6 @@
 
 ;; chinese-fonts-setup
 (use-package chinese-fonts-setup
-  :defer t
   :init
   (defun my-set-symbol-fonts (fontsizes-list)
     (let* ((fontname "Segoe UI Symbol")
@@ -219,7 +218,7 @@
         (message "字体 %S 不存在！" fontname))))
   (add-hook 'cnfonts-set-font-finish-hook 'my-set-symbol-fonts)
   (setq cfs--current-profile-name "profile1")
-    :config
+  :config
   (cnfonts-enable))
 
 ;; color-theme-solarized
