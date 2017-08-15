@@ -498,6 +498,11 @@
 (setq sml/shorten-directory t)
 (setq sml/shorten-modes t)
 (setq sml/name-width 20)
+(setq eol-mnemonic-dos ":CRLF")
+(setq eol-mnemonic-mac ":CR")
+(setq eol-mnemonic-unix ":LF")
+(setq eol-mnemonic-undecided ":?")
+(setq sml/mule-info "%Z")
 (sml/setup)
 (require 'modeline-posn)                ; modeline-posn must be loaded after sml
 (size-indication-mode 1)                ; to take effect
