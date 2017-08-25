@@ -63,6 +63,7 @@
     modeline-posn
     modern-cpp-font-lock
     multiple-cursors
+    nlinum
     origami
     pandoc-mode
     paredit
@@ -84,6 +85,7 @@
     vlf
     websocket
     workgroups2
+    wttrin
     xcscope
     yasnippet
     youdao-dictionary
@@ -448,6 +450,12 @@
 ;; lua-mode
 (setq lua-indent-level 4)
 
+;; magit
+(use-package magit
+  :defer t
+  :init
+  (setq magit-blame-heading-format "%-20a %H %C %s"))
+
 ;; markdown-mode
 ;; Note: \' matches the end of a string, while $ matches the empty string before
 ;; a newline. Thus, $ may lead to unexpected behavior when dealing with
@@ -468,6 +476,12 @@
 
 ;; multiple-cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+
+;; nlinum
+(use-package nlinum
+  :defer t
+  :init
+  (setq nlinum-format "%d "))
 
 ;; origami
 (dolist (hook '(
@@ -529,6 +543,11 @@
     (global-set-key (kbd "C-c t n") 'tabbar-forward-tab)
     (global-set-key (kbd "C-c t p") 'tabbar-backward-tab)))
 
+;; undo-tree
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode))
+
 ;; vimrc-mode
 (add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
 
@@ -547,6 +566,13 @@
       wg-mode-line-decor-right-brace "]"  ; how to surround it
       wg-mode-line-decor-divider ":")
 (add-hook 'after-init-hook (lambda ()  (workgroups-mode 1)))
+
+;; wttrin
+(use-package wttrin
+  :defer t
+  :config
+  (add-to-list 'wttrin-default-cities "Beijing")
+  (add-to-list 'wttrin-default-cities "Shanghai"))
 
 ;; xcscope
 (require 'xcscope)
