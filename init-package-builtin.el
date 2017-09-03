@@ -156,6 +156,10 @@
 ;; Man-mode
 (require 'man)
 (add-hook 'Man-mode-hook 'visual-line-mode)
+(when (eq (face-attribute 'Man-overstrike :foreground) 'unspecified)
+    (set-face-attribute 'Man-overstrike nil :inherit font-lock-type-face :bold t))
+(when (eq (face-attribute 'Man-overstrike :foreground) 'unspecified)
+  (set-face-attribute 'Man-underline nil :inherit font-lock-keyword-face :underline t))
 
 ;; octave-mode
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
