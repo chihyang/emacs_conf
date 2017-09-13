@@ -126,8 +126,13 @@
 
 ;; anzu
 (global-anzu-mode +1)
-(global-set-key [remap query-replace] 'anzu-query-replace)
-(global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
+(if (display-graphic-p)
+    (progn
+      (global-set-key [remap query-replace] 'anzu-query-replace)
+      (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp))
+  (progn
+    (global-set-key [remap query-replace] 'anzu-query-replace-regexp)
+    (global-set-key [remap query-replace-regexp] 'anzu-query-replace)))
 
 ;; auto-complete
 (ac-config-default)                             ; auto-complete

@@ -57,6 +57,12 @@
 (setq c-default-style "bsd")
 (setq c-basic-offset 4)
 (c-set-offset 'case-label '+)
+;;; highlight TODO and BUG and FIXME
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (font-lock-add-keywords
+             nil
+             '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
 ;;; Seems `c-toggle-auto-newline' takes more trouble than convenience, so it is
 ;;; disabled.
 ;; (add-hook 'c-mode-common-hook
