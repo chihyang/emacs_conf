@@ -270,6 +270,8 @@
   (dim-minor-names
    '(
      (auto-fill-function         " ¶")
+     (undo-tree-mode             " ⇔")
+     (modern-c++-font-lock-mode  " c++11")
      (auto-revert-mode           "")
      (auto-complete-mode         "")
      (auto-highlight-symbol-mode "")
@@ -546,7 +548,10 @@
       (global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab))
   (progn
     (global-set-key (kbd "C-c t n") 'tabbar-forward-tab)
-    (global-set-key (kbd "C-c t p") 'tabbar-backward-tab)))
+    (global-set-key (kbd "C-c t p") 'tabbar-backward-tab)
+    (global-set-key (kbd "C-c t <up>") 'tabbar-backward-group)
+    (global-set-key (kbd "C-c t <down>") 'tabbar-forward-group)
+    (global-set-key (kbd "C-c t <home>") 'tabbar-press-home)))
 
 ;; undo-tree
 (use-package undo-tree
