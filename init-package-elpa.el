@@ -64,6 +64,7 @@
     modern-cpp-font-lock
     multiple-cursors
     nlinum
+    omni-scratch
     origami
     pandoc-mode
     paredit
@@ -271,7 +272,7 @@
    '(
      (auto-fill-function         " ¶")
      (undo-tree-mode             " ⇔")
-     (modern-c++-font-lock-mode  " c++11")
+     (modern-c++-font-lock-mode  " C++11")
      (auto-revert-mode           "")
      (auto-complete-mode         "")
      (auto-highlight-symbol-mode "")
@@ -489,6 +490,15 @@
   :defer t
   :init
   (setq nlinum-format "%d "))
+
+;; omni-scratch
+(use-package omni-scratch
+  :init
+  (setq omni-scratch-default-mode 'emacs-lisp-mode)
+  :bind (("M-s DEL" . omni-scratch-buffer)
+         ("M-s <deletechar>" . omni-scratch-major-buffer)
+         ("M-s $" . omni-scratch-goto-latest)
+         ("M-s *" . omni-scratch-buffers)))
 
 ;; origami
 (dolist (hook '(
