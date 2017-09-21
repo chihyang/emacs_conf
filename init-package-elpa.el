@@ -74,6 +74,7 @@
     psvn
     py-autopep8
     rainbow-mode
+    slime
     smart-mode-line
     smart-mode-line-powerline-theme
     sos
@@ -522,6 +523,13 @@
 (add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
 (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+
+;; slime
+(use-package slime
+  :defer t
+  :init
+  (setq inferior-lisp-program "sbcl")
+  (setq slime-contribs '(slime-fancy)))
 
 ;; smart-mode-line
 (require 'smart-mode-line)
