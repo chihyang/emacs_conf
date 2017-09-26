@@ -73,6 +73,7 @@
     protobuf-mode
     psvn
     py-autopep8
+    rainbow-delimiters
     rainbow-mode
     slime
     smart-mode-line
@@ -524,12 +525,25 @@
 (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
+;; rainbow-delimiters
+(use-package rainbow-delimiters
+  :defer t
+  :init
+  (dolist (hook '(emacs-lisp-mode-hook
+                  eval-expression-minibuffer-setup-hook
+                  ielm-mode-hook
+                  lisp-mode-hook
+                  lisp-interaction-mode-hook
+                  scheme-mode-hook))
+    (add-hook hook 'rainbow-delimiters-mode)))
+
 ;; slime
 (use-package slime
   :defer t
   :init
   (setq inferior-lisp-program "sbcl")
-  (setq slime-contribs '(slime-fancy)))
+  (setq slime-contribs '(slime-fancy))
+  (load (expand-file-name "~/quicklisp/slime-helper.el")))
 
 ;; smart-mode-line
 (require 'smart-mode-line)
