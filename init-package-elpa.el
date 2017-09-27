@@ -316,14 +316,14 @@
 (add-hook 'python-mode-hook (lambda () (auto-complete-mode -1)))
 
 ;; ethan-wspace
-(require 'ethan-wspace)
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (setq mode-require-final-newline nil)
-            (setq require-final-newline nil)
-            (ethan-wspace-mode 1)
-            (ethan-wspace-clean-no-nl-eof-mode -1)
-            (ethan-wspace-highlight-tabs-mode 1)))
+(use-package 'ethan-wspace
+  :init
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (setq require-final-newline nil)
+              (ethan-wspace-mode 1)
+              (ethan-wspace-clean-no-nl-eof-mode -1)
+              (ethan-wspace-highlight-tabs-mode 1))))
 
 ;; everything
 (if (eq system-type 'windows-nt)
