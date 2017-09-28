@@ -13,6 +13,7 @@
 (defconst required-packages
   '(
     ac-ispell
+    ac-slime
     adaptive-wrap
     ample-theme
     anzu
@@ -316,7 +317,7 @@
 (add-hook 'python-mode-hook (lambda () (auto-complete-mode -1)))
 
 ;; ethan-wspace
-(use-package 'ethan-wspace
+(use-package ethan-wspace
   :init
   (add-hook 'c-mode-common-hook
             (lambda ()
@@ -544,6 +545,14 @@
   (setq inferior-lisp-program "sbcl")
   (setq slime-contribs '(slime-fancy))
   (load (expand-file-name "~/quicklisp/slime-helper.el")))
+(use-package ac-slime
+  :defer t
+  :after slime
+  :init
+  (add-hook 'slime-mode-hook 'set-up-slime-ac)
+  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+  (eval-after-load "auto-complete"
+    '(add-to-list 'ac-modes 'slime-repl-mode)))
 
 ;; smart-mode-line
 (require 'smart-mode-line)
