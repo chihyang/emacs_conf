@@ -319,11 +319,11 @@
 ;; ethan-wspace
 (use-package ethan-wspace
   :init
-  (add-hook 'c-mode-common-hook
+  (add-hook 'prog-mode-hook
             (lambda ()
               (setq require-final-newline nil)
               (ethan-wspace-mode 1)
-              (ethan-wspace-clean-no-nl-eof-mode -1)
+              (ethan-wspace-clean-no-nl-eof-mode 1)
               (ethan-wspace-highlight-tabs-mode 1))))
 
 ;; everything
