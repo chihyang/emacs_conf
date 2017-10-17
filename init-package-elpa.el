@@ -544,7 +544,8 @@
   :init
   (setq inferior-lisp-program "sbcl")
   (setq slime-contribs '(slime-fancy))
-  (load (expand-file-name "~/quicklisp/slime-helper.el")))
+  (if (file-exists-p "~/quicklisp/slime-helper.el")
+      (load (expand-file-name "~/quicklisp/slime-helper.el"))))
 (use-package ac-slime
   :defer t
   :after slime
