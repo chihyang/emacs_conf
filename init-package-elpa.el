@@ -193,16 +193,19 @@
 (global-set-key (kbd "C-c C-b") 'whitespace-mode) ; show whitespace
 
 ;; bookmark+
-; rebind bmkp prefix key to "C x /"
-(setq bmkp-bookmark-map-prefix-keys (quote ("/")))
-(setq bmkp-last-as-first-bookmark-file nil)
-(require 'bookmark+-bmu)
-; change annoying bookmark name face
-(when (not (display-graphic-p))
-  (set-face-attribute
-   'bmkp-local-file-without-region nil
-   :foreground "green"))                ; color in terminal mode
-(setq bookmark-save-flag 1)             ; automatically save change
+(use-package bookmark+
+  :config
+  (setq bmkp-bookmark-map-prefix-keys (quote ("/")))
+  (setq bmkp-last-as-first-bookmark-file nil)
+  (setq bmkp-auto-light-when-set 'any-bookmark)
+  (setq bmkp-auto-light-when-jump 'any-bookmark)
+  ;; change annoying bookmark name face
+  (when (not (display-graphic-p))
+    (set-face-attribute
+     'bmkp-local-file-without-region nil
+     :foreground "green"))
+  ;; automatically save change
+  (setq bookmark-save-flag 1))
 
 ;; cal-china-x
 (require 'cal-china-x)
