@@ -30,6 +30,7 @@
     cal-china-x
     chinese-fonts-setup
     cmake-mode
+    cmake-project
     column-marker
     color-theme
     color-theme-solarized
@@ -262,10 +263,23 @@
       (enable-theme terminal-theme))))
 (switch-theme 'solarized 'ample-flat)
 
+;; cmake-project-mode
+
+;; cmake-project
+(use-package cmake-project
+  :requires cmake-mode
+  :config
+  (defun maybe-cmake-project-hook ()
+    (if (file-exists-p "CMakeLists.txt") (cmake-project-mode)))
+  (add-hook 'c-mode-hook 'maybe-cmake-project-hook)
+  (add-hook 'c++-mode-hook 'maybe-cmake-project-hook)
+  (add-hook 'cmake-mode-hook 'maybe-cmake-project-hook))
+
 ;; column-marker
 (column-marker-1 80)                    ; column marker width
 
 ;; dim
+(require 'dim)
 (defun simplify-mode-alias ()
   "Shorten mode line major/minor modes names."
   (dim-major-names
@@ -277,8 +291,6 @@
   (dim-minor-names
    '(
      (auto-fill-function         " ¶")
-     (undo-tree-mode             " ⇔")
-     (modern-c++-font-lock-mode  " C++11")
      (auto-revert-mode           "")
      (auto-complete-mode         "")
      (auto-highlight-symbol-mode "")
@@ -484,9 +496,19 @@
   (add-to-list 'auto-mode-alist '("README.*" . gfm-mode))
   (setq markdown-command "pandoc -f markdown_github"))
 
+;; modeline-posn
+(use-package modeline-posn
+  :after smart-mode-line
+  :config
+  (line-number-mode 1)
+  (column-number-mode 1)
+  (size-indication-mode 1))
+
 ;; modern-c++-font-lock
-(require 'modern-cpp-font-lock)
-(modern-c++-font-lock-global-mode t)
+(use-package modern-cpp-font-lock
+  :config
+  (modern-c++-font-lock-global-mode t)
+  (dim-minor-names '((modern-c++-font-lock-mode " C++11"))))
 
 ;; multiple-cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -559,27 +581,19 @@
     '(add-to-list 'ac-modes 'slime-repl-mode)))
 
 ;; smart-mode-line
-(require 'smart-mode-line)
-(setq sml/no-confirm-load-theme t)
-(setq sml/shorten-directory t)
-(setq sml/shorten-modes t)
-(setq sml/name-width 20)
-(setq eol-mnemonic-dos ":CRLF")
-(setq eol-mnemonic-mac ":CR")
-(setq eol-mnemonic-unix ":LF")
-(setq eol-mnemonic-undecided ":?")
-(setq sml/mule-info "%Z")
-(sml/setup)
-(require 'modeline-posn)                ; modeline-posn must be loaded after sml
-(size-indication-mode 1)                ; to take effect
-
-;; sr-speedbar
-(use-package sr-speedbar
-  :defer t
+(use-package smart-mode-line
   :init
-  (setq speedbar-show-unknown-files t)
-  (setq sr-speedbar-default-width 100)
-  (setq sr-speedbar-max-width 100))
+  (setq sml/no-confirm-load-theme t)
+  (setq sml/shorten-directory t)
+  (setq sml/shorten-modes t)
+  (setq sml/name-width 20)
+  (setq eol-mnemonic-dos ":CRLF")
+  (setq eol-mnemonic-mac ":CR")
+  (setq eol-mnemonic-unix ":LF")
+  (setq eol-mnemonic-undecided ":?")
+  (setq sml/mule-info "%Z")
+  :config
+  (sml/setup))
 
 ;; switch-window
 (global-set-key (kbd "C-x o") 'switch-window) ; rebind `C-x o' to switch-window
@@ -601,7 +615,8 @@
 ;; undo-tree
 (use-package undo-tree
   :config
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  (dim-minor-names '((undo-tree-mode " ⇔"))))
 
 ;; vimrc-mode
 (add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
