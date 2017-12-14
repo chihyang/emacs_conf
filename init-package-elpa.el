@@ -490,11 +490,12 @@
 (use-package markdown-mode
   :defer t
   :init
-  (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("[^Mm]\\.md\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.text\\'" . gfm-mode))
+  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . gfm-mode))
+  (add-to-list 'auto-mode-alist '("[^Mm]\\.md\\'" . gfm-mode))
   (add-to-list 'auto-mode-alist '("README.*" . gfm-mode))
-  (setq markdown-command "pandoc -f markdown_github"))
+  (setq markdown-command "pandoc -f markdown_github")
+  (setq markdown-fontify-code-block-natively t))
 
 ;; modeline-posn
 (use-package modeline-posn
