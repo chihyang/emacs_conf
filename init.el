@@ -182,6 +182,18 @@
 (if (file-exists-p "~/.emacs.d/init-package-manual.el")
     (load "~/.emacs.d/init-package-manual.el"))
 
+(defun update-load-path ()
+  "Clear invalid paths from `load-path'."
+  (interactive)
+  (defun update-path-list-iter (paths result)
+    (cond ((null paths) result)
+          ((file-directory-p (car paths))
+           (update-path-list-iter (cdr paths) (append result (list (car paths)))))
+          (t
+           (update-path-list-iter (cdr paths) result))))
+  (setq load-path
+        (update-path-list-iter load-path '())))
+
 ;; custom parameter
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
