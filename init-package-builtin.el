@@ -103,6 +103,7 @@
 ;; dried omit mode
 (require 'dired-x)
 (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
+(setq dired-listing-switches "-alh")
 
 ;; ede
 (global-ede-mode 1)                      ; Enable the Project management system
