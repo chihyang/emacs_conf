@@ -482,7 +482,8 @@
 (use-package magit
   :defer t
   :init
-  (setq magit-blame-heading-format "%-20a %H %C %s"))
+  (setq magit-blame-heading-format "%-20a %H %C %s")
+  (setq magit-diff-refine-hunk 'all))
 
 ;; markdown-mode
 ;; Note: \' matches the end of a string, while $ matches the empty string before
