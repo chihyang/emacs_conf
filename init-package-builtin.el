@@ -226,6 +226,9 @@ unwanted space when exporting `org-mode' to html."
 (recentf-mode 1)
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
+;; subword-mode
+(global-subword-mode)
+
 ;; set program to run scheme
 (require 'scheme)
 (if (eq system-type 'windows-nt)
