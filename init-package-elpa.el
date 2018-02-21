@@ -80,7 +80,7 @@
     slime
     smart-mode-line
     smart-mode-line-powerline-theme
-    sos
+    sx
     sr-speedbar
     swiper
     switch-window
