@@ -6,6 +6,13 @@
 
 ;;; Code:
 
+;; ansi-color
+(require 'ansi-color)
+(defun display-ansi-colors ()
+  (interactive)
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+
 ;; auto-fill
 (global-set-key (kbd "C-c q") 'auto-fill-mode) ; auto-fill mode by C-c q
 (setq-default fill-column 80)                  ;set auto-fill at 80

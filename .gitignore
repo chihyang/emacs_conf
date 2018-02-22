@@ -24,3 +24,4 @@ tramp
 manual/*
 init-package-manual.el
 .mc-lists.el
+.emacs-custom.el
