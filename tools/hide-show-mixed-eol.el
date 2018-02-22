@@ -12,10 +12,12 @@
   (interactive)
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
+
 ;; show mixed line ending
 (defun show-mixed-eol ()
   "Show ^M in files containing mixed UNIX and DOS line endings."
   (interactive)
   (setq buffer-display-table nil))
+
 (provide 'hide-show-mixed-eol)
 ;;; hide-show-mixed-eol.el ends here

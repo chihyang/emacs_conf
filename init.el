@@ -177,26 +177,17 @@
                 ))
   (add-hook hook 'comment-shortcut-for-coding-mode-hook))
 
-(load "~/.emacs.d/init-package-builtin.el")
-(load "~/.emacs.d/init-package-elpa.el")
-(load "~/.emacs.d/easy-copy.el")
-(load "~/.emacs.d/hide-show-mixed-eol.el")
-(load "~/.emacs.d/night-mode.el")
-(if (file-exists-p "~/.emacs.d/init-package-manual.el")
+;;; load other configurations
+(when (file-exists-p "~/.emacs.d/init-package-builtin.el")
+  (load "~/.emacs.d/init-package-builtin.el"))
+(when (file-exists-p "~/.emacs.d/init-package-elpa.el")
+  (load "~/.emacs.d/init-package-elpa.el"))
+(when (file-exists-p "~/.emacs.d/init-package-manual.el")
     (load "~/.emacs.d/init-package-manual.el"))
-
-(defun update-load-path ()
-  "Clear invalid paths from `load-path'."
-  (interactive)
-  (defun update-path-list-iter (paths result)
-    (cond ((null paths) result)
-          ((file-directory-p (car paths))
-           (update-path-list-iter (cdr paths) (append result (list (car paths)))))
-          (t
-           (update-path-list-iter (cdr paths) result))))
-  (setq load-path
-        (update-path-list-iter load-path '())))
-
+;;; load tool functions
+(let ((tools (directory-files "~/.emacs.d/tools" t "\\.el$")))
+  (dolist (tool tools)
+    (load tool)))
 (setq custom-file "~/.emacs.d/.emacs-custom.el")
 (when (file-exists-p custom-file)
   (load custom-file))

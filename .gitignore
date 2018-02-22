@@ -1,27 +1,29 @@
 # ignore auto generated folders
+.sx/*
 auto-save-list/*
 chinese-fonts-setup/*
 cnfonts/*
 elpa/*
+emms/*
+irony/*
 server/*
 tutorial/*
-emms/*
 semanticdb/*
-irony/*
 url/*
-# ignore auto generated files
+.emacs-custom.el
+.mc-lists.el
 *.*~
 *.dat
 *.elc
 *.emacs.desktop*
 *.session
-ede-projects.el
-recentf
 bookmarks
+ede-projects.el
+network-security.data
+recentf
 srecode-map.el
 tramp
+
 # ignore platform dependent configuration files
 manual/*
 init-package-manual.el
-.mc-lists.el
-.emacs-custom.el
