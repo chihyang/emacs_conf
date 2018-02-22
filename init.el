@@ -47,6 +47,9 @@
   (setq jit-lock-defer-time 0)
   (setq fast-but-imprecise-scrolling t))
 
+(setq enable-recursive-minibuffers t)
+(minibuffer-depth-indicate-mode)
+
 (global-set-key (kbd "M-9") 'kill-whole-line)  ; delete a whole line with M-9
 (global-set-key (kbd "C-x _") 'shrink-window)  ; shrink window vertically
 (global-set-key (kbd "C-x n") 'next-multiframe-window)

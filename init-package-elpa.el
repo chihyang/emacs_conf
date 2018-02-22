@@ -93,6 +93,7 @@
     wttrin
     xcscope
     yasnippet
+    yasnippet-snippets
     youdao-dictionary
     ztree
     ))
