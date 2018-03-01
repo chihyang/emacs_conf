@@ -183,7 +183,7 @@
 (when (file-exists-p "~/.emacs.d/init-package-elpa.el")
   (load "~/.emacs.d/init-package-elpa.el"))
 (when (file-exists-p "~/.emacs.d/init-package-manual.el")
-    (load "~/.emacs.d/init-package-manual.el"))
+  (load "~/.emacs.d/init-package-manual.el"))
 ;;; load tool functions
 (let ((tools (directory-files "~/.emacs.d/tools" t "\\.el$")))
   (dolist (tool tools)
