@@ -117,7 +117,20 @@
 (ede-enable-generic-projects)
 
 ;; ediff
+(require 'ediff)
 (setq ediff-diff-options "-w")
+(defun ediff-copy-both-to-C ()
+  "Copy both buffer A and buffer B's content to C."
+  (interactive)
+  (ediff-copy-diff
+   ediff-current-difference nil 'C nil
+   (concat
+    (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+    (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+(defun add-d-to-ediff-mode-map ()
+  "Add key map for copy both to C."
+  (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
+(add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
 
 ;; electric-pair-mode
 (if (not (version< emacs-version "24.4"))
@@ -246,7 +259,7 @@ unwanted space when exporting `org-mode' to html."
 
 ;; time
 (require 'time)
-(setq display-time-format "%Y/%m/%d %H:%M")
+(setq display-time-format "%Y/%m/%d-%u %H:%M")
 (setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
 (display-time-mode t)
