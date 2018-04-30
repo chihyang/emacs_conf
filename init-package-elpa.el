@@ -47,6 +47,7 @@
     fish-mode
     flycheck
     flyspell-popup
+    graphviz-dot-mode
     haskell-mode
     hide-lines
     htmlize
@@ -75,6 +76,7 @@
     protobuf-mode
     psvn
     py-autopep8
+    racket-mode
     rainbow-delimiters
     rainbow-mode
     slime
@@ -547,6 +549,7 @@
                 ielm-mode-hook
                 lisp-mode-hook
                 lisp-interaction-mode-hook
+                racket-mode-hook
                 scheme-mode-hook))
   (add-hook hook 'enable-paredit-mode))
 
@@ -565,6 +568,7 @@
                   ielm-mode-hook
                   lisp-mode-hook
                   lisp-interaction-mode-hook
+                  racket-mode-hook
                   scheme-mode-hook))
     (add-hook hook 'rainbow-delimiters-mode)))
 
