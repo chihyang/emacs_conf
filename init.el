@@ -54,8 +54,8 @@
 (global-set-key (kbd "C-x _") 'shrink-window)  ; shrink window vertically
 (global-set-key (kbd "C-x n") 'next-multiframe-window)
 (global-set-key (kbd "C-x p") 'previous-multiframe-window)
-(global-unset-key "\C-x\C-b")           ; rebind `C-x C-b' to buffer-menu
-(global-set-key "\C-x\C-b" 'buffer-menu)
+(global-unset-key "\C-x\C-b")           ; rebind `C-x C-b' to ibuffer
+(global-set-key "\C-x\C-b" 'ibuffer)
 (global-set-key "\C-\M-^" 'scroll-other-window-down)
 
 ;; compile command

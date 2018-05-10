@@ -69,7 +69,7 @@
           (lambda ()
             (font-lock-add-keywords
              nil
-             '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
+             '(("\\<\\(FIXME\\|TODO\\|BUG\\|WARNING\\):" 1 font-lock-warning-face t)))))
 ;;; Seems `c-toggle-auto-newline' takes more trouble than convenience, so it is
 ;;; disabled.
 ;; (add-hook 'c-mode-common-hook
