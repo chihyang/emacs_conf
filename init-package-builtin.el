@@ -178,7 +178,9 @@
     (propertize (format (format "%%%dd " w) line) 'face 'linum)))
 (when (not (display-graphic-p))
   (setq linum-format 'linum-format-func))
-(global-linum-mode 1)
+(if (> emacs-major-version 25)
+    (global-display-line-numbers-mode 1)
+  (global-linum-mode 1))
 
 ;; Man-mode
 (require 'man)
