@@ -50,6 +50,7 @@
     graphviz-dot-mode
     haskell-mode
     hide-lines
+    highlight-escape-sequences
     htmlize
     iedit
     indent-guide
@@ -375,6 +376,13 @@
 
 ;; flyspell-popup
 ;; (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
+
+(use-package highlight-escape-sequences
+  :init
+  (hes-mode 1)
+  :config
+  (put 'hes-escape-backslash-face 'face-alias 'font-lock-builtin-face)
+  (put 'hes-escape-sequence-face 'face-alias 'font-lock-builtin-face))
 
 (require 'ivy)
 (setq ivy-use-virtual-buffers t)
