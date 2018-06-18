@@ -188,6 +188,7 @@
 
 ;; bookmark+
 (use-package bookmark+
+  :defer t
   :load-path "emacswiki/bookmark+/"
   :config
   (setq bmkp-bookmark-map-prefix-keys (quote ("/")))
@@ -337,25 +338,35 @@
   :load-path "emacswiki/dired-sort-menu+/")
 
 ;; elpy
-(require 'elpy)
-(elpy-enable)
-(setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-(add-hook 'python-mode-hook (lambda () (auto-complete-mode -1)))
+(use-package elpy
+  :config
+  (elpy-enable)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+  (add-hook 'python-mode-hook (lambda () (auto-complete-mode -1))))
 
 ;; ethan-wspace
 (use-package ethan-wspace
-  :init
-  (add-hook 'prog-mode-hook
-            (lambda ()
-              (setq require-final-newline nil)
-              (ethan-wspace-mode 1)
-              (ethan-wspace-clean-no-nl-eof-mode 1)
-              (ethan-wspace-highlight-tabs-mode 1))))
+  :config
+  (add-hook
+   'prog-mode-hook
+   (lambda ()
+     (setq mode-require-final-newline nil)
+     (global-ethan-wspace-mode 1)
+     (ethan-wspace-clean-no-nl-eof-mode 1)
+     (ethan-wspace-highlight-tabs-mode 1)))
+  (add-hook
+   'text-mode-hook
+   (lambda ()
+     (ethan-wspace-mode 0)
+     (setq mode-require-final-newline t))))
 
 ;; fill-column-indicator
-(setq fci-rule-width 1)
-(setq fci-rule-color "darkblue")
+(use-package fill-column-indicator
+  :defer t
+  :config
+  (setq fci-rule-width 1)
+  (setq fci-rule-color "darkblue"))
 
 ;; flycheck-mode
 (add-hook 'prog-mode-hook 'flycheck-mode)
@@ -515,15 +526,6 @@
   (setq markdown-command "pandoc -f markdown_github")
   (setq markdown-fontify-code-block-natively t))
 
-;; modeline-posn
-(use-package modeline-posn
-  :load-path "emacswiki/modeline-posn/"
-  :after smart-mode-line
-  :config
-  (line-number-mode 1)
-  (column-number-mode 1)
-  (size-indication-mode 1))
-
 ;; modern-c++-font-lock
 (use-package modern-cpp-font-lock
   :config
@@ -606,7 +608,7 @@
 
 ;; smart-mode-line
 (use-package smart-mode-line
-  :init
+  :config
   (setq sml/no-confirm-load-theme t)
   (setq sml/shorten-directory t)
   (setq sml/shorten-modes t)
@@ -616,8 +618,14 @@
   (setq eol-mnemonic-unix ":LF")
   (setq eol-mnemonic-undecided ":?")
   (setq sml/mule-info "%Z")
-  :config
   (sml/setup))
+;; modeline-posn
+(use-package modeline-posn
+  :load-path "emacswiki/modeline-posn/"
+  :config
+  (line-number-mode 1)
+  (column-number-mode 1)
+  (size-indication-mode 1))
 
 ;; switch-window
 (global-set-key (kbd "C-x o") 'switch-window) ; rebind `C-x o' to switch-window
