@@ -7,13 +7,10 @@
 ;;; Standard package repositories
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable
-  ;; as desired
-  (add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
-  (when (< emacs-major-version 24)
-    ;; For important compatibility libraries like cl-lib
-    (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
+       (proto (if no-ssl "http" "http")))
+  (setq package-archives
+        '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -182,6 +179,13 @@
                 plain-TeX-mode-hook
                 ))
   (add-hook hook 'comment-shortcut-for-coding-mode-hook))
+
+ ;; Set transparency of emacs
+(defun set-transparency (value)
+  "Set the transparency of the frame window to VALUE.
+0=transparent/100=opaque."
+  (interactive "nTransparency Value 0 - 100 opaque:")
+  (set-frame-parameter (selected-frame) 'alpha value))
 
 ;;; load other configurations
 (when (file-exists-p "~/.emacs.d/init-package-builtin.el")

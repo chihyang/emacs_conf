@@ -25,24 +25,17 @@
     auto-highlight-symbol
     autopair
     avy
-    blank-mode
-    bookmark+
     cal-china-x
     cnfonts
     cmake-mode
     cmake-project
-    column-marker
     color-theme
     color-theme-solarized
     csharp-mode
-    cursor-chg
     dim
-    dired+
     dired-single
-    dired-sort-menu+
     elpy
     ethan-wspace
-    everything
     fill-column-indicator
     fish-mode
     flycheck
@@ -57,6 +50,7 @@
     ivy
     java-snippets
     json-mode
+    langtool
     linum-relative
     logview
     lua-mode
@@ -64,7 +58,6 @@
     markdown-mode
     markdown-preview-mode
     minimap
-    modeline-posn
     modern-cpp-font-lock
     multiple-cursors
     nlinum
@@ -75,7 +68,6 @@
     plantuml-mode
     powerline-evil
     protobuf-mode
-    psvn
     py-autopep8
     racket-mode
     rainbow-delimiters
@@ -194,11 +186,9 @@
 (global-set-key (kbd "M-g e") 'avy-goto-word-0)
 (avy-setup-default)
 
-;; blank-mode
-(global-set-key (kbd "C-c C-b") 'whitespace-mode) ; show whitespace
-
 ;; bookmark+
 (use-package bookmark+
+  :load-path "emacswiki/bookmark+/"
   :config
   (setq bmkp-bookmark-map-prefix-keys (quote ("/")))
   (setq bmkp-last-as-first-bookmark-file nil)
@@ -236,7 +226,6 @@
           (set-fontset-font "fontset-default" 'symbol fontspec nil 'append)
         (message "字体 %S 不存在！" fontname))))
   (add-hook 'cnfonts-set-font-finish-hook 'my-set-symbol-fonts)
-  (setq cfs--current-profile-name "profile1")
   :config
   (cnfonts-enable))
 
@@ -280,7 +269,10 @@
   (add-hook 'cmake-mode-hook 'maybe-cmake-project-hook))
 
 ;; column-marker
-(column-marker-1 80)                    ; column marker width
+(use-package column-marker
+  :load-path "emacswiki/column-marker/"
+  :config
+  (column-marker-1 80))
 
 ;; dim
 (require 'dim)
@@ -318,15 +310,31 @@
           (lambda ()
             (dim-minor-name 'flyspell-mode   " √")))
 
+;; dired+
+(use-package dired+
+  :load-path "emacswiki/dired+/")
+
 ;; dired-single
-(add-hook 'dired-mode-hook
-          (lambda ()
-            (define-key dired-mode-map (kbd "RET") 'dired-single-buffer)
-            (define-key dired-mode-map (kbd "<mouse-1>") 'dired-single-buffer-mouse)
-            (define-key dired-mode-map (kbd "^")
-              (lambda ()
-                (interactive)
-                (dired-single-buffer "..")))))
+(use-package dired-single
+  :config
+  (add-hook 'dired-mode-hook
+            (lambda ()
+              (define-key dired-mode-map (kbd "RET") 'dired-single-buffer)
+              (define-key dired-mode-map (kbd "<mouse-1>") 'dired-single-buffer-mouse)
+              (define-key dired-mode-map (kbd "^")
+                (lambda ()
+                  (interactive)
+                  (dired-single-buffer ".."))))))
+
+;; dired-sort-menu+
+(use-package dired-sort-menu
+  :requires (dired+)
+  :load-path "emacswiki/dired-sort-menu/")
+
+;; dired-sort-menu+
+(use-package dired-sort-menu+
+  :requires (dired+ dired-sort-menu)
+  :load-path "emacswiki/dired-sort-menu+/")
 
 ;; elpy
 (require 'elpy)
@@ -344,10 +352,6 @@
               (ethan-wspace-mode 1)
               (ethan-wspace-clean-no-nl-eof-mode 1)
               (ethan-wspace-highlight-tabs-mode 1))))
-
-;; everything
-(if (eq system-type 'windows-nt)
-    (setq everything-cmd "D:/Program Files/Everything/es.exe"))
 
 ;; fill-column-indicator
 (setq fci-rule-width 1)
@@ -413,15 +417,15 @@
 ;; langtool
 (use-package langtool
   :config
-  (setq langtool-mother-tongue "en-US")
   (when (file-exists-p "~/languagetool/languagetool-commandline.jar")
     (setq langtool-language-tool-jar
-          "~/languagetool/languagetool-commandline.jar"))
-  (global-set-key "\C-x4w" 'langtool-check)
-  (global-set-key "\C-x4W" 'langtool-check-done)
-  (global-set-key "\C-x4l" 'langtool-switch-default-language)
-  (global-set-key "\C-x44" 'langtool-show-message-at-point)
-  (global-set-key "\C-x4c" 'langtool-correct-buffer)
+          "~/languagetool/languagetool-commandline.jar")
+    (setq langtool-mother-tongue "en-US")
+    (global-set-key "\C-x4w" 'langtool-check)
+    (global-set-key "\C-x4W" 'langtool-check-done)
+    (global-set-key "\C-x4l" 'langtool-switch-default-language)
+    (global-set-key "\C-x44" 'langtool-show-message-at-point)
+    (global-set-key "\C-x4c" 'langtool-correct-buffer))
   (defun langtool-autoshow-detail-popup (overlays)
     "Show langtool check result automatically."
     (when (require 'popup nil t)
@@ -513,6 +517,7 @@
 
 ;; modeline-posn
 (use-package modeline-posn
+  :load-path "emacswiki/modeline-posn/"
   :after smart-mode-line
   :config
   (line-number-mode 1)
@@ -562,10 +567,12 @@
   (add-hook hook 'enable-paredit-mode))
 
 ;; plantuml-mode
-(require 'plantuml-mode)
-(add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
-(add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
-(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+(use-package plantuml-mode
+  :config
+  (when (file-exists-p plantuml-jar-path)
+    (add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
+    (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))))
 
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
