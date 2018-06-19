@@ -159,16 +159,22 @@
       (setq ac-clang-complete-executable "~/clang-complete")
       (add-to-list 'ac-sources 'ac-source-clang-async)
       (ac-clang-launch-completion-process))))
-(add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
-(load (expand-file-name "~/.emacs.d/auto-complete-clang-extension"))
-(add-hook 'c++-mode-hook
-          (lambda ()
-            (setq achead:include-directories
-                  (append achead:include-directories
-                          ac-clang-extension-all-include-dirs))
-            (setq ac-clang-flags
-                  (mapcar (lambda (item) (concat "-I" item))
-                          ac-clang-extension-all-include-dirs))))
+(defun load-ac-for-c-c++ ()
+  "Enable auto complete clang sources for c and c++.
+
+This is not enabled by default for performance problem."
+  (interactive)
+  (when (file-exists-p ac-clang-complete-executable)
+    (load (expand-file-name "~/.emacs.d/auto-complete-clang-extension"))
+    (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+    (add-hook 'c++-mode-hook
+              (lambda ()
+                (setq achead:include-directories
+                      (append achead:include-directories
+                              ac-clang-extension-all-include-dirs))
+                (setq ac-clang-flags
+                      (mapcar (lambda (item) (concat "-I" item))
+                              ac-clang-extension-all-include-dirs))))))
 
 ;; auto-highlight-symbol-mode
 (require 'auto-highlight-symbol)
