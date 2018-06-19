@@ -137,6 +137,7 @@
     (global-set-key [remap query-replace-regexp] 'anzu-query-replace)))
 
 ;; auto-complete
+(require 'auto-complete)
 (ac-config-default)                             ; auto-complete
 (ac-flyspell-workaround)                        ; fix collisions with flyspell
 (ac-linum-workaround)                           ; fix collisions with linum
@@ -144,17 +145,14 @@
 (add-hook 'prog-mode-hook 'auto-complete-mode)
 (add-hook 'text-mode-hook 'auto-complete-mode)
 (add-hook 'org-mode-hook 'auto-complete-mode)
-(require 'auto-complete-c-headers)
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (add-to-list 'ac-sources 'ac-source-c-headers)))
+
 (defun ac-cc-mode-setup ()
   "Set up auto-complete-clang."
   (if (eq system-type 'windows-nt)
       (progn
         (require 'auto-complete-clang)
         (add-to-list 'ac-sources 'ac-source-clang))
-    (progn
+    (when (file-exists-p "~/clang-complete")
       (require 'auto-complete-clang-async)
       (setq ac-clang-complete-executable "~/clang-complete")
       (add-to-list 'ac-sources 'ac-source-clang-async)
@@ -166,6 +164,10 @@ This is not enabled by default for performance problem."
   (interactive)
   (when (file-exists-p ac-clang-complete-executable)
     (load (expand-file-name "~/.emacs.d/auto-complete-clang-extension"))
+    (require 'auto-complete-c-headers)
+    (add-hook 'c-mode-common-hook
+              (lambda ()
+                (add-to-list 'ac-sources 'ac-source-c-headers)))
     (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
     (add-hook 'c++-mode-hook
               (lambda ()
@@ -324,6 +326,7 @@ This is not enabled by default for performance problem."
 
 ;; dired+
 (use-package dired+
+  :defer t
   :load-path "emacswiki/dired+/")
 
 ;; dired-single
