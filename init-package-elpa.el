@@ -27,6 +27,7 @@
     avy
     cal-china-x
     cnfonts
+    cmake-font-lock
     cmake-mode
     cmake-project
     color-theme
@@ -257,7 +258,11 @@
       (enable-theme terminal-theme))))
 (switch-theme 'solarized 'ample-flat)
 
-;; cmake-project-mode
+;; cmake-font-lock
+(use-package cmake-font-lock
+  :requires cmake-mode
+  :config
+  (add-hook 'cmake-mode-hook 'cmake-font-lock-activate))
 
 ;; cmake-project
 (use-package cmake-project
