@@ -41,7 +41,6 @@
 (setq-default cursor-type 'bar)
 (setq backup-by-copying nil)              ; do not copy
 (setq backup-directory-alist `(("." . "~/.saves"))) ; change backup directory
-(setq visible-bell 1)                     ; turn of audible belling
 (fset 'yes-or-no-p 'y-or-n-p)             ; substitue y/n for yes/no
 
 (setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
