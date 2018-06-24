@@ -517,8 +517,8 @@
 ;; modern-c++-font-lock
 (use-package modern-cpp-font-lock
   :config
-  (modern-c++-font-lock-global-mode t)
-  (dim-minor-names '((modern-c++-font-lock-mode " C++11"))))
+  (dim-minor-names '((modern-c++-font-lock-mode " C++11")))
+  (add-hook 'c-mode-common-hook #'modern-c++-font-lock-mode))
 
 ;; multiple-cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)

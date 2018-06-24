@@ -162,6 +162,40 @@
           (lambda ()
             (bind-java-exercise-key)))
 
+;;; Set highlight face for c/c++ printf format string
+;;; from: https://gustafwaldemarson.com/posts/printf-format-highlighting-in-emacs/
+(defface font-lock-format-specifier-face
+  '((t . (:inherit font-lock-regexp-grouping-backslash
+         :foreground "OrangeRed1")))
+  "Font-lock face used to highlight printf format specifiers."
+  :group 'font-lock-faces)
+
+(defvar printf-fmt-regexp
+  (concat "\\(%"
+          "\\([[:digit:]]+\\$\\)?"   ; Posix argument position extension.
+          "[-+' #0*]*"
+          "\\(?:[[:digit:]]*\\|\\*\\|\\*[[:digit:]]+\\$\\)"
+          "\\(?:\\.\\(?:[[:digit:]]*\\|\\*\\|\\*[[:digit:]]+\\$\\)\\)?"
+          "\\(?:[hlLjzt]\\|ll\\|hh\\)?"
+          "\\(?:[aAbdiuoxXDOUfFeEgGcCsSpn]\\|\\[\\^?.[^]]*\\]\\)\\)")
+  "Regular expression to capture all possible `printf' formats in C/C++.")
+
+(defun printf-fmt-matcher (end)
+  "Search for `printf' format specifiers within strings up to END."
+  (let ((pos)
+        (case-fold-search nil))
+    (while (and (setq pos (re-search-forward printf-fmt-regexp end t))
+                (null (nth 3 (syntax-ppss pos)))))
+    pos))
+
+(defun hightlight-c-format-string ()
+  "Setup common utilities for all C-like modes."
+  (font-lock-add-keywords
+   nil
+   '((printf-fmt-matcher (0 'font-lock-format-specifier-face prepend)))))
+
+(add-hook 'c-mode-common-hook #'hightlight-c-format-string)
+
 ;; comment line or region with the shortcut `C-q'
 (defun comment-or-uncomment-line-or-region ()
   "Comments or uncomments the current line or region."
