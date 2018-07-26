@@ -213,12 +213,20 @@
                 ))
   (add-hook hook 'comment-shortcut-for-coding-mode-hook))
 
- ;; Set transparency of emacs
+;; Set transparency of emacs
 (defun set-transparency (value)
   "Set the transparency of the frame window to VALUE.
 0=transparent/100=opaque."
   (interactive "nTransparency Value 0 - 100 opaque:")
   (set-frame-parameter (selected-frame) 'alpha value))
+
+;; Open file's current directory in a platform-independent way
+(defun browse-file-directory ()
+  "Open the current file's directory however the OS would."
+  (interactive)
+  (if default-directory
+      (browse-url-of-file (expand-file-name default-directory))
+    (error "No `default-directory' to open")))
 
 ;;; load other configurations
 (when (file-exists-p "~/.emacs.d/init-package-builtin.el")
