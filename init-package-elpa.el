@@ -443,7 +443,10 @@
  logview-additional-timestamp-formats
  (quote (("Android Logcat Time Format"
           (java-pattern . "MM-dd HH:mm:ss.SSS")
-          (aliases "MM-dd HH:mm:ss.SSS")))))
+          (aliases "ant"))
+         ("Log4cpp Time Format"
+          (java-pattern . "yyyy-MM-dd HH:mm:ss,SSS")
+          (aliases "l4t")))))
 (setq
  logview-additional-level-mappings
  (quote (("Logcat"
@@ -452,42 +455,54 @@
           (information "I")
           (debug "D")
           (trace "V")
-          (aliases "android")))))
+          (aliases "anl"))
+         ("Log4cpp"
+          (error "ERROR")
+          (warning "WARN")
+          (information "NOTICE")
+          (debug "INFO")
+          (trace "DEBUG")
+          (aliases "l4l")))))
 (setq
  logview-additional-submodes
  (quote (("Android"
           (format . "TIMESTAMP LEVEL/NAME( THREAD):")
-          (levels . "Logcat")
-          (timestamp "Android Logcat Time Format")
-          (aliases "la"))
+          (levels . "anl")
+          (timestamp "ant")
+          (aliases "an"))
          ("Android-nontime"
           (format . "LEVEL NAME THREAD:")
-          (levels . "Logcat")
-          (aliases "la-n"))
+          (levels . "anl")
+          (aliases "ann"))
          ("threadtime"
           (format . "TIMESTAMP THREAD THREAD LEVEL NAME:")
-          (levels . "Logcat")
-          (timestamp "Android Logcat Time Format")
+          (levels . "anl")
+          (timestamp "ant")
           (aliases "tt"))
          ("thread-blank"
           (format . "LEVEL/NAME( THREAD):")
-          (levels . "Logcat")
-          (timestamp "Android Logcat Time Format")
+          (levels . "anl")
+          (timestamp "ant")
           (aliases "tb"))
          ("thread-nonblank"
           (format . "LEVEL/NAME(THREAD):")
-          (levels . "Logcat")
-          (timestamp "Android Logcat Time Format")
+          (levels . "anl")
+          (timestamp "ant")
           (aliases "tn"))
          ("android-colon"
           (format . "TIMESTAMP: LEVEL/NAME(THREAD):")
-          (levels . "Logcat")
-          (timestamp "Android Logcat Time Format")
-          (aliases "lac"))
+          (levels . "anl")
+          (timestamp "ant")
+          (aliases "ancolon"))
          ("decoder"
           (format . "[TIMESTAMP]")
           (timestamp "ISO 8601 datetime")
-          (aliases "de")))))
+          (aliases "de"))
+         ("log4cpp"
+          (format . "[TIMESTAMP] LEVEL:")
+          (levels . "l4l")
+          (timestamp "l4t")
+          (aliases "l4g")))))
 
 ;; lua-mode
 (setq lua-indent-level 4)
