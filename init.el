@@ -9,8 +9,8 @@
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "http")))
   (setq package-archives
-        '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
+        '(("gnu"   . "http://elpa.gnu.org/packages/")
+          ("melpa" . "http://melpa.org/packages/"))))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)

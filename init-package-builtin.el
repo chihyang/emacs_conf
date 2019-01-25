@@ -64,6 +64,7 @@
 (setq c-default-style "bsd")
 (setq c-basic-offset 4)
 (c-set-offset 'case-label '+)
+(c-set-offset 'innamespace 0)
 ;;; highlight TODO and BUG and FIXME
 (add-hook 'c-mode-common-hook
           (lambda ()

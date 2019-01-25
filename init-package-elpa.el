@@ -63,6 +63,7 @@
     multiple-cursors
     nlinum
     omni-scratch
+    org-preview-html
     origami
     pandoc-mode
     paredit
@@ -494,15 +495,20 @@
           (levels . "anl")
           (timestamp "ant")
           (aliases "ancolon"))
-         ("decoder"
-          (format . "[TIMESTAMP]")
-          (timestamp "ISO 8601 datetime")
-          (aliases "de"))
-         ("log4cpp"
+         ("log4cpp1"
           (format . "[TIMESTAMP] LEVEL:")
           (levels . "l4l")
           (timestamp "l4t")
-          (aliases "l4g")))))
+          (aliases "l4g1"))
+         ("log4cpp2"
+          (format . "[TIMESTAMP] [LEVEL]:")
+          (levels . "l4l")
+          (timestamp "l4t")
+          (aliases "l4g2"))
+         ("log4cpp3"
+          (format . "[TIMESTAMP]")
+          (timestamp "ISO 8601 datetime")
+          (aliases "l4g3")))))
 
 ;; lua-mode
 (setq lua-indent-level 4)
