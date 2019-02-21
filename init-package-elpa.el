@@ -35,12 +35,15 @@
     csharp-mode
     dim
     dired-single
+    edit-server
     elpy
     ethan-wspace
     fill-column-indicator
     fish-mode
     flycheck
     flyspell-popup
+    geiser
+    gmail-message-mode
     graphviz-dot-mode
     haskell-mode
     hide-lines

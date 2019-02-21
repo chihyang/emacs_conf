@@ -3,14 +3,32 @@
 ;;; load packages and customized functions
 ;;; Code:
 
+(defconst package-elpa-sources
+  '((tsinghua . (("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                 ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+    (standard . (("gnu"   . "http://elpa.gnu.org/packages/")
+                 ("melpa" . "http://melpa.org/packages/")))))
+(defun package-available-elpa-sources ()
+  (defun get-all-keys (alst)
+    (if (null alst)
+        '()
+      (cons (caar alst)
+            (get-all-keys (cdr alst)))))
+  (get-all-keys package-elpa-sources))
+(defun package-switch-elps-sources (elpa)
+  "Switch between different `ELPA' sources."
+  (interactive
+   (list
+    (intern (completing-read
+             "Select from available sources: "
+             (mapcar 'symbol-name
+                     (available-elpa-sources))))))
+  (setq package-archives (alist-get elpa package-elpa-sources)))
+
 (require 'package)
 ;;; Standard package repositories
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "http")))
-  (setq package-archives
-        '(("gnu"   . "http://elpa.gnu.org/packages/")
-          ("melpa" . "http://melpa.org/packages/"))))
+(setq package-archives (alist-get 'tsinghua package-elpa-sources))
+
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
