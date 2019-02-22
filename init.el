@@ -22,7 +22,7 @@
     (intern (completing-read
              "Select from available sources: "
              (mapcar 'symbol-name
-                     (available-elpa-sources))))))
+                     (package-available-elpa-sources))))))
   (setq package-archives (alist-get elpa package-elpa-sources)))
 
 (require 'package)
