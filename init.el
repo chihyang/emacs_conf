@@ -4,10 +4,12 @@
 ;;; Code:
 
 (defconst package-elpa-sources
-  '((tsinghua . (("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                 ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
-    (standard . (("gnu"   . "http://elpa.gnu.org/packages/")
-                 ("melpa" . "http://melpa.org/packages/")))))
+  '((standard-dev . (("gnu"   . "http://elpa.gnu.org/packages/")
+                     ("melpa" . "http://melpa.org/packages/")))
+    (standard-statble . (("gnu"   . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "https://stable.melpa.org/packages/")))
+    (tsinghua . (("gnu"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                 ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
 (defun package-available-elpa-sources ()
   (defun get-all-keys (alst)
     (if (null alst)
