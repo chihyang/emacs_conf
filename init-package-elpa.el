@@ -12,16 +12,10 @@
 
 (defconst required-packages
   '(
-    ac-ispell
-    ac-slime
     adaptive-wrap
     ample-theme
     anzu
     auctex
-    auto-complete
-    auto-complete-clang
-    auto-complete-clang-async
-    auto-complete-c-headers
     auto-highlight-symbol
     autopair
     avy
@@ -32,6 +26,8 @@
     cmake-project
     color-theme
     color-theme-solarized
+    company
+    company-quickhelp
     csharp-mode
     dim
     dired-single
@@ -110,23 +106,6 @@
 (ensure-packages)
 
 ;;; configuration of packages, ordered alphabetically
-
-;; ac-ispell
-;; Completion words longer than 4 characters
-(custom-set-variables
- '(ac-ispell-requires 4)
- '(ac-ispell-fuzzy-limit 2))
-
-(eval-after-load "auto-complete"
-  '(progn
-     (ac-ispell-setup)))
-
-(add-hook 'git-commit-mode-hook 'ac-ispell-ac-setup)
-(add-hook 'mail-mode-hook 'ac-ispell-ac-setup)
-(add-hook 'prog-mode-hook 'ac-ispell-ac-setup)
-(add-hook 'text-mode-hook 'ac-ispell-ac-setup)
-(add-hook 'org-mode-hook 'ac-ispell-ac-setup)
-
 ;; adaptive-wrap
 (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)
 
@@ -139,22 +118,6 @@
   (progn
     (global-set-key [remap query-replace] 'anzu-query-replace-regexp)
     (global-set-key [remap query-replace-regexp] 'anzu-query-replace)))
-
-;; auto-complete
-(require 'auto-complete)
-(ac-config-default)                             ; auto-complete
-(ac-flyspell-workaround)                        ; fix collisions with flyspell
-(ac-linum-workaround)                           ; fix collisions with linum
-(global-auto-complete-mode t)                   ; enable auto-complete-mode globally
-(add-hook 'prog-mode-hook 'auto-complete-mode)
-(add-hook 'text-mode-hook 'auto-complete-mode)
-(add-hook 'org-mode-hook 'auto-complete-mode)
-(use-package auto-complete-c-headers
-  :config
-  (add-hook
-   'c-mode-common-hook
-   (lambda ()
-     (add-to-list 'ac-sources 'ac-source-c-headers))))
 
 ;; auto-highlight-symbol-mode
 (require 'auto-highlight-symbol)
@@ -244,6 +207,19 @@
       (enable-theme terminal-theme))))
 (switch-theme 'solarized 'ample-flat)
 
+;; company
+(use-package company
+  :config
+  (setq company-show-numbers t)
+  (setq company-tooltip-align-annotations t)
+  (add-hook 'after-init-hook 'global-company-mode))
+
+;; company-quickhelp
+(use-package company-quickhelp
+  :require company
+  :config
+  (add-hook 'global-company-mode-hook 'company-quickhelp-mode))
+
 ;; cmake-font-lock
 (use-package cmake-font-lock
   :requires cmake-mode
@@ -280,7 +256,6 @@
    '(
      (auto-fill-function         " ¶")
      (auto-revert-mode           "")
-     (auto-complete-mode         "")
      (auto-highlight-symbol-mode "")
      (autopair-mode              "")
      (anzu-mode                  "")
@@ -334,8 +309,7 @@
   :config
   (elpy-enable)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-  (add-hook 'python-mode-hook (lambda () (auto-complete-mode -1))))
+  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
 
 ;; ethan-wspace
 (use-package ethan-wspace
@@ -609,14 +583,6 @@
   (setq slime-contribs '(slime-fancy))
   (if (file-exists-p "~/quicklisp/slime-helper.el")
       (load (expand-file-name "~/quicklisp/slime-helper.el"))))
-(use-package ac-slime
-  :defer t
-  :after slime
-  :init
-  (add-hook 'slime-mode-hook 'set-up-slime-ac)
-  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-  (eval-after-load "auto-complete"
-    '(add-to-list 'ac-modes 'slime-repl-mode)))
 
 ;; smart-mode-line
 (use-package smart-mode-line
@@ -706,8 +672,6 @@
 (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
 ;; Alternatively use Control-c + tab
 (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
-;; push yasnippet into auto complete sources
-(setq ac-sources (append '(ac-source-yasnippet) ac-sources))
 
 ;; youdao-dictionary
 (require 'youdao-dictionary)
