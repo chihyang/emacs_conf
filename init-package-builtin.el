@@ -117,7 +117,7 @@
   (setq dired-listing-switches "-alh --time-style \"+%Y-%m-%d %H:%M:%S\""))
 
 ;; ede
-(global-ede-mode 1)                      ; Enable the Project management system
+(global-ede-mode -1)                      ; Enable the Project management system
 (ede-enable-generic-projects)
 
 ;; ediff

@@ -24,7 +24,6 @@
     cmake-font-lock
     cmake-mode
     cmake-project
-    color-theme
     color-theme-solarized
     company
     company-quickhelp
@@ -181,7 +180,6 @@
   (cnfonts-enable))
 
 ;; color-theme-solarized
-(require 'color-theme)
 (require 'color-theme-solarized)
 (defun switch-theme (gui-theme terminal-theme)
   (interactive
@@ -212,6 +210,7 @@
   :config
   (setq company-show-numbers t)
   (setq company-tooltip-align-annotations t)
+  (setq company-minimum-prefix-length 2)
   (add-hook 'after-init-hook 'global-company-mode))
 
 ;; company-quickhelp
