@@ -24,6 +24,7 @@
     cmake-font-lock
     cmake-mode
     cmake-project
+    color-theme-modern
     color-theme-solarized
     company
     company-quickhelp
@@ -215,7 +216,7 @@
 
 ;; company-quickhelp
 (use-package company-quickhelp
-  :require company
+  :requires company
   :config
   (add-hook 'global-company-mode-hook 'company-quickhelp-mode))
 
