@@ -111,10 +111,9 @@
 ;; dried omit mode
 (require 'dired-x)
 (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
-(when (not (or (eq system-type 'windows-nt)
-               (eq system-type 'ms-dos)
-               (eq system-type 'cygwin)))
-  (setq dired-listing-switches "-alh --time-style \"+%Y-%m-%d %H:%M:%S\""))
+(setq dired-listing-switches "-alh")
+(when (eq window-system 'w32)
+  (setq tramp-default-method "plink"))
 
 ;; ede
 (global-ede-mode -1)                      ; Enable the Project management system
