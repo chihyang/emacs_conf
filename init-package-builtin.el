@@ -105,8 +105,6 @@
 (require 'dired-x)
 (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
 (setq dired-listing-switches "-alh")
-(when (eq window-system 'w32)
-  (setq tramp-default-method "plink"))
 
 ;; ede
 (global-ede-mode -1)                      ; Enable the Project management system
@@ -267,8 +265,9 @@ unwanted space when exporting `org-mode' to html."
 
 ;; tramp-mode
 (require 'tramp)
-(if (eq system-type 'windows-nt)
-    (setq tramp-default-method "plink"))
+(when (eq window-system 'w32)
+  (setq tramp-default-method "plink"))
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 
 ;; winner-mode
 (when (fboundp 'winner-mode)
