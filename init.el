@@ -248,6 +248,16 @@
       (browse-url-of-file (expand-file-name default-directory))
     (error "No `default-directory' to open")))
 
+;;; tool for minify a JSON
+;;; https://www.accidentalrebel.com/posts/minifying-buffer-contents-in-emacs.html
+(defun minify-json()
+  "Minifies the buffer contents by removing whitespaces."
+  (interactive)
+  (delete-whitespace-rectangle (point-min) (point-max))
+  (mark-whole-buffer)
+  (goto-char (point-min))
+  (while (search-forward "\n" nil t) (replace-match "" nil t)))
+
 ;;; load other configurations
 (when (file-exists-p "~/.emacs.d/init-package-builtin.el")
   (load "~/.emacs.d/init-package-builtin.el"))

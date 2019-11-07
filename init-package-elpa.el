@@ -29,6 +29,7 @@
     company
     company-quickhelp
     csharp-mode
+    counsel-projectile
     dim
     dired-single
     edit-server
@@ -69,6 +70,7 @@
     plantuml-mode
     powerline-evil
     protobuf-mode
+    projectile
     py-autopep8
     racket-mode
     rainbow-delimiters
@@ -561,6 +563,18 @@
     (add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
     (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))))
+
+;; projectile
+(use-package projectile
+  :config
+  (define-key projectile-mode-map (kbd "C-c p")
+    'projectile-command-map)
+  (projectile-mode 1))
+
+(use-package counsel-projectile
+  :requires projectile
+  :config
+  (counsel-projectile-mode 1))
 
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
