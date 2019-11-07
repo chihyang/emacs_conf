@@ -41,6 +41,7 @@
     flyspell-popup
     geiser
     gmail-message-mode
+    golden-ratio
     graphviz-dot-mode
     haskell-mode
     hide-lines
