@@ -27,6 +27,7 @@
                      (package-available-elpa-sources))))))
   (setq package-archives (alist-get elpa package-elpa-sources)))
 
+(fset 'yes-or-no-p 'y-or-n-p)             ; substitue y/n for yes/no
 (require 'package)
 ;;; Standard package repositories
 (setq package-archives (alist-get 'tsinghua package-elpa-sources))
@@ -61,9 +62,10 @@
 (setq-default cursor-type 'bar)
 (setq backup-by-copying nil)              ; do not copy
 (setq backup-directory-alist `(("." . "~/.saves"))) ; change backup directory
-(fset 'yes-or-no-p 'y-or-n-p)             ; substitue y/n for yes/no
 
-(setenv "GIT_ASKPASS" "git-gui--askpass") ; set git for pushing to github by https
+(when (< emacs-major-version 26)
+  ;; set git for pushing to github by https
+  (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
 (when (> emacs-major-version 24)
   (setq jit-lock-defer-time 0)
