@@ -368,9 +368,11 @@
   (put 'hes-escape-backslash-face 'face-alias 'font-lock-builtin-face)
   (put 'hes-escape-sequence-face 'face-alias 'font-lock-builtin-face))
 
-(require 'ivy)
-(setq ivy-use-virtual-buffers t)
-(ivy-mode 1)
+(use-package ivy
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (ivy-mode 1)
+  (counsel-mode 1))
 
 ;; iedit-mode
 (require 'iedit)
