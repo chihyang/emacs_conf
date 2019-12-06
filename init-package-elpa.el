@@ -19,6 +19,7 @@
     auto-highlight-symbol
     autopair
     avy
+    ace-pinyin
     cal-china-x
     cnfonts
     cmake-font-lock
@@ -132,16 +133,25 @@
     (autopair-global-mode 1))
 
 ;; avy
-(global-set-key (kbd "M-g :") 'avy-goto-char)
-(global-set-key (kbd "M-g '") 'avy-goto-char-2)
-(global-set-key (kbd "M-g f") 'avy-goto-line)
-(global-set-key (kbd "M-g w") 'avy-goto-word-1)
-(global-set-key (kbd "M-g e") 'avy-goto-word-0)
-(avy-setup-default)
+(use-package avy
+  :config
+  (global-set-key (kbd "M-g :") 'avy-goto-char)
+  (global-set-key (kbd "M-g '") 'avy-goto-char-2)
+  (global-set-key (kbd "M-g f") 'avy-goto-line)
+  (global-set-key (kbd "M-g w") 'avy-goto-word-1)
+  (global-set-key (kbd "M-g e") 'avy-goto-word-0)
+  (avy-setup-default)
+  )
+
+(use-package ace-pinyin
+  :requires avy
+  :config
+  (setq ace-pinyin-treat-word-as-char nil)
+  (ace-pinyin-global-mode +1)
+  )
 
 ;; bookmark+
 (use-package bookmark+
-  :defer t
   :load-path "emacswiki/bookmark+/"
   :config
   (setq bmkp-bookmark-map-prefix-keys (quote ("/")))
