@@ -292,8 +292,9 @@
 
 ;; dired+
 (use-package dired+
-  :defer t
-  :load-path "emacswiki/dired+/")
+  :load-path "emacswiki/dired+/"
+  :config
+  (unbind-key "M-O" dired-mode-map))
 
 ;; dired-single
 (use-package dired-single
@@ -625,6 +626,7 @@
   (setq eol-mnemonic-undecided ":?")
   (setq sml/mule-info "%Z")
   (sml/setup))
+
 ;; modeline-posn
 (use-package modeline-posn
   :load-path "emacswiki/modeline-posn/"
