@@ -294,7 +294,9 @@
 (use-package dired+
   :load-path "emacswiki/dired+/"
   :config
-  (unbind-key "M-O" dired-mode-map))
+  (unbind-key "M-O" dired-mode-map)
+  (define-key dired-mode-map (kbd "y") 'dired-show-file-type)
+  (define-key dired-mode-map (kbd "_") 'diredp-relsymlink-this-file))
 
 ;; dired-single
 (use-package dired-single
