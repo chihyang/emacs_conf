@@ -334,7 +334,7 @@
    'prog-mode-hook
    (lambda ()
      (setq mode-require-final-newline nil)
-     (global-ethan-wspace-mode 1)
+     (ethan-wspace-mode 1)
      (ethan-wspace-clean-no-nl-eof-mode 1)
      (ethan-wspace-highlight-tabs-mode 1)))
   (add-hook
