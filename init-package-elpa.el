@@ -322,10 +322,13 @@
 
 ;; elpy
 (use-package elpy
-  :config
-  (elpy-enable)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
+  :ensure t
+  :defer t
+  ;; :config
+  ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  ;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+  :init
+  (advice-add 'python-mode :before 'elpy-enable))
 
 ;; ethan-wspace
 (use-package ethan-wspace
@@ -334,7 +337,7 @@
    'prog-mode-hook
    (lambda ()
      (setq mode-require-final-newline nil)
-     (ethan-wspace-mode 1)
+     (global-ethan-wspace-mode 1)
      (ethan-wspace-clean-no-nl-eof-mode 1)
      (ethan-wspace-highlight-tabs-mode 1)))
   (add-hook
@@ -608,6 +611,7 @@
 
 ;; slime
 (use-package slime
+  :ensure t
   :defer t
   :init
   (setq inferior-lisp-program "sbcl")
@@ -694,20 +698,24 @@
 (add-hook 'c-mode-common-hook #'cscope-minor-mode)
 
 ;; yasnippet
-(require 'yasnippet)
-(yas-global-mode 1)
-(add-hook 'prog-mode-hook #'yas-minor-mode)
-;; Remove Yasnippet's default tab key binding
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
-;; Set Yasnippet's key binding to shift+tab
-(define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
-;; Alternatively use Control-c + tab
-(define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
+(use-package yasnippet
+  :config
+  (yas-global-mode 1)
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
+  ;; Remove Yasnippet's default tab key binding
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  ;; Set Yasnippet's key binding to shift+tab
+  (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
+  ;; Alternatively use Control-c + tab
+  (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand))
 
 ;; youdao-dictionary
-(require 'youdao-dictionary)
-(global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point)
+(use-package youdao-dictionary
+  :ensure t
+  :defer t
+  :init
+  (global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point))
 
 (provide 'init-package-elpa)
 ;;; init-package-elpa.el ends here

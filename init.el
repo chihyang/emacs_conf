@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; load packages and customized functions
 ;;; Code:
+(setq gc-cons-threshold (* 50 1024 1024))
 
 (defconst package-elpa-sources
   '((standard-dev . (("gnu"   . "http://elpa.gnu.org/packages/")
@@ -275,3 +276,4 @@
 (setq custom-file "~/.emacs.d/.emacs-custom.el")
 (when (file-exists-p custom-file)
   (load custom-file))
+(setq gc-cons-threshold (* 2 1024 1024))

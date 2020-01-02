@@ -31,53 +31,63 @@
 (global-set-key (kbd "C-c M-q") 'unfill-paragraph)
 
 ;; auto-revert-mode
-(require 'autorevert)
+(use-package autorevert)
 
 ;;; cedet implementation
 ;; cedet
-(require 'cedet)
-(require 'semantic)
-(add-to-list 'semantic-inhibit-functions
-             (lambda () (not (member major-mode '(c-mode c++-mode)))))
-(semantic-mode 1)
+(use-package cedet)
+(use-package semantic
+  :config
+  (add-to-list 'semantic-inhibit-functions
+               (lambda () (not (member major-mode '(c-mode c++-mode)))))
+  :init
+  (semantic-mode 1))
 
 ;; semantic/ia
-(require 'semantic/ia)
-(setq-mode-local c-mode semanticdb-find-default-throttle
-                 '(project unloaded system recursive))
-(setq-mode-local c++-mode semanticdb-find-default-throttle
-                 '(project unloaded system recursive))
-(global-semanticdb-minor-mode 1)
-(global-semantic-idle-scheduler-mode 1)
-(global-semantic-idle-summary-mode 1)
-(global-set-key [f12] 'semantic-ia-fast-jump)
+(use-package semantic/ia
+  :defer t
+  :init
+  (setq-mode-local c-mode semanticdb-find-default-throttle
+                   '(project unloaded system recursive))
+  (setq-mode-local c++-mode semanticdb-find-default-throttle
+                   '(project unloaded system recursive))
+  (global-semanticdb-minor-mode 1)
+  (global-semantic-idle-scheduler-mode 1)
+  (global-semantic-idle-summary-mode 1)
+  (global-set-key [f12] 'semantic-ia-fast-jump))
 
 ;; semantic/db-global
-(require 'semantic/db-global)
-(semanticdb-enable-gnu-global-databases 'c-mode)
-(semanticdb-enable-gnu-global-databases 'c++-mode)
+(use-package semantic/db-global
+  :defer t
+  :init
+  (semanticdb-enable-gnu-global-databases 'c-mode)
+  (semanticdb-enable-gnu-global-databases 'c++-mode))
 
 ;; cc-mode
-(require 'cc-mode)
-(setq-default c-basic-offset 4)         ; set indentation for cc mode
-(setq-default tab-width 4)              ; set tab as 4 spaces
-(setq c-default-style "bsd")
-(setq c-basic-offset 4)
-(c-set-offset 'case-label '+)
-(c-set-offset 'innamespace 0)
-;;; highlight TODO and BUG and FIXME
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (font-lock-add-keywords
-             nil
-             '(("\\<\\(FIXME\\|TODO\\|BUG\\|WARNING\\):" 1 font-lock-warning-face t)))))
+(use-package cc-mode
+  :defer t
+  :init
+  (setq-default c-basic-offset 4)         ; set indentation for cc mode
+  (setq-default tab-width 4)              ; set tab as 4 spaces
+  (setq c-default-style "bsd")
+  (setq c-basic-offset 4)
+  (c-set-offset 'case-label '+)
+  (c-set-offset 'innamespace 0)
+  ;;; highlight TODO and BUG and FIXME
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (font-lock-add-keywords
+               nil
+               '(("\\<\\(FIXME\\|TODO\\|BUG\\|WARNING\\):" 1 font-lock-warning-face t))))))
 
 ;; column-number-mode
 (column-number-mode t)                  ; enable column-number-mode
 
 ;; compile
-(require 'compile)
-(setq compilation-scroll-output t)      ; auto-scroll the compilation buffer
+(use-package compile
+  :defer t
+  :init
+  (setq compilation-scroll-output t))      ; auto-scroll the compilation buffer
 
 ;; conf-mode
 (add-to-list 'auto-mode-alist '("\\.rc\\'" . conf-mode))
@@ -102,39 +112,45 @@
       (desktop-save-mode))))
 
 ;; dried omit mode
-(require 'dired-x)
-(setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
-(setq dired-listing-switches "-alh")
+(use-package dired-x
+  :config
+  (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
+  (setq dired-listing-switches "-alh"))
 
 ;; ede
-(global-ede-mode -1)                      ; Enable the Project management system
-(ede-enable-generic-projects)
+(use-package ede
+  :defer t
+  :init
+  (global-ede-mode -1)                      ; Enable the Project management system
+  (ede-enable-generic-projects))
 
 ;; ediff
-(require 'ediff)
-(setq ediff-diff-options "-w")
-(defun ediff-copy-both-to-C ()
-  "Copy both buffer A and buffer B's content to C."
-  (interactive)
-  (ediff-copy-diff
-   ediff-current-difference nil 'C nil
-   (concat
-    (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
-    (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
-(defun add-d-to-ediff-mode-map ()
-  "Add key map for copy both to C."
-  (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
-(add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
+(use-package ediff
+  :config
+  (setq ediff-diff-options "-w")
+  (defun ediff-copy-both-to-C ()
+    "Copy both buffer A and buffer B's content to C."
+    (interactive)
+    (ediff-copy-diff
+     ediff-current-difference nil 'C nil
+     (concat
+      (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+      (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+  (defun add-d-to-ediff-mode-map ()
+    "Add key map for copy both to C."
+    (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
+  (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map))
 
 ;; electric-pair-mode
 (if (not (version< emacs-version "24.4"))
     (electric-pair-mode 1))
 
 ;; hide-show-mode
-(require 'hideshow)
-(setq hs-allow-nesting t)
-(dolist (hook '(prog-mode-hook))
-  (add-hook hook 'hs-minor-mode))
+(use-package hideshow
+  :config
+  (setq hs-allow-nesting t)
+  (dolist (hook '(prog-mode-hook))
+    (add-hook hook 'hs-minor-mode)))
 
 ;; hl-line-mode
 (global-hl-line-mode)
@@ -153,28 +169,29 @@
             (sgml-guess-indent)))
 
 ;; linum-mode
-(require 'linum)
-(defun linum-update-window-scale-fix (win)
-  "fix linum for scaled text"
-  (set-window-margins
-   win
-   (ceiling (* (if (boundp 'text-scale-mode-step)
-                   (expt text-scale-mode-step
-                         text-scale-mode-amount)
-                 1)
-               (if (car (window-margins))
-                   (car (window-margins)) 1)
-               ))))
-(advice-add #'linum-update-window :after #'linum-update-window-scale-fix)
-(defun linum-format-func (line)
-  "Add padding for line number in terminal mode"
-  (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-    (propertize (format (format "%%%dd " w) line) 'face 'linum)))
-(when (not (display-graphic-p))
-  (setq linum-format 'linum-format-func))
-(if (> emacs-major-version 25)
-    (global-display-line-numbers-mode 1)
-  (global-linum-mode 1))
+(use-package linum
+  :config
+  (defun linum-update-window-scale-fix (win)
+    "fix linum for scaled text"
+    (set-window-margins
+     win
+     (ceiling (* (if (boundp 'text-scale-mode-step)
+                     (expt text-scale-mode-step
+                           text-scale-mode-amount)
+                   1)
+                 (if (car (window-margins))
+                     (car (window-margins)) 1)
+                 ))))
+  (advice-add #'linum-update-window :after #'linum-update-window-scale-fix)
+  (defun linum-format-func (line)
+    "Add padding for line number in terminal mode"
+    (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+      (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+  (when (not (display-graphic-p))
+    (setq linum-format 'linum-format-func))
+  (if (> emacs-major-version 25)
+      (global-display-line-numbers-mode 1)
+    (global-linum-mode 1)))
 
 ;; Man-mode
 (require 'man)
