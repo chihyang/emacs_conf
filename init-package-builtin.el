@@ -259,6 +259,13 @@ unwanted space when exporting `org-mode' to html."
 (recentf-mode 1)
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
+;; savehist
+(use-package savehist
+  :config
+  (add-to-list 'savehist-additional-variables 'log-edit-comment-ring)
+  :init
+  (savehist-mode 1))
+
 ;; subword-mode
 (global-subword-mode)
 
