@@ -115,7 +115,8 @@
 (use-package dired-x
   :config
   (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
-  (setq dired-listing-switches "-alh"))
+  (setq dired-listing-switches "-alh")
+  (setq dired-dwim-target t))
 
 ;; ede
 (use-package ede

@@ -86,8 +86,9 @@
     switch-window
     tabbar
     use-package
-    vimrc-mode
     vlf
+    vimrc-mode
+    visual-regexp-steroids
     websocket
     workgroups2
     wttrin
