@@ -26,7 +26,6 @@
     cmake-mode
     cmake-project
     color-theme-modern
-    color-theme-solarized
     company
     company-quickhelp
     csharp-mode
@@ -80,6 +79,7 @@
     slime
     smart-mode-line
     smart-mode-line-powerline-theme
+    solarized-theme
     sx
     sr-speedbar
     swiper
@@ -194,8 +194,7 @@
   :config
   (cnfonts-enable))
 
-;; color-theme-solarized
-(require 'color-theme-solarized)
+;; theme
 (defun switch-theme (gui-theme terminal-theme)
   (interactive
     (list
@@ -218,7 +217,7 @@
       (set-terminal-parameter nil 'background-mode 'dark)
       (load-theme terminal-theme t t)
       (enable-theme terminal-theme))))
-(switch-theme 'solarized 'ample-flat)
+(switch-theme 'solarized-dark 'ample-flat)
 
 ;; company
 (use-package company
