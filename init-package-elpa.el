@@ -90,6 +90,7 @@
     vimrc-mode
     visual-regexp-steroids
     websocket
+    which-key
     workgroups2
     wttrin
     xcscope
@@ -668,8 +669,9 @@
 (add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
 
 ;; vlf
-(require 'vlf-setup)
-(setq vlf-application 'dont-ask)
+(use-package 'vlf-setup
+  :config
+  (setq vlf-application 'dont-ask))
 
 ;; workgroups2
 (require 'workgroups2)
