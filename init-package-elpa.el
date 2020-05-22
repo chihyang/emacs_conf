@@ -32,6 +32,7 @@
     counsel-projectile
     dim
     dired-single
+    dired-subtree
     edit-server
     elpy
     ethan-wspace
@@ -73,6 +74,7 @@
     protobuf-mode
     projectile
     py-autopep8
+    pyenv-mode
     racket-mode
     rainbow-delimiters
     rainbow-mode
@@ -320,6 +322,12 @@
 (use-package dired-sort-menu+
   :requires (dired+ dired-sort-menu)
   :load-path "emacswiki/dired-sort-menu+/")
+
+;; dired-subtree
+(use-package dired-subtree
+  :defer t
+  :bind (:map dired-mode-map
+              ("TAB" . dired-subtree-cycle)))
 
 ;; elpy
 (use-package elpy
@@ -596,6 +604,12 @@
   :requires projectile
   :config
   (counsel-projectile-mode 1))
+
+;; pyenv-mode
+(use-package pyenv-mode
+  :config
+  (when (eq? system-type 'gnu/linux)
+    (pyenv-mode 1)))
 
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
