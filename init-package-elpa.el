@@ -280,6 +280,7 @@
      (abbrev-mode                "")
      (hs-minor-mode              "")
      (ivy-mode                   "")
+     (git-gutter-mode            "")
      )))
 (eval-after-load "~/.emacs.d/init.el" (simplify-mode-alias))
 (add-hook 'workgroups-mode-hook
