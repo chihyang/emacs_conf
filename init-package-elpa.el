@@ -41,6 +41,7 @@
     flycheck
     flyspell-popup
     geiser
+    git-gutter
     gmail-message-mode
     golden-ratio
     graphviz-dot-mode
@@ -221,7 +222,7 @@
       (set-terminal-parameter nil 'background-mode 'dark)
       (load-theme terminal-theme t t)
       (enable-theme terminal-theme))))
-(switch-theme 'solarized-dark 'ample-flat)
+(switch-theme 'gruvbox-theme 'gruvbox-theme)
 
 ;; company
 (use-package company
@@ -386,6 +387,21 @@
 
 ;; flyspell-popup
 ;; (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
+
+(use-package git-gutter
+  :init
+  ;; If you enable global minor mode
+  (global-git-gutter-mode t)
+  :config
+  ;; Jump to next/previous hunk
+  (global-set-key (kbd "C-x v p") 'git-gutter:previous-hunk)
+  (global-set-key (kbd "C-x v n") 'git-gutter:next-hunk)
+  ;; Stage current hunk
+  (global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
+  ;; Revert current hunk
+  (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
+  ;; Mark current hunk
+  (global-set-key (kbd "C-x v SPC") #'git-gutter:mark-hunk))
 
 (use-package highlight-escape-sequences
   :init
