@@ -222,7 +222,7 @@
       (set-terminal-parameter nil 'background-mode 'dark)
       (load-theme terminal-theme t t)
       (enable-theme terminal-theme))))
-(switch-theme 'gruvbox-theme 'gruvbox-theme)
+(switch-theme 'gruvbox-dark-medium 'gruvbox-dark-medium)
 
 ;; company
 (use-package company
