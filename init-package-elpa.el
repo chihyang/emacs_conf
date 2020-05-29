@@ -44,6 +44,7 @@
     gmail-message-mode
     golden-ratio
     graphviz-dot-mode
+    gruvbox-theme
     haskell-mode
     hide-lines
     highlight-escape-sequences
