@@ -261,7 +261,6 @@
   (column-marker-1 80))
 
 ;; dim
-(require 'dim)
 (defun simplify-mode-alias ()
   "Shorten mode line major/minor modes names."
   (dim-major-names
@@ -282,19 +281,23 @@
      (ivy-mode                   "")
      (git-gutter-mode            "")
      )))
-(eval-after-load "~/.emacs.d/init.el" (simplify-mode-alias))
-(add-hook 'workgroups-mode-hook
-          (lambda ()
-            (dim-minor-name 'workgroups-mode "")))
-(add-hook 'yas-minor-mode-hook
-          (lambda ()
-            (dim-minor-name 'yas-minor-mode  " →")))
-(add-hook 'paredit-mode-hook
-          (lambda ()
-            (dim-minor-name 'paredit-mode    " ()")))
-(add-hook 'flyspell-mode-hook
-          (lambda ()
-            (dim-minor-name 'flyspell-mode   " √")))
+(use-package dim
+  :after
+  (anzu ivy git-gutter workgroups2 yasnippet paredit)
+  :init
+  (add-hook 'workgroups-mode-hook
+            (lambda ()
+              (dim-minor-name 'workgroups-mode "")))
+  (add-hook 'yas-minor-mode-hook
+            (lambda ()
+              (dim-minor-name 'yas-minor-mode  " →")))
+  (add-hook 'paredit-mode-hook
+            (lambda ()
+              (dim-minor-name 'paredit-mode    " ()")))
+  (add-hook 'flyspell-mode-hook
+            (lambda ()
+              (dim-minor-name 'flyspell-mode   " √")))
+  (simplify-mode-alias))
 
 ;; dired+
 (use-package dired+
