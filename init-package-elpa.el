@@ -626,7 +626,7 @@
 ;; pyenv-mode
 (use-package pyenv-mode
   :config
-  (when (eq? system-type 'gnu/linux)
+  (when (eq system-type 'gnu/linux)
     (pyenv-mode 1)))
 
 ;; rainbow-delimiters
@@ -701,7 +701,7 @@
 (add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
 
 ;; vlf
-(use-package 'vlf-setup
+(use-package vlf-setup
   :config
   (setq vlf-application 'dont-ask))
 
