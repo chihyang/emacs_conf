@@ -89,6 +89,7 @@
     swiper
     switch-window
     tabbar
+    trashed
     use-package
     vlf
     vimrc-mode
@@ -120,14 +121,17 @@
 (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)
 
 ;; anzu
-(global-anzu-mode +1)
-(if (display-graphic-p)
+(use-package anzu
+  :config
+  (if (display-graphic-p)
+      (progn
+        (global-set-key [remap query-replace] 'anzu-query-replace)
+        (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp))
     (progn
-      (global-set-key [remap query-replace] 'anzu-query-replace)
-      (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp))
-  (progn
-    (global-set-key [remap query-replace] 'anzu-query-replace-regexp)
-    (global-set-key [remap query-replace-regexp] 'anzu-query-replace)))
+      (global-set-key [remap query-replace] 'anzu-query-replace-regexp)
+      (global-set-key [remap query-replace-regexp] 'anzu-query-replace)))
+  (setq anzu-search-threshold nil)
+  (global-anzu-mode +1))
 
 ;; auto-highlight-symbol-mode
 (require 'auto-highlight-symbol)
