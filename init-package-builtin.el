@@ -267,6 +267,11 @@ unwanted space when exporting `org-mode' to html."
   :init
   (savehist-mode 1))
 
+;; savehist
+(use-package saveplace
+  :ensure nil
+  :hook (after-init . save-place-mode))
+
 ;; subword-mode
 (global-subword-mode)
 
