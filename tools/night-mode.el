@@ -25,18 +25,17 @@
 (defun night-mode-p ()
   "Check if it is night."
   (let ((hr (nth 2 (decode-time (current-time)))))
-    (or (< hr night-end)
-        (> hr night-start)
-        (and (< hr noon-end) (> hr noon-start)))))
+    (not (or (and (>= hr night-end)
+                  (< hr noon-start))
+             (and (>= hr noon-end)
+                  (< hr night-start))))))
 (defun night-mode-check-bell-time ()
   "Check if bell should be turned off."
   (if (display-graphic-p)
-      (progn
-        (setq ring-bell-function 'ignore)
-        (setq ring-bell-function
-               (lambda ()
-                 (unless (night-mode-p)
-                   (ding)))))
+      (setq ring-bell-function
+            (lambda ()
+              (unless (night-mode-p)
+                (ding))))
     (setq ring-bell-function 'ignore)))
 
 (defvar night-mode-bell-timer (run-at-time "1 hour" 1 #'night-mode-check-bell-time)
