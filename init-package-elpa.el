@@ -275,8 +275,7 @@
   (setq dashboard-items
         '((projects . 5)
           (recents . 5)
-          (bookmarks . 5)
-          (agenda . 5)))
+          (bookmarks . 5)))
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))
 
 ;; dim
