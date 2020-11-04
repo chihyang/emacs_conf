@@ -30,6 +30,7 @@
     company-quickhelp
     csharp-mode
     counsel-projectile
+    dashboard
     dim
     dired-single
     dired-subtree
@@ -53,6 +54,7 @@
     iedit
     indent-guide
     ivy
+    ivy-rich
     java-snippets
     json-mode
     langtool
@@ -264,6 +266,21 @@
   :config
   (column-marker-1 80))
 
+;; dashboard
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-items
+        '((projects . 5)
+          (recents . 5)
+          (bookmarks . 5)
+          (agenda . 5)))
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))
+
 ;; dim
 (defun simplify-mode-alias ()
   "Shorten mode line major/minor modes names."
@@ -418,11 +435,17 @@
   (put 'hes-escape-backslash-face 'face-alias 'font-lock-builtin-face)
   (put 'hes-escape-sequence-face 'face-alias 'font-lock-builtin-face))
 
+;; ivy
 (use-package ivy
   :config
   (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
   (ivy-mode 1)
   (counsel-mode 1))
+
+(use-package ivy-rich
+  :config
+  (ivy-rich-mode 1))
 
 ;; iedit-mode
 (require 'iedit)
