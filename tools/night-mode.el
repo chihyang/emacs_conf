@@ -38,7 +38,7 @@
                 (ding))))
     (setq ring-bell-function 'ignore)))
 
-(defvar night-mode-bell-timer (run-at-time "1 hour" 1 #'night-mode-check-bell-time)
+(defvar night-mode-bell-timer (run-at-time "1 hour" 600 #'night-mode-check-bell-time)
   "Timer to run bell check every 1 hour.")
 
 (provide 'night-mode)
