@@ -271,6 +271,7 @@
 
 ;; dashboard
 (use-package dashboard
+  :disabled
   :ensure t
   :config
   (dashboard-setup-startup-hook)
@@ -279,7 +280,8 @@
         '((projects . 5)
           (recents . 5)
           (bookmarks . 5)))
-  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))
+  ;; (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+  )
 
 ;; dim
 (defun simplify-mode-alias ()
