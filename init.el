@@ -34,8 +34,7 @@
 ;;; Standard package repositories
 (setq package-archives (alist-get 'tsinghua package-elpa-sources))
 
-(when (< emacs-major-version 27)
-  (package-initialize))
+(package-initialize)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)

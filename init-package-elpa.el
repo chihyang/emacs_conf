@@ -110,11 +110,14 @@
 (defun ensure-packages ()
   "Install lost packages."
   (interactive)
-  (unless package-archive-contents
-    (package-refresh-contents))
-  (dolist (package required-packages)
-    (unless (package-installed-p package)
-      (package-install package))))
+  (let ((cache-refreshed? nil))
+    (dolist (package required-packages)
+      (unless (package-installed-p package)
+        (unless (and package-archive-contents cache-refreshed?)
+          (setq cache-refreshed? t)
+          (message "Ready to refresh package contents")
+          (package-refresh-contents))
+        (package-install package)))))
 
 (ensure-packages)
 
