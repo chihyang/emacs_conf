@@ -68,6 +68,7 @@
     modern-cpp-font-lock
     multiple-cursors
     nlinum
+    nov
     omni-scratch
     org-preview-html
     origami
@@ -95,6 +96,7 @@
     use-package
     vlf
     vimrc-mode
+    visual-fill-column
     visual-regexp-steroids
     websocket
     which-key
@@ -607,6 +609,20 @@
   :init
   (setq nlinum-format "%d "))
 
+(use-package nov
+  :after
+  (visual-fill-column)
+  :init
+  (setq nov-text-width 80)
+  (setq nov-text-width t)
+  (defun my-nov-mode-hook ()
+    (setq buffer-display-table (make-display-table))
+    (set-display-table-slot buffer-display-table 'wrap ?\ ))
+  (add-hook 'nov-mode-hook 'visual-line-mode)
+  (add-hook 'nov-mode-hook 'visual-fill-column-mode)
+  (add-hook 'nov-mode-hook 'my-nov-mode-hook)
+  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
+
 ;; omni-scratch
 (use-package omni-scratch
   :init
@@ -731,6 +747,8 @@
 
 ;; vimrc-mode
 (add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
+
+(use-package visual-fill-column)
 
 ;; vlf
 (use-package vlf-setup
