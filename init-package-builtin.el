@@ -146,6 +146,12 @@
 (if (not (version< emacs-version "24.4"))
     (electric-pair-mode 1))
 
+;; goto-addr
+(use-package goto-addr
+  :config
+  (add-hook 'prog-mode-hook 'goto-address-prog-mode)
+  (add-hook 'text-mode-hook 'goto-address-mode))
+
 ;; hide-show-mode
 (use-package hideshow
   :config
