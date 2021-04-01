@@ -449,6 +449,9 @@
 
 (use-package ivy-rich
   :config
+  (setq ivy-rich-parse-remote-buffer nil)
+  (setq ivy-rich-parse-remote-file-path nil)
+  (setq ivy-rich-path-style (quote full))
   (ivy-rich-mode 1))
 
 ;; iedit-mode
