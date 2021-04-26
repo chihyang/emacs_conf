@@ -100,7 +100,6 @@
     visual-regexp-steroids
     websocket
     which-key
-    workgroups2
     wttrin
     xcscope
     yasnippet
@@ -759,16 +758,18 @@
   (setq vlf-application 'dont-ask))
 
 ;; workgroups2
-(require 'workgroups2)
-(setq wg-emacs-exit-save-behavior           'save)      ; Options: 'save 'ask nil
-(setq wg-workgroups-mode-exit-save-behavior 'save)      ; Options: 'save 'ask nil
-;; Mode Line changes
-(setq wg-mode-line-display-on t)          ; Default: (not (featurep 'powerline))
-(setq wg-flag-modified t)                 ; Display modified flags as well
-(setq wg-mode-line-decor-left-brace "["
-      wg-mode-line-decor-right-brace "]"  ; how to surround it
-      wg-mode-line-decor-divider ":")
-(add-hook 'after-init-hook (lambda ()  (workgroups-mode 1)))
+(use-package workgroups2
+  :load-path "emacswiki/workgroups2/"
+  :config
+  (setq wg-emacs-exit-save-behavior           'save)      ; Options: 'save 'ask nil
+  (setq wg-workgroups-mode-exit-save-behavior 'save)      ; Options: 'save 'ask nil
+  ;; Mode Line changes
+  (setq wg-mode-line-display-on t)          ; Default: (not (featurep 'powerline))
+  (setq wg-flag-modified t)                 ; Display modified flags as well
+  (setq wg-mode-line-decor-left-brace "["
+        wg-mode-line-decor-right-brace "]"  ; how to surround it
+        wg-mode-line-decor-divider ":")
+  (add-hook 'after-init-hook (lambda ()  (workgroups-mode 1))))
 
 ;; wttrin
 (use-package wttrin
