@@ -15,6 +15,7 @@
     adaptive-wrap
     ample-theme
     anzu
+    anaphora
     auctex
     auto-highlight-symbol
     avy
