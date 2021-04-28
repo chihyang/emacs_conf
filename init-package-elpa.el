@@ -17,7 +17,6 @@
     anzu
     auctex
     auto-highlight-symbol
-    autopair
     avy
     ace-pinyin
     cal-china-x
@@ -142,11 +141,6 @@
 ;; auto-highlight-symbol-mode
 (require 'auto-highlight-symbol)
 (add-hook 'prog-mode-hook 'auto-highlight-symbol-mode)
-
-;; autopair
-(require 'autopair)
-(if (version< emacs-version "24.4")
-    (autopair-global-mode 1))
 
 ;; avy
 (use-package avy
@@ -298,7 +292,6 @@
      (auto-fill-function         " ¶")
      (auto-revert-mode           "")
      (auto-highlight-symbol-mode "")
-     (autopair-mode              "")
      (anzu-mode                  "")
      (abbrev-mode                "")
      (hs-minor-mode              "")
