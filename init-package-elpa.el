@@ -93,6 +93,7 @@
     switch-window
     tabbar
     trashed
+    undo-tree
     use-package
     vlf
     vimrc-mode
