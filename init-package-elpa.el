@@ -671,7 +671,8 @@
 ;; pyenv-mode
 (use-package pyenv-mode
   :config
-  (when (eq system-type 'gnu/linux)
+  (when (and (eq system-type 'gnu/linux)
+             (executable-find "pyenv" nil))
     (pyenv-mode 1)))
 
 ;; rainbow-delimiters
