@@ -42,6 +42,8 @@
     flycheck
     flyspell-popup
     geiser
+    geiser-chez
+    geiser-racket
     git-gutter
     gmail-message-mode
     golden-ratio
@@ -87,6 +89,7 @@
     smart-mode-line
     smart-mode-line-powerline-theme
     solarized-theme
+    separedit
     sx
     sr-speedbar
     swiper
@@ -719,6 +722,19 @@
   (line-number-mode 1)
   (column-number-mode 1)
   (size-indication-mode 1))
+
+;; separedit
+(use-package separedit
+  :config
+  (define-key prog-mode-map        (kbd "C-c '") #'separedit)
+  ;; Default major-mode for editing buffer
+  (setq separedit-default-mode 'markdown-mode)
+  ;; Feature options
+  (setq separedit-preserve-string-indentation t)
+  (setq separedit-continue-fill-column t)
+  (setq separedit-write-file-when-execute-save t)
+  (setq separedit-remove-trailing-spaces-in-comment t)
+  (add-hook 'separedit-buffer-creation-hook #'auto-fill-mode))
 
 ;; switch-window
 (global-set-key (kbd "C-x o") 'switch-window) ; rebind `C-x o' to switch-window
