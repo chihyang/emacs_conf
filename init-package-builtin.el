@@ -300,10 +300,17 @@ unwanted space when exporting `org-mode' to html."
 (tool-bar-mode 0)
 
 ;; tramp-mode
-(require 'tramp)
-(when (eq window-system 'w32)
-  (setq tramp-default-method "plink"))
-(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+(use-package tramp
+  :defer t
+  :init
+  (setq remote-file-name-inhibit-cache nil)
+  (setq vc-ignore-dir-regexp
+        (format "\\(%s\\)\\|\\(%s\\)"
+                vc-ignore-dir-regexp
+                tramp-file-name-regexp))
+  (when (eq window-system 'w32)
+    (setq tramp-default-method "plink"))
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
 ;; winner-mode
 (when (fboundp 'winner-mode)
