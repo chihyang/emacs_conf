@@ -815,7 +815,8 @@
   :ensure t
   :defer t
   :init
-  (global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point))
+  (global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point)
+  (global-set-key (kbd "C-x y") 'youdao-dictionary-search-from-input))
 
 (provide 'init-package-elpa)
 ;;; init-package-elpa.el ends here
