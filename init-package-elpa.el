@@ -27,6 +27,7 @@
     cmake-project
     color-theme-modern
     company
+    company-prescient
     company-quickhelp
     csharp-mode
     counsel-projectile
@@ -56,6 +57,7 @@
     iedit
     indent-guide
     ivy
+    ivy-prescient
     ivy-rich
     java-snippets
     json-mode
@@ -236,16 +238,22 @@
 ;; company
 (use-package company
   :config
-  (setq company-show-numbers t)
+  (setq company-show-quick-access t)
   (setq company-tooltip-align-annotations t)
   (setq company-minimum-prefix-length 2)
+  (setq company-auto-commit t)
   (add-hook 'after-init-hook 'global-company-mode))
+
+;; company-prescient
+(use-package company-prescient
+  :config
+  (company-prescient-mode 1))
 
 ;; company-quickhelp
 (use-package company-quickhelp
   :requires company
   :config
-  (add-hook 'global-company-mode-hook 'company-quickhelp-mode))
+  (company-quickhelp-mode 1))
 
 ;; cmake-font-lock
 (use-package cmake-font-lock
@@ -444,6 +452,14 @@
   (ivy-mode 1)
   (counsel-mode 1))
 
+;; ivy-prescient
+(use-package ivy-prescient
+  :after
+  (counsel-mode 1)
+  :init
+  (ivy-prescient-mode))
+
+;; ivy-rich
 (use-package ivy-rich
   :config
   (setq ivy-rich-parse-remote-buffer nil)
