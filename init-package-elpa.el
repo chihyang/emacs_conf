@@ -240,7 +240,7 @@
   :config
   (setq company-show-quick-access t)
   (setq company-tooltip-align-annotations t)
-  (setq company-minimum-prefix-length 1)
+  (setq company-minimum-prefix-length 2)
   (defun my-company-visible-and-explicit-action-p ()
     (and (company-tooltip-visible-p)
          (company-explicit-action-p)))
