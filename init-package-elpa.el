@@ -240,8 +240,24 @@
   :config
   (setq company-show-quick-access t)
   (setq company-tooltip-align-annotations t)
-  (setq company-minimum-prefix-length 2)
-  (setq company-auto-commit t)
+  (setq company-minimum-prefix-length 1)
+  (defun my-company-visible-and-explicit-action-p ()
+    (and (company-tooltip-visible-p)
+         (company-explicit-action-p)))
+
+  (defun company-ac-setup ()
+    "Sets up `company-mode' to behave similarly to `auto-complete-mode'."
+    (setq company-require-match nil)
+    (setq company-auto-commit #'my-company-visible-and-explicit-action-p)
+    (setq company-frontends '(company-echo-metadata-frontend
+                              company-pseudo-tooltip-unless-just-one-frontend-with-delay
+                              company-preview-frontend))
+    (define-key company-active-map [tab]
+      'company-select-next-if-tooltip-visible-or-complete-selection)
+    (define-key company-active-map (kbd "TAB")
+      'company-select-next-if-tooltip-visible-or-complete-selection))
+
+  (company-ac-setup)
   (add-hook 'after-init-hook 'global-company-mode))
 
 ;; company-prescient

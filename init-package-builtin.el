@@ -33,36 +33,6 @@
 ;; auto-revert-mode
 (use-package autorevert)
 
-;;; cedet implementation
-;; cedet
-(use-package cedet)
-(use-package semantic
-  :config
-  (add-to-list 'semantic-inhibit-functions
-               (lambda () (not (member major-mode '(c-mode c++-mode)))))
-  :init
-  (semantic-mode 1))
-
-;; semantic/ia
-(use-package semantic/ia
-  :defer t
-  :init
-  (setq-mode-local c-mode semanticdb-find-default-throttle
-                   '(project unloaded system recursive))
-  (setq-mode-local c++-mode semanticdb-find-default-throttle
-                   '(project unloaded system recursive))
-  (global-semanticdb-minor-mode 1)
-  (global-semantic-idle-scheduler-mode 1)
-  (global-semantic-idle-summary-mode 1)
-  (global-set-key [f12] 'semantic-ia-fast-jump))
-
-;; semantic/db-global
-(use-package semantic/db-global
-  :defer t
-  :init
-  (semanticdb-enable-gnu-global-databases 'c-mode)
-  (semanticdb-enable-gnu-global-databases 'c++-mode))
-
 ;; cc-mode
 (use-package cc-mode
   :defer t
