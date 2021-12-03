@@ -78,6 +78,7 @@
     origami
     pandoc-mode
     paredit
+    persistent-scratch
     plantuml-mode
     powerline-evil
     protobuf-mode
@@ -754,6 +755,10 @@
   (line-number-mode 1)
   (column-number-mode 1)
   (size-indication-mode 1))
+
+;; separedit
+(use-package persistent-scratch
+  :defer t)
 
 ;; separedit
 (use-package separedit
