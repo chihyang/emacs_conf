@@ -472,8 +472,8 @@
 ;; ivy-prescient
 (use-package ivy-prescient
   :after
-  (counsel-mode 1)
-  :init
+  (ivy)
+  :config
   (ivy-prescient-mode))
 
 ;; ivy-rich
