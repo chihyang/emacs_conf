@@ -53,6 +53,7 @@
     haskell-mode
     hide-lines
     highlight-escape-sequences
+    hl-todo
     htmlize
     iedit
     indent-guide
@@ -460,6 +461,11 @@
   :config
   (put 'hes-escape-backslash-face 'face-alias 'font-lock-builtin-face)
   (put 'hes-escape-sequence-face 'face-alias 'font-lock-builtin-face))
+
+;; hl-todo
+(use-package hl-todo
+  :config
+  (global-hl-todo-mode 1))
 
 ;; ivy
 (use-package ivy
