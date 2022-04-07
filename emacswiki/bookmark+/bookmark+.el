@@ -4,13 +4,13 @@
 ;; Description: Bookmark+: extensions to standard library `bookmark.el'.
 ;; Author: Drew Adams, Thierry Volpiatto
 ;; Maintainer: Drew Adams (concat "drew.adams" "@" "oracle" ".com")
-;; Copyright (C) 2000-2019, Drew Adams, all rights reserved.
+;; Copyright (C) 2000-2022, Drew Adams, all rights reserved.
 ;; Copyright (C) 2009, Thierry Volpiatto, all rights reserved.
 ;; Created: Fri Sep 15 07:58:41 2000
-;; Version: 2019.04.22
-;; Last-Updated: Mon Apr 22 09:38:51 2019 (-0700)
+;; Version: 2021.09.19
+;; Last-Updated: Fri Jan 14 12:52:46 2022 (-0800)
 ;;           By: dradams
-;;     Update #: 15049
+;;     Update #: 15072
 ;; URL: https://www.emacswiki.org/emacs/download/bookmark%2b.el
 ;; Doc URL: https://www.emacswiki.org/emacs/BookmarkPlus
 ;; Keywords: bookmarks, bookmark+, projects, placeholders, annotations, search, info, url, eww, w3m, gnus
@@ -26,9 +26,10 @@
 ;;   `help-fns', `help-fns+', `help-macro', `help-macro+',
 ;;   `help-mode', `hl-line', `hl-line+', `info', `info+', `kmacro',
 ;;   `macroexp', `menu-bar', `menu-bar+', `misc-cmds', `misc-fns',
-;;   `naked', `pp', `pp+', `radix-tree', `replace', `second-sel',
-;;   `strings', `syntax', `text-mode', `thingatpt', `thingatpt+',
-;;   `vline', `w32browser-dlgopen', `wid-edit', `wid-edit+'.
+;;   `naked', `pp', `pp+', `radix-tree', `rect', `replace',
+;;   `second-sel', `strings', `syntax', `text-mode', `thingatpt',
+;;   `thingatpt+', `vline', `w32browser-dlgopen', `wid-edit',
+;;   `wid-edit+'.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -180,6 +181,43 @@
   "Show version number of library `bookmark+.el'."
   (interactive)
   (message "Bookmark+, version %s" bmkp-version-number))
+
+;; This was made automatically buffer-local for vanilla Emacs 28.  Do it here, for all Bookmark+ files.
+(defvar bookmark-annotation-name nil
+  "Name of bookmark under edit in `bookmark-edit-annotation-mode'.")
+(make-variable-buffer-local 'bookmark-annotation-name)
+
+;;;###autoload (autoload 'bookmark-bmenu-buffer "bookmark+")
+;; This was added for vanilla Emacs 28.  Add it here for older releases.
+(defconst bookmark-bmenu-buffer "*Bookmark List*"
+  "Name of buffer used by vanilla Emacs for the bookmark-list display.")
+
+;;;###autoload (autoload 'bookmark-plus "bookmark+")
+(defgroup bookmark-plus nil
+  "Bookmark enhancements."
+  :prefix "bmkp-" :group 'bookmark
+  :link `(url-link :tag "Send Bug Report"
+          ,(concat "mailto:" "drew.adams" "@" "oracle" ".com?subject=\
+Bookmark+ bug: \
+&body=Describe bug here, starting with `emacs -Q'.  \
+Don't forget to mention your Emacs and library versions."))
+  :link '(url-link :tag "Download" "https://www.emacswiki.org/emacs/download/bookmark%2b.el")
+  :link '(url-link :tag "Description" "https://www.emacswiki.org/emacs/BookmarkPlus")
+  :link '(emacs-commentary-link :tag "Commentary" "bookmark+"))
+
+;; NOTE:
+;; $$$$$$ Currently all vanilla Emacs functions that use constant `bookmark-bmenu-buffer' are
+;; already redefined for Bookmark+.  But if vanilla Emacs adds more such functions, and if those
+;; functions could be invoked somehow when using Bookmark+, and if `bmkp-bmenu-buffer' has a
+;; different value from `bookmark-bmenu-buffer', then some adjustment of Bookmark+ code will be
+;; needed, to make sure the `bmkp-bmenu-buffer' value gets used instead.
+;;
+;;;###autoload (autoload 'bmkp-bmenu-buffer "bookmark+")
+(defcustom bmkp-bmenu-buffer bookmark-bmenu-buffer
+  "Name of buffer used by Bookmark+ for the bookmark-list display.
+The default value is that of vanilla Emacs constant `bookmark-bmenu-buffer'."
+  :type 'string :group 'bookmark-plus)
+
 
 
 ;; Load Bookmark+ libraries.
