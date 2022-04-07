@@ -272,7 +272,7 @@ unwanted space when exporting `org-mode' to html."
 ;; tramp-mode
 (use-package tramp
   :defer t
-  :init
+  :config
   (setq remote-file-name-inhibit-cache nil)
   (setq vc-ignore-dir-regexp
         (format "\\(%s\\)\\|\\(%s\\)"
