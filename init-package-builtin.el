@@ -259,6 +259,11 @@ unwanted space when exporting `org-mode' to html."
 ;; show-paren-mode
 (show-paren-mode 1)                       ; highlight paired brackets
 
+;; so-long-mode
+(use-package so-long
+  :config
+  (global-so-long-mode 1))
+
 ;; time
 (require 'time)
 (setq display-time-format "%Y/%m/%d-%u %H:%M")
