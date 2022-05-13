@@ -824,7 +824,8 @@
   (setq wg-mode-line-decor-left-brace "["
         wg-mode-line-decor-right-brace "]"  ; how to surround it
         wg-mode-line-decor-divider ":")
-  (add-hook 'after-init-hook (lambda ()  (workgroups-mode 1))))
+  (add-hook 'after-init-hook (lambda ()  (workgroups-mode 1)))
+  (add-to-list 'delete-frame-functions (lambda (frame) (wg-save-session))))
 
 ;; wttrin
 (use-package wttrin

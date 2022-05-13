@@ -79,7 +79,12 @@
   :config
   (unless (daemonp)
     (eval-after-load "init.el"
-      (desktop-save-mode))))
+      (desktop-save-mode)))
+  (add-to-list 'delete-frame-functions
+               (lambda (frame)
+                 (when (and (desktop-owner)
+                            (= (desktop-owner) (emacs-pid)))
+                   (desktop-save-in-desktop-dir)))))
 
 ;; dried omit mode
 (use-package dired-x
