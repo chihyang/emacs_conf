@@ -825,6 +825,7 @@
         wg-mode-line-decor-right-brace "]"  ; how to surround it
         wg-mode-line-decor-divider ":")
   (add-hook 'after-init-hook (lambda ()  (workgroups-mode 1)))
+  (add-hook 'server-after-make-frame-hook (lambda () (wg-open-session (wg-get-session-file))))
   (add-to-list 'delete-frame-functions (lambda (frame) (wg-save-session))))
 
 ;; wttrin
