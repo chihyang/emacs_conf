@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: question element
+# key: 1q
+# --
+@elem[#:style question]{$0}

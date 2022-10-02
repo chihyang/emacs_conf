@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: emphasize element with original word
+# key: 2e
+# --
+@emph{$0} (@emph{$1})

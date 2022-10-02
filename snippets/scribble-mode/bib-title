@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: bib title
+# key: bt
+@a-title{$0}

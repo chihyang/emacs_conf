@@ -1,0 +1,19 @@
+# key: qa
+# name: question answer pair
+# --
+@qa{
+
+@qt{
+
+$1
+
+}
+
+@an{
+
+$2
+
+}
+
+}
+$0

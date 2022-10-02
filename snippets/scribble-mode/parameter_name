@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: parameter name
+# key: bn
+# --
+@bn{$0}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: nested flow with small style
+# key: ns
+# --
+@nested[#:style small]

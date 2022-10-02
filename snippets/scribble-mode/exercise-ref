@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: exercise reference
+# key: er
+# --
+@exercise-ref{$0}
