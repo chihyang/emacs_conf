@@ -1,0 +1,7 @@
+# key: ng
+# name: nugget
+# --
+@nugget{
+$1
+}
+$0

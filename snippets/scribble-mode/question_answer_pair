@@ -1,7 +1,7 @@
 # key: qa
 # name: question answer pair
 # --
-@qa{
+@qa[
 
 @qt{
 
@@ -15,5 +15,5 @@ $2
 
 }
 
-}
+]
 $0
