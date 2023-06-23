@@ -831,6 +831,12 @@
   (define-key racket-repl-mode-map (kbd "C-c \\") #'racket-insert-lambda)
   (define-key racket-repl-mode-map (kbd "M-r") #'comint-history-isearch-backward-regexp))
 
+(use-package scribble-mode
+  :after
+  (racket-mode)
+  :config
+  (define-key scribble-mode-map (kbd "C-c \\") #'racket-insert-lambda))
+
 ;; separedit
 (use-package separedit
   :config
