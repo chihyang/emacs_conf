@@ -44,7 +44,7 @@
     flyspell-popup
     geiser
     geiser-chez
-    geiser-racket
+    ;; geiser-racket
     git-gutter
     gmail-message-mode
     golden-ratio
@@ -133,6 +133,14 @@
 ;;; configuration of packages, ordered alphabetically
 ;; adaptive-wrap
 (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)
+
+
+;; auctex
+(use-package latex
+  :ensure auctex
+  :config
+  (define-key TeX-mode-map (kbd "C-x n n") #'next-multiframe-window)
+  (define-key LaTeX-mode-map (kbd "C-x n n") #'next-multiframe-window))
 
 ;; anzu
 (use-package anzu
@@ -625,13 +633,14 @@
 ;; https://www.emacswiki.org/emacs/AutoModeAlist
 (use-package markdown-mode
   :defer t
-  :init
+  :config
   (add-to-list 'auto-mode-alist '("\\.text\\'" . gfm-mode))
   (add-to-list 'auto-mode-alist '("\\.markdown\\'" . gfm-mode))
   (add-to-list 'auto-mode-alist '("[^Mm]\\.md\\'" . gfm-mode))
   (add-to-list 'auto-mode-alist '("README.*" . gfm-mode))
+  (define-key markdown-mode-map (kbd "C-x n n") #'next-multiframe-window)
   (setq markdown-command "pandoc -f markdown_github")
-  (setq markdown-fontify-code-block-natively t))
+  (markdown-toggle-fontify-code-blocks-natively))
 
 ;; modern-c++-font-lock
 (use-package modern-cpp-font-lock
@@ -680,14 +689,58 @@
 (global-set-key (kbd "C-c M-f") 'origami-toggle-all-nodes)
 
 ;; paredit
-(dolist (hook '(emacs-lisp-mode-hook
-                eval-expression-minibuffer-setup-hook
-                ielm-mode-hook
-                lisp-mode-hook
-                lisp-interaction-mode-hook
-                racket-mode-hook
-                scheme-mode-hook))
-  (add-hook hook 'enable-paredit-mode))
+(use-package paredit
+  :config
+  (define-key paredit-mode-map "\M-r" nil)
+  (dolist (hook '(emacs-lisp-mode-hook
+                  eval-expression-minibuffer-setup-hook
+                  ielm-mode-hook
+                  lisp-mode-hook
+                  lisp-interaction-mode-hook
+                  racket-mode-hook
+                  racket-repl-mode-hook
+                  scheme-mode-hook))
+    (add-hook hook 'enable-paredit-mode))
+  (defun paredit-replace-wrap (target)
+    "Replace the pair of brackets around an s-exp with a pair of square brackets."
+    (save-excursion
+      (let ((paren (remove target '(?\{ ?\( ?\[)))
+            (paredit-wrap-func
+             (cond
+              ((char-equal target ?\[) #'paredit-wrap-square)
+              ((char-equal target ?\() #'paredit-wrap-round)
+              ((char-equal target ?\{) #'paredit-wrap-curly)))
+            (sexp-start
+                (progn
+                  (paredit-move-forward)
+                  (paredit-move-backward)
+                  (point))))
+        (cond
+         ((memq (char-after sexp-start) paren)
+          (funcall paredit-wrap-func)
+          (goto-char (+ (point) 1))
+          (paredit-splice-sexp))))))
+  (defun paredit-replace-wrap-with-square ()
+    "Replace the pair of brackets around an s-exp with a pair of square brackets."
+    (interactive)
+    (paredit-replace-wrap ?\[))
+  (defun paredit-replace-wrap-with-round ()
+    "Replace the pair of brackets around an s-exp with a pair of round brackets."
+    (interactive)
+    (paredit-replace-wrap ?\())
+  (defun paredit-replace-wrap-with-curly ()
+    "Replace the pair of brackets around an s-exp with a pair of curly brackets."
+    (interactive)
+    (paredit-replace-wrap ?\{))
+  (dolist (mode-map (list
+                     emacs-lisp-mode-map
+                     lisp-mode-map
+                     racket-mode-map
+                     racket-repl-mode-map
+                     scribble-mode-map))
+    (define-key mode-map (kbd "C-c [") #'paredit-replace-wrap-with-square)
+    (define-key mode-map (kbd "C-c 9") #'paredit-replace-wrap-with-round))
+  (define-key scribble-mode-map (kbd "C-c \\") #'paredit-replace-wrap-with-curly))
 
 ;; plantuml-mode
 (use-package plantuml-mode
@@ -762,16 +815,28 @@
   (column-number-mode 1)
   (size-indication-mode 1))
 
-;; separedit
+;; persistent-scratch
 (use-package persistent-scratch
   :defer t)
+
+;; racket, use racket-mode instead of geiser
+(use-package racket-mode
+  :after (paredit)
+  :config
+  (setq auto-mode-alist (assq-delete-all "\\.rkt\\'" auto-mode-alist))
+  (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
+  (add-hook 'racket-mode-hook #'racket-xp-mode)
+  (define-key racket-mode-map (kbd "C-c \\") #'racket-insert-lambda)
+  (define-key racket-mode-map (kbd "C-c C-a") #'racket-run-and-switch-to-repl)
+  (define-key racket-repl-mode-map (kbd "C-c \\") #'racket-insert-lambda)
+  (define-key racket-repl-mode-map (kbd "M-r") #'comint-history-isearch-backward-regexp))
 
 ;; separedit
 (use-package separedit
   :config
   (define-key prog-mode-map        (kbd "C-c '") #'separedit)
   ;; Default major-mode for editing buffer
-  (setq separedit-default-mode 'markdown-mode)
+  (setq separedit-default-mode 'text-mode)
   ;; Feature options
   (setq separedit-preserve-string-indentation t)
   (setq separedit-continue-fill-column t)
