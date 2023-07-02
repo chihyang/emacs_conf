@@ -1,0 +1,13 @@
+# key: ft
+# name: footnote definition
+# --
+@define[ft-$1
+
+@ft{
+
+$2
+
+}
+
+]
+$0
