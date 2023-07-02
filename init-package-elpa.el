@@ -425,8 +425,10 @@
   (setq fci-rule-color "darkblue"))
 
 ;; flycheck-mode
-(add-hook 'prog-mode-hook 'flycheck-mode)
-(add-hook 'tex-mode-hook 'flycheck-mode)
+(use-package flycheck-mode
+  :config
+  (add-hook 'prog-mode-hook 'flycheck-mode)
+  (add-hook 'tex-mode-hook 'flycheck-mode))
 
 ;; flyspell-mode
 (use-package ispell
@@ -443,10 +445,10 @@
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
   :config
   (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
-    (add-hook hook (lambda () (flyspell-mode -1)))))
-
-;; flyspell-popup
-;; (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
+    (add-hook hook (lambda () (flyspell-mode -1))))
+  ;; flyspell-popup
+  ;; (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
+)
 
 (use-package git-gutter
   :init
@@ -462,6 +464,12 @@
   (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
   ;; Mark current hunk
   (global-set-key (kbd "C-x v SPC") #'git-gutter:mark-hunk))
+
+;;; geiser
+(use-package geiser
+  :requires paredit
+  :config
+  (add-hook 'geiser-repl-mode-hook 'paredit-mode))
 
 (use-package highlight-escape-sequences
   :init
