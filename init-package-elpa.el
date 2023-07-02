@@ -690,6 +690,7 @@
 
 ;; paredit
 (use-package paredit
+  :after (racket-mode scribble-mode)
   :config
   (define-key paredit-mode-map "\M-r" nil)
   (dolist (hook '(emacs-lisp-mode-hook
@@ -821,7 +822,6 @@
 
 ;; racket, use racket-mode instead of geiser
 (use-package racket-mode
-  :after (paredit)
   :config
   (setq auto-mode-alist (assq-delete-all "\\.rkt\\'" auto-mode-alist))
   (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
