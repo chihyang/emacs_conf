@@ -755,6 +755,7 @@
                      lisp-mode-map
                      racket-mode-map
                      racket-repl-mode-map
+                     scheme-mode-map
                      scribble-mode-map))
     (define-key mode-map (kbd "C-c [") #'paredit-replace-wrap-with-square)
     (define-key mode-map (kbd "C-c 9") #'paredit-replace-wrap-with-round))
