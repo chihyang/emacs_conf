@@ -708,6 +708,7 @@
       (define-key (current-local-map) (kbd "<RET>") (local-key-binding (kbd "<RET>")))
       (define-key (current-local-map) (kbd "<RET>") #'paredit-RET))
     (enable-paredit-mode))
+  (define-key paredit-mode-map (kbd "RET") nil)
   (define-key paredit-mode-map "\M-r" nil)
   (dolist (hook '(emacs-lisp-mode-hook
                   eval-expression-minibuffer-setup-hook
