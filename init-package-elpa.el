@@ -699,17 +699,15 @@
 ;; paredit
 (use-package paredit
   :after (racket-mode scribble-mode)
-  :bind
-  (:map paredit-mode-map
-        ("<return>" . my/paredit-RET))
   :config
-  ;; from https://www.reddit.com/r/emacs/comments/101uwgd/comment/jjq0jen/
+  ;; adapted from https://www.reddit.com/r/emacs/comments/101uwgd/comment/jjq0jen/
   (defun my/paredit-RET ()
     "Wraps `paredit-RET' to provide a sensible minibuffer experience."
     (interactive)
-    (if (minibufferp)
-        (read--expression-try-read)
-      (paredit-RET)))
+    (when (not (local-key-binding (kbd "<RET>")))
+      (define-key (current-local-map) (kbd "<RET>") (local-key-binding (kbd "<RET>")))
+      (define-key (current-local-map) (kbd "<RET>") #'paredit-RET))
+    (enable-paredit-mode))
   (define-key paredit-mode-map "\M-r" nil)
   (dolist (hook '(emacs-lisp-mode-hook
                   eval-expression-minibuffer-setup-hook
@@ -719,7 +717,7 @@
                   racket-mode-hook
                   racket-repl-mode-hook
                   scheme-mode-hook))
-    (add-hook hook 'enable-paredit-mode))
+    (add-hook hook #'my/paredit-RET))
   (defun paredit-replace-wrap (target)
     "Replace the pair of brackets around an s-exp with a pair of square brackets."
     (save-excursion
@@ -730,10 +728,10 @@
               ((char-equal target ?\() #'paredit-wrap-round)
               ((char-equal target ?\{) #'paredit-wrap-curly)))
             (sexp-start
-                (progn
-                  (paredit-move-forward)
-                  (paredit-move-backward)
-                  (point))))
+             (progn
+               (paredit-move-forward)
+               (paredit-move-backward)
+               (point))))
         (cond
          ((memq (char-after sexp-start) paren)
           (funcall paredit-wrap-func)
@@ -914,7 +912,7 @@
         wg-mode-line-decor-right-brace "]"  ; how to surround it
         wg-mode-line-decor-divider ":")
   (add-hook 'after-init-hook (lambda ()  (workgroups-mode 1)))
-  (add-hook 'server-after-make-frame-hook (lambda () (wg-open-session (wg-get-session-file))))
+  ;; (add-hook 'server-after-make-frame-hook (lambda () (wg-open-session (wg-get-session-file))))
   (add-to-list 'delete-frame-functions (lambda (frame) (wg-save-session))))
 
 ;; wttrin
