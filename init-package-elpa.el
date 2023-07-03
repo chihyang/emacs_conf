@@ -689,12 +689,12 @@
          ("M-s *" . omni-scratch-buffers)))
 
 ;; origami
-(dolist (hook '(
-                prog-mode-hook
-                ))
-  (add-hook hook 'origami-mode))
-(global-set-key (kbd "C-c C-f") 'origami-toggle-node)
-(global-set-key (kbd "C-c M-f") 'origami-toggle-all-nodes)
+(use-package origami
+  :config
+  (dolist (hook '(prog-mode-hook))
+    (add-hook hook 'origami-mode))
+  (global-set-key (kbd "C-c C-f") 'origami-toggle-node)
+  (global-set-key (kbd "C-c M-f") 'origami-toggle-all-nodes))
 
 ;; paredit
 (use-package paredit
