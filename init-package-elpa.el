@@ -699,7 +699,17 @@
 ;; paredit
 (use-package paredit
   :after (racket-mode scribble-mode)
+  :bind
+  (:map paredit-mode-map
+        ("<return>" . my/paredit-RET))
   :config
+  ;; from https://www.reddit.com/r/emacs/comments/101uwgd/comment/jjq0jen/
+  (defun my/paredit-RET ()
+    "Wraps `paredit-RET' to provide a sensible minibuffer experience."
+    (interactive)
+    (if (minibufferp)
+        (read--expression-try-read)
+      (paredit-RET)))
   (define-key paredit-mode-map "\M-r" nil)
   (dolist (hook '(emacs-lisp-mode-hook
                   eval-expression-minibuffer-setup-hook
