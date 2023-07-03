@@ -788,6 +788,17 @@
              (executable-find "pyenv" nil))
     (pyenv-mode 1)))
 
+;; racket, use racket-mode instead of geiser
+(use-package racket-mode
+  :config
+  (setq auto-mode-alist (assq-delete-all "\\.rkt\\'" auto-mode-alist))
+  (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
+  (add-hook 'racket-mode-hook #'racket-xp-mode)
+  (define-key racket-mode-map (kbd "C-c \\") #'racket-insert-lambda)
+  (define-key racket-mode-map (kbd "C-c C-a") #'racket-run-and-switch-to-repl)
+  (define-key racket-repl-mode-map (kbd "C-c \\") #'racket-insert-lambda)
+  (define-key racket-repl-mode-map (kbd "M-r") #'comint-history-isearch-backward-regexp))
+
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
   :defer t
@@ -836,17 +847,6 @@
 ;; persistent-scratch
 (use-package persistent-scratch
   :defer t)
-
-;; racket, use racket-mode instead of geiser
-(use-package racket-mode
-  :config
-  (setq auto-mode-alist (assq-delete-all "\\.rkt\\'" auto-mode-alist))
-  (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
-  (add-hook 'racket-mode-hook #'racket-xp-mode)
-  (define-key racket-mode-map (kbd "C-c \\") #'racket-insert-lambda)
-  (define-key racket-mode-map (kbd "C-c C-a") #'racket-run-and-switch-to-repl)
-  (define-key racket-repl-mode-map (kbd "C-c \\") #'racket-insert-lambda)
-  (define-key racket-repl-mode-map (kbd "M-r") #'comint-history-isearch-backward-regexp))
 
 (use-package scribble-mode
   :after
