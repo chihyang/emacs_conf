@@ -425,7 +425,7 @@
   (setq fci-rule-color "darkblue"))
 
 ;; flycheck-mode
-(use-package flycheck-mode
+(use-package flycheck
   :config
   (add-hook 'prog-mode-hook 'flycheck-mode)
   (add-hook 'tex-mode-hook 'flycheck-mode))
