@@ -759,7 +759,13 @@
                      scribble-mode-map))
     (define-key mode-map (kbd "C-c [") #'paredit-replace-wrap-with-square)
     (define-key mode-map (kbd "C-c 9") #'paredit-replace-wrap-with-round))
-  (define-key scribble-mode-map (kbd "C-c \\") #'paredit-replace-wrap-with-curly))
+  (define-key scribble-mode-map (kbd "C-c \\") #'paredit-replace-wrap-with-curly)
+  ;; switch default buffer in REPL
+  (defun racket-change-default-directory ()
+    (let ((dir (file-name-directory (buffer-file-name (current-buffer)))))
+      (with-current-buffer racket-repl-buffer-name
+        (setq default-directory dir))))
+  (add-hook 'racket-after-run-hook 'racket-change-default-directory))
 
 ;; plantuml-mode
 (use-package plantuml-mode

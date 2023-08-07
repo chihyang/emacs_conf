@@ -299,5 +299,20 @@ unwanted space when exporting `org-mode' to html."
 ;; which-function-mode
 (which-function-mode 1)
 
+(defun kill-right-whitespace ()
+  "Remove all white space from current cursor to the point before
+the next non whitespace character."
+  (interactive)
+  (save-excursion
+    (let ((start (point))
+          (space? (looking-at-p "[[:space:]]"))
+          (end (progn
+                 (forward-whitespace 1)
+                 (point))))
+      (when (and space? (< start end))
+        (kill-region start end)))))
+
+(global-set-key (kbd "C-|") 'kill-right-whitespace)
+
 (provide 'init-package-builtin)
 ;;; init-package-builtin.el ends here
