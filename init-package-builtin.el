@@ -136,8 +136,6 @@
 
 ;; hl-line-mode
 (global-hl-line-mode)
-(if  (not (window-system))
-    (set-face-background 'hl-line "brightblack"))
 
 ;; html-mode
 (add-hook 'html-mode-hook
