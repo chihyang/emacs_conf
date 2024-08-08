@@ -221,6 +221,11 @@
   (cnfonts-enable))
 
 ;; theme
+(use-package gruvbox-theme
+  :config
+  (load-theme 'gruvbox-dark-medium t)
+  (enable-theme 'gruvbox-dark-medium))
+
 (defun switch-theme (gui-theme terminal-theme)
   (interactive
     (list
@@ -243,7 +248,6 @@
       (set-terminal-parameter nil 'background-mode 'dark)
       (load-theme terminal-theme t t)
       (enable-theme terminal-theme))))
-(switch-theme 'gruvbox-dark-medium 'gruvbox-dark-medium)
 
 ;; company
 (use-package company
@@ -673,7 +677,11 @@
   (setq nov-text-width t)
   (defun my-nov-mode-hook ()
     (setq buffer-display-table (make-display-table))
-    (set-display-table-slot buffer-display-table 'wrap ?\ ))
+    (display-line-numbers-mode -1)
+    (setq visual-fill-column-center-text t)
+    (set-display-table-slot buffer-display-table 'wrap ?\ )
+    (define-key (current-local-map) (kbd "j") #'next-line)
+    (define-key (current-local-map) (kbd "k") #'previous-line))
   (add-hook 'nov-mode-hook 'visual-line-mode)
   (add-hook 'nov-mode-hook 'visual-fill-column-mode)
   (add-hook 'nov-mode-hook 'my-nov-mode-hook)
@@ -878,18 +886,20 @@
 (global-set-key (kbd "C-x o") 'switch-window) ; rebind `C-x o' to switch-window
 
 ;; tabbar-mode
-(tabbar-mode)
-(load "~/.emacs.d/init-tabbar-theme.el") ; theme
-(if (display-graphic-p)                  ; key-binding
+(use-package tabbar
+  :config
+  ;; (load "~/.emacs.d/init-tabbar-theme.el") ; theme
+  (if (display-graphic-p)               ; key-binding
+      (progn
+        (global-set-key [C-tab] 'tabbar-forward-tab)
+        (global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab))
     (progn
-      (global-set-key [C-tab] 'tabbar-forward-tab)
-      (global-set-key (kbd "C-c <C-tab>") 'tabbar-backward-tab))
-  (progn
-    (global-set-key (kbd "C-c t n") 'tabbar-forward-tab)
-    (global-set-key (kbd "C-c t p") 'tabbar-backward-tab)
-    (global-set-key (kbd "C-c t <up>") 'tabbar-backward-group)
-    (global-set-key (kbd "C-c t <down>") 'tabbar-forward-group)
-    (global-set-key (kbd "C-c t <home>") 'tabbar-press-home)))
+      (global-set-key (kbd "C-c t n") 'tabbar-forward-tab)
+      (global-set-key (kbd "C-c t p") 'tabbar-backward-tab)
+      (global-set-key (kbd "C-c t <up>") 'tabbar-backward-group)
+      (global-set-key (kbd "C-c t <down>") 'tabbar-forward-group)
+      (global-set-key (kbd "C-c t <home>") 'tabbar-press-home)))
+  (tabbar-mode))
 
 ;; undo-tree
 (use-package undo-tree
