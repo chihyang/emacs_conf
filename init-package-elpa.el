@@ -329,8 +329,10 @@
     (dim-major-names
      '(
        (emacs-lisp-mode     "Eλ")
+       (haskell-mode        "Hs")
        (makefile-gmake-mode "GM")
        (scheme-mode         "λ")
+       (racket-mode         "Rλ")
        ))
     (dim-minor-names
      '(
