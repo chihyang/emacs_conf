@@ -156,8 +156,9 @@
   (global-anzu-mode +1))
 
 ;; auto-highlight-symbol-mode
-(require 'auto-highlight-symbol)
-(add-hook 'prog-mode-hook 'auto-highlight-symbol-mode)
+(use-package auto-highlight-symbol
+  :config
+  (add-hook 'prog-mode-hook 'auto-highlight-symbol-mode))
 
 ;; avy
 (use-package avy
@@ -194,14 +195,15 @@
   (setq bookmark-save-flag 1))
 
 ;; cal-china-x
-(require 'cal-china-x)
-(setq mark-holidays-in-calendar t)
-(setq cal-china-x-important-holiday
-      cal-china-x-chinese-holidays)
-(setq calendar-holidays
-      (append cal-china-x-important-holidays
-              cal-china-x-general-holidays
-              holiday-other-holidays))
+(use-package cal-china-x
+  :config
+  (setq mark-holidays-in-calendar t)
+  (setq cal-china-x-important-holiday
+        cal-china-x-chinese-holidays)
+  (setq calendar-holidays
+        (append cal-china-x-important-holidays
+                cal-china-x-general-holidays
+                holiday-other-holidays)))
 
 ;; chinese-fonts-setup
 (use-package cnfonts
@@ -514,23 +516,24 @@
   (ivy-rich-mode 1))
 
 ;; iedit-mode
-(require 'iedit)
-(defun iedit-dwim (arg)
-  "Starts iedit but uses \\[narrow-to-defun] to limit its scope."
-  (interactive "P")
-  (if arg
-      (iedit-mode)
-    (save-excursion
-      (save-restriction
-        (widen)
-        ;; this function determines the scope of `iedit-start'.
-        (if iedit-mode
-            (iedit-done)
-          ;; `current-word' can of course be replaced by other
-          ;; functions.
-          (narrow-to-defun)
-          (iedit-start (current-word) (point-min) (point-max)))))))
-(global-set-key (kbd "C-c ; s") 'iedit-dwim)
+(use-package iedit
+  :config
+  (defun iedit-dwim (arg)
+    "Starts iedit but uses \\[narrow-to-defun] to limit its scope."
+    (interactive "P")
+    (if arg
+        (iedit-mode)
+      (save-excursion
+        (save-restriction
+          (widen)
+          ;; this function determines the scope of `iedit-start'.
+          (if iedit-mode
+              (iedit-done)
+            ;; `current-word' can of course be replaced by other
+            ;; functions.
+            (narrow-to-defun)
+            (iedit-start (current-word) (point-min) (point-max)))))))
+  (global-set-key (kbd "C-c ; s") 'iedit-dwim))
 
 ;; indent-guide
 (setq indent-guide-recursive t)
@@ -943,11 +946,12 @@
   (add-to-list 'wttrin-default-cities "Shanghai"))
 
 ;; xcscope
-(require 'xcscope)
-(setq cscope-option-do-not-update-database t)
-(cscope-setup)
-(add-hook 'java-mode-hook #'cscope-minor-mode)
-(add-hook 'c-mode-common-hook #'cscope-minor-mode)
+(use-package xcscope
+  :config
+  (setq cscope-option-do-not-update-database t)
+  (add-hook 'java-mode-hook #'cscope-minor-mode)
+  (add-hook 'c-mode-common-hook #'cscope-minor-mode)
+  (cscope-setup))
 
 ;; yasnippet
 (use-package yasnippet
