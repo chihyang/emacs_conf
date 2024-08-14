@@ -322,41 +322,42 @@
   )
 
 ;; dim
-(defun simplify-mode-alias ()
-  "Shorten mode line major/minor modes names."
-  (dim-major-names
-   '(
-     (emacs-lisp-mode     "Eλ")
-     (makefile-gmake-mode "GM")
-     (scheme-mode         "λ")
-     ))
-  (dim-minor-names
-   '(
-     (auto-fill-function         " ¶")
-     (auto-revert-mode           "")
-     (auto-highlight-symbol-mode "")
-     (anzu-mode                  "")
-     (abbrev-mode                "")
-     (hs-minor-mode              "")
-     (ivy-mode                   "")
-     (git-gutter-mode            "")
-     )))
 (use-package dim
-  :after
-  (anzu ivy git-gutter workgroups2 yasnippet paredit)
-  :init
-  (add-hook 'workgroups-mode-hook
-            (lambda ()
-              (dim-minor-name 'workgroups-mode "")))
-  (add-hook 'yas-minor-mode-hook
-            (lambda ()
-              (dim-minor-name 'yas-minor-mode  " →")))
-  (add-hook 'paredit-mode-hook
-            (lambda ()
-              (dim-minor-name 'paredit-mode    " ()")))
-  (add-hook 'flyspell-mode-hook
-            (lambda ()
-              (dim-minor-name 'flyspell-mode   " √")))
+  :config
+  (defun simplify-mode-alias ()
+    "Shorten mode line major/minor modes names."
+    (dim-major-names
+     '(
+       (emacs-lisp-mode     "Eλ")
+       (makefile-gmake-mode "GM")
+       (scheme-mode         "λ")
+       ))
+    (dim-minor-names
+     '(
+       (abbrev-mode                "")
+       (ace-pinyin-mode            "")
+       (anzu-mode                  "")
+       (auto-fill-function         "¶")
+       (auto-highlight-symbol-mode "")
+       (auto-revert-mode           "")
+       (company-mode               "")
+       (counsel-mode               "")
+       (eldoc-mode                 "")
+       (ethan-wspace-mode          "␣")
+       (flycheck-mode              "!")
+       (flyspell-mode              "√")
+       (git-gutter-mode            "")
+       (hs-minor-mode              "")
+       (interactive-haskell-mode   "")
+       (ivy-mode                   "")
+       (modern-c++-font-lock-mode  " C++11 ")
+       (paredit-mode               "()")
+       (projectile-mode            "Pj")
+       (subword-mode               "")
+       (undo-tree-mode             "⇔")
+       (workgroups-mode            "")
+       (yas-minor-mode             "")
+       )))
   (simplify-mode-alias))
 
 ;; dired+
@@ -657,7 +658,6 @@
 ;; modern-c++-font-lock
 (use-package modern-cpp-font-lock
   :config
-  (dim-minor-names '((modern-c++-font-lock-mode " C++11")))
   (add-hook 'c-mode-common-hook #'modern-c++-font-lock-mode))
 
 ;; multiple-cursors
@@ -811,6 +811,7 @@
   (add-hook 'racket-mode-hook #'racket-xp-mode)
   (define-key racket-mode-map (kbd "C-c \\") #'racket-insert-lambda)
   (define-key racket-mode-map (kbd "C-c C-a") #'racket-run-and-switch-to-repl)
+  (define-key racket-repl-mode-map (kbd "C-c M-o") #'racket-repl-clear-leaving-last-prompt)
   (define-key racket-repl-mode-map (kbd "C-c \\") #'racket-insert-lambda)
   (define-key racket-repl-mode-map (kbd "M-r") #'comint-history-isearch-backward-regexp))
 
@@ -904,8 +905,7 @@
 ;; undo-tree
 (use-package undo-tree
   :config
-  (global-undo-tree-mode)
-  (dim-minor-names '((undo-tree-mode " ⇔"))))
+  (global-undo-tree-mode))
 
 ;; vimrc-mode
 (add-to-list 'auto-mode-alist '("vim\\(rc\\)?$" . vimrc-mode))
