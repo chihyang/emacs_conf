@@ -362,7 +362,7 @@
        (workgroups-mode            "")
        (yas-minor-mode             "")
        )))
-  (simplify-mode-alias))
+  (add-hook 'find-file-hook 'simplify-mode-alias))
 
 ;; dired+
 (use-package dired+
