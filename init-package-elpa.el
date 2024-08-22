@@ -690,6 +690,7 @@
   (add-hook 'nov-mode-hook 'visual-line-mode)
   (add-hook 'nov-mode-hook 'visual-fill-column-mode)
   (add-hook 'nov-mode-hook 'my-nov-mode-hook)
+  (add-hook 'nov-mode-hook 'word-wrap-whitespace-mode)
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
 
 ;; omni-scratch
