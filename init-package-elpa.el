@@ -27,6 +27,7 @@
     cmake-project
     color-theme-modern
     company
+    company-coq
     company-prescient
     company-quickhelp
     csharp-mode
@@ -82,6 +83,7 @@
     persistent-scratch
     plantuml-mode
     powerline-evil
+    proof-general
     protobuf-mode
     projectile
     py-autopep8
@@ -140,7 +142,8 @@
   :ensure auctex
   :config
   (define-key TeX-mode-map (kbd "C-x n n") #'next-multiframe-window)
-  (define-key LaTeX-mode-map (kbd "C-x n n") #'next-multiframe-window))
+  (define-key LaTeX-mode-map (kbd "C-x n n") #'next-multiframe-window)
+  (setq LaTeX-electric-left-right-brace t))
 
 ;; anzu
 (use-package anzu
@@ -221,6 +224,12 @@
   (add-hook 'cnfonts-set-font-finish-hook 'my-set-symbol-fonts)
   :config
   (cnfonts-enable))
+
+;; company-coq
+(use-package company-coq
+  :requires proof-general
+  :config
+  (add-hook 'coq-mode-hook #'company-coq-mode))
 
 ;; theme
 (use-package gruvbox-theme
