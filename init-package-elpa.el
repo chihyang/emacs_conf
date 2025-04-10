@@ -226,10 +226,7 @@
   (cnfonts-enable))
 
 ;; company-coq
-(use-package company-coq
-  :requires proof-general
-  :config
-  (add-hook 'coq-mode-hook #'company-coq-mode))
+(use-package company-coq)
 
 ;; theme
 (use-package gruvbox-theme
@@ -825,6 +822,8 @@
   (define-key racket-mode-map (kbd "C-c \\") #'racket-insert-lambda)
   (define-key racket-mode-map (kbd "C-c C-a") #'racket-run-and-switch-to-repl)
   (define-key racket-repl-mode-map (kbd "C-c M-o") #'racket-repl-clear-leaving-last-prompt)
+  (define-key emacs-lisp-mode-map (kbd "C-c \\") #'racket-insert-lambda)
+  (define-key lisp-interaction-mode-map (kbd "C-c \\") #'racket-insert-lambda)
   (define-key racket-repl-mode-map (kbd "C-c \\") #'racket-insert-lambda)
   (define-key racket-repl-mode-map (kbd "M-r") #'comint-history-isearch-backward-regexp))
 
@@ -876,6 +875,14 @@
 ;; persistent-scratch
 (use-package persistent-scratch
   :defer t)
+
+;; proof-general
+(use-package proof-general
+  :defer t
+  :after
+  (company-coq)
+  :init
+  (add-hook 'coq-mode-hook #'company-coq-mode))
 
 (use-package scribble-mode
   :after

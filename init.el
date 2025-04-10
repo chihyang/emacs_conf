@@ -6,10 +6,13 @@
 
 (defconst package-elpa-sources
   '((standard-dev . (("gnu"   . "http://elpa.gnu.org/packages/")
+                     ("nongnu" . "https://elpa.nongnu.org/nongnu/")
                      ("melpa" . "http://melpa.org/packages/")))
     (standard-statble . (("gnu"   . "http://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
                          ("melpa" . "https://stable.melpa.org/packages/")))
     (tsinghua . (("gnu"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
                  ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                  ("emacswiki"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/emacswiki/")))))
 (defun package-available-elpa-sources ()
