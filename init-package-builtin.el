@@ -234,10 +234,17 @@ unwanted space when exporting `org-mode' to html."
 (global-set-key (kbd "C-c C-r") 'read-only-mode)
 
 ;; recentf-mode
-(require 'recentf)
-(setq recentf-max-menu-items 25)
-(recentf-mode 1)
-(global-set-key (kbd "C-x C-r") 'recentf-open-files)
+(use-package recentf
+  :init
+  (setq
+    recentf-save-file "~/.cache/emacs/recentf"
+    recentf-max-saved-items 10000
+    recentf-max-menu-items 5000
+    )
+  (recentf-mode 1)
+  (run-at-time nil (* 5 60) 'recentf-save-list)
+  (global-set-key (kbd "C-x C-r") 'recentf-open-files)
+  )
 
 ;; savehist
 (use-package savehist
@@ -311,6 +318,9 @@ the next non whitespace character."
         (kill-region start end)))))
 
 (global-set-key (kbd "C-|") 'kill-right-whitespace)
+
+(setq delete-pair-blink-delay 0)
+(global-set-key (kbd "C-x 9") 'delete-pair)
 
 (provide 'init-package-builtin)
 ;;; init-package-builtin.el ends here

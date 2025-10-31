@@ -102,6 +102,7 @@
     switch-window
     tabbar
     trashed
+    (twauctex . "https://github.com/jeeger/twauctex.git")
     undo-tree
     use-package
     vlf
@@ -118,17 +119,32 @@
     ztree
     ))
 
+(defun package-name (package)
+  "Return the `PACKAGE' name of a package description."
+  (cond
+   ((symbolp package) package)
+   ((listp package) (car package))
+   (t (error "Not a valid package description: %s" package))))
+
+(defun package-from-elpa? (package)
+  "Check if a `PACKAGE' is from ELPA."
+  (cond
+   ((listp package) nil)
+   (t t)))
+
 (defun ensure-packages ()
   "Install lost packages."
   (interactive)
   (let ((cache-refreshed? nil))
     (dolist (package required-packages)
-      (unless (package-installed-p package)
+      (unless (package-installed-p (package-name package))
         (unless (and package-archive-contents cache-refreshed?)
           (setq cache-refreshed? t)
           (message "Ready to refresh package contents")
           (package-refresh-contents))
-        (package-install package)))))
+        (if (package-from-elpa? package)
+            (package-install (package-name package))
+          (package-vc-install (cdr package)))))))
 
 (ensure-packages)
 
@@ -143,7 +159,8 @@
   :config
   (define-key TeX-mode-map (kbd "C-x n n") #'next-multiframe-window)
   (define-key LaTeX-mode-map (kbd "C-x n n") #'next-multiframe-window)
-  (setq LaTeX-electric-left-right-brace t))
+  (setq LaTeX-electric-left-right-brace t)
+  (setq TeX-source-correlate-mode t))
 
 ;; anzu
 (use-package anzu
@@ -690,7 +707,8 @@
     (setq visual-fill-column-center-text t)
     (set-display-table-slot buffer-display-table 'wrap ?\ )
     (define-key (current-local-map) (kbd "j") #'next-line)
-    (define-key (current-local-map) (kbd "k") #'previous-line))
+    (define-key (current-local-map) (kbd "k") #'previous-line)
+    (define-key (current-local-map) (kbd "y") #'google-translate-at-point))
   (add-hook 'nov-mode-hook 'visual-line-mode)
   (add-hook 'nov-mode-hook 'visual-fill-column-mode)
   (add-hook 'nov-mode-hook 'my-nov-mode-hook)
@@ -893,9 +911,15 @@
 ;; separedit
 (use-package separedit
   :config
+  ;; Key binding for modes you want edit
+  ;; or simply bind ‘global-map’ for all.
   (define-key prog-mode-map        (kbd "C-c '") #'separedit)
-  ;; Default major-mode for editing buffer
+  (define-key minibuffer-local-map (kbd "C-c '") #'separedit)
+  (define-key help-mode-map        (kbd "C-c '") #'separedit)
+
+  ;; Default major-mode for edit buffer
   (setq separedit-default-mode 'text-mode)
+
   ;; Feature options
   (setq separedit-preserve-string-indentation t)
   (setq separedit-continue-fill-column t)
@@ -921,6 +945,11 @@
       (global-set-key (kbd "C-c t <down>") 'tabbar-forward-group)
       (global-set-key (kbd "C-c t <home>") 'tabbar-press-home)))
   (tabbar-mode))
+
+(use-package twauctex
+  :ensure auctex
+  :config
+  (add-hook 'TeX-mode-hook #'twauctex-mode))
 
 ;; undo-tree
 (use-package undo-tree
@@ -982,12 +1011,12 @@
   (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand))
 
 ;; youdao-dictionary
-(use-package youdao-dictionary
+(use-package google-translate
   :ensure t
   :defer t
   :init
-  (global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point)
-  (global-set-key (kbd "C-x y") 'youdao-dictionary-search-from-input))
+  (global-set-key (kbd "C-c y") 'google-translate-at-point)
+  (global-set-key (kbd "C-x y") 'google-translate-query-translate))
 
 (provide 'init-package-elpa)
 ;;; init-package-elpa.el ends here
