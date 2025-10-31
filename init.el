@@ -56,7 +56,9 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (if (eq system-type 'windows-nt)
-    (setq file-name-coding-system 'gbk))
+    (progn
+      (setq file-name-coding-system 'gbk)
+      (setq default-process-coding-system '(utf-8-dos . chinese-gbk-dos))))
 (if (boundp 'buffer-file-coding-system)             ; backward compatibility as
     (setq-default buffer-file-coding-system 'utf-8) ; default-buffer-file-coding-system
   (setq default-buffer-file-coding-system 'utf-8))  ; is deprecated in 23.2.
