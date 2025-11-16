@@ -152,6 +152,18 @@
 ;; adaptive-wrap
 (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)
 
+(load-file (let ((coding-system-for-read 'utf-8))
+             (shell-command-to-string "agda-mode.exe locate")))
+
+(use-package agda2
+  :init
+  (require 'agda-input)
+  :config
+  (setq auto-mode-alist
+        (append
+         '(("\\.agda\\'" . agda2-mode)
+           ("\\.lagda.md\\'" . agda2-mode))
+         auto-mode-alist)))
 
 ;; auctex
 (use-package latex
@@ -229,15 +241,27 @@
 (use-package cnfonts
   :init
   (defun my-set-symbol-fonts (fontsizes-list)
-    (let* ((fontname "Segoe UI Symbol")
-           (fontsize (nth 0 fontsizes-list))
-           (fontspec (font-spec :name fontname
-                                :size fontsize
-                                :weight 'normal
-                                :slant 'normal)))
-      (if (cnfonts--fontspec-valid-p fontspec)
-          (set-fontset-font "fontset-default" 'symbol fontspec nil 'append)
-        (message "字体 %S 不存在！" fontname))))
+    (set-fontset-font t 'unicode "STIX Two" nil 'append)
+    (set-fontset-font t 'symbol "Webdings" nil 'append)
+    (set-fontset-font t 'mathematical "Webdings" nil 'append)
+    (set-fontset-font t 'unicode "Segoe UI Symbol" nil 'append)
+    (set-fontset-font t 'unicode "Segoe UI Emoji" nil 'append)
+    (set-fontset-font "fontset-default" '(#x0900 . #x097F)
+                      (font-spec :name "Lohit Devanagari"
+                                 :size 24
+                                 :weight 'normal
+                                 :slant 'normal)
+                      nil 'prepend)
+    ;; (let* ((fontname "Segoe UI Symbol")
+    ;;        (fontsize (nth 0 fontsizes-list))
+    ;;        (fontspec (font-spec :name fontname
+    ;;                             :size fontsize
+    ;;                             :weight 'normal
+    ;;                             :slant 'normal)))
+    ;;   (if (cnfonts--fontspec-valid-p fontspec)
+    ;;       (set-fontset-font "fontset-default" 'symbol fontspec nil 'append)
+    ;;     (message "字体 %S 不存在！" fontname)))
+    )
   (add-hook 'cnfonts-set-font-finish-hook 'my-set-symbol-fonts)
   :config
   (cnfonts-enable))
@@ -949,6 +973,7 @@
 (use-package twauctex
   :ensure auctex
   :config
+  (setq twauctex-use-visual-fill-column nil)
   (add-hook 'TeX-mode-hook #'twauctex-mode))
 
 ;; undo-tree
