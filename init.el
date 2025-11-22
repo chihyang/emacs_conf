@@ -31,12 +31,13 @@
              "Select from available sources: "
              (mapcar 'symbol-name
                      (package-available-elpa-sources))))))
-  (setq package-archives (alist-get elpa package-elpa-sources)))
+  (customize-save-variable 'package-archives (alist-get elpa package-elpa-sources)))
 
 (fset 'yes-or-no-p 'y-or-n-p)             ; substitue y/n for yes/no
 (require 'package)
 ;;; Standard package repositories
-(setq package-archives (alist-get 'tsinghua package-elpa-sources))
+(when (eq package-archives (get 'package-archives 'standard-value))
+  (customize-save-variable package-archives (alist-get 'tsinghua package-elpa-sources)))
 
 (package-initialize)
 
