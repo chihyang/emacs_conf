@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: tll index entry translation
+# key: te
+# --
+@tll-index-entry-translate[$1 $2]
+$0
