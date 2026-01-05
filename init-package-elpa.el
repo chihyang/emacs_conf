@@ -34,7 +34,7 @@
     counsel-projectile
     dashboard
     dim
-    dired-single
+    (dired-single . "https://github.com/emacsattic/dired-single.git")
     dired-subtree
     edit-server
     elpy
@@ -64,7 +64,6 @@
     java-snippets
     json-mode
     langtool
-    linum-relative
     logview
     lua-mode
     magit
@@ -73,7 +72,6 @@
     minimap
     modern-cpp-font-lock
     multiple-cursors
-    nlinum
     nov
     omni-scratch
     org-preview-html
@@ -240,29 +238,21 @@
 ;; chinese-fonts-setup
 (use-package cnfonts
   :init
-  (defun my-set-symbol-fonts (fontsizes-list)
-    (set-fontset-font t 'unicode "STIX Two" nil 'append)
-    (set-fontset-font t 'symbol "Webdings" nil 'append)
-    (set-fontset-font t 'mathematical "Webdings" nil 'append)
-    (set-fontset-font t 'unicode "Segoe UI Symbol" nil 'append)
-    (set-fontset-font t 'unicode "Segoe UI Emoji" nil 'append)
-    (set-fontset-font "fontset-default" '(#x0900 . #x097F)
-                      (font-spec :name "Lohit Devanagari"
-                                 :size 24
-                                 :weight 'normal
-                                 :slant 'normal)
-                      nil 'prepend)
-    ;; (let* ((fontname "Segoe UI Symbol")
-    ;;        (fontsize (nth 0 fontsizes-list))
-    ;;        (fontspec (font-spec :name fontname
-    ;;                             :size fontsize
-    ;;                             :weight 'normal
-    ;;                             :slant 'normal)))
-    ;;   (if (cnfonts--fontspec-valid-p fontspec)
-    ;;       (set-fontset-font "fontset-default" 'symbol fontspec nil 'append)
-    ;;     (message "字体 %S 不存在！" fontname)))
+  (defun set-symbol-fonts (fontsizes-list)
+    (when (eq system-type 'windows-nt)
+      (set-fontset-font t 'emoji '("Segoe UI Emoji" . "iso10646-1") nil 'prepend)
+      (set-fontset-font t 'mathematical "STIX Two" nil 'prepend)
+      (set-fontset-font t 'symbol '("Segoe UI Symbol" . "iso10646-1") nil 'prepend)
+      (set-fontset-font t 'symbol (font-spec :family "Cambria Math") nil 'prepend)
+      (set-fontset-font t 'symbol (font-spec :family "Segoe UI Symbol") nil 'append)
+      (set-fontset-font "fontset-default" '(#x0900 . #x097F)
+                        (font-spec :name "Lohit Devanagari"
+                                   :size 24
+                                   :weight 'normal
+                                   :slant 'normal)
+                        nil 'prepend))
     )
-  (add-hook 'cnfonts-set-font-finish-hook 'my-set-symbol-fonts)
+  (add-hook 'cnfonts-set-font-finish-hook 'set-symbol-fonts)
   :config
   (cnfonts-enable))
 
@@ -713,12 +703,6 @@
 ;; multiple-cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 
-;; nlinum
-(use-package nlinum
-  :defer t
-  :init
-  (setq nlinum-format "%d "))
-
 (use-package nov
   :after
   (visual-fill-column)
@@ -750,9 +734,8 @@
 
 ;; origami
 (use-package origami
+  :defer t
   :config
-  (dolist (hook '(prog-mode-hook))
-    (add-hook hook 'origami-mode))
   (global-set-key (kbd "C-c C-f") 'origami-toggle-node)
   (global-set-key (kbd "C-c M-f") 'origami-toggle-all-nodes))
 

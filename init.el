@@ -5,17 +5,15 @@
 (setq gc-cons-threshold (* 50 1024 1024))
 
 (defconst package-elpa-sources
-  '((standard-dev . (("gnu"   . "http://elpa.gnu.org/packages/")
-                     ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-                     ("melpa" . "http://melpa.org/packages/")))
-    (standard-statble . (("gnu"   . "http://elpa.gnu.org/packages/")
+  '((standard-dev .     (("gnu"    . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-                         ("melpa" . "https://stable.melpa.org/packages/")))
-    (tsinghua . (("gnu"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-                 ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                 ("emacswiki"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/emacswiki/")
-                 ("nongnu" . "https://elpa.nongnu.org/nongnu/")))))
+                         ("melpa"  . "https://melpa.org/packages/")))
+    (standard-statble . (("gnu"    . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                         ("melpa"  . "https://stable.melpa.org/packages/")))
+    (tsinghua .         (("gnu"    . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                         ("melpa"  . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))
 (defun package-available-elpa-sources ()
   (defun get-all-keys (alst)
     (if (null alst)
@@ -35,11 +33,11 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)             ; substitue y/n for yes/no
 (require 'package)
-;;; Standard package repositories
-(when (eq package-archives (get 'package-archives 'standard-value))
-  (customize-save-variable package-archives (alist-get 'tsinghua package-elpa-sources)))
-
 (package-initialize)
+;;; Standard package repositories
+(when (equal package-archives (eval (car (get 'package-archives 'standard-value))))
+  (customize-save-variable 'package-archives (alist-get 'tsinghua package-elpa-sources)))
+
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
