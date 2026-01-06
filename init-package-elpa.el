@@ -240,11 +240,10 @@
   :init
   (defun set-symbol-fonts (fontsizes-list)
     (when (eq system-type 'windows-nt)
-      (set-fontset-font t 'emoji '("Segoe UI Emoji" . "iso10646-1") nil 'prepend)
+      (set-fontset-font t 'emoji "Segoe UI Emoji" nil 'prepend)
       (set-fontset-font t 'mathematical "STIX Two" nil 'prepend)
-      (set-fontset-font t 'symbol '("Segoe UI Symbol" . "iso10646-1") nil 'prepend)
-      (set-fontset-font t 'symbol (font-spec :family "Cambria Math") nil 'prepend)
-      (set-fontset-font t 'symbol (font-spec :family "Segoe UI Symbol") nil 'append)
+      (set-fontset-font t 'symbol "Cambria Math" nil 'prepend)
+      (set-fontset-font t 'symbol "Segoe UI Symbol" nil 'prepend)
       (set-fontset-font "fontset-default" '(#x0900 . #x097F)
                         (font-spec :name "Lohit Devanagari"
                                    :size 24
