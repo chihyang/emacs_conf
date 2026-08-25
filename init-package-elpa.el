@@ -1,4 +1,4 @@
-;;; init-package-elpa --- Configuration for packages managed by elpa.
+;;; init-package-elpa --- Configuration for packages managed by elpa.  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;; Load packages configuration managed by elpa.
@@ -20,12 +20,14 @@
     auto-highlight-symbol
     avy
     ace-pinyin
+    (bookmark-plus . "https://github.com/emacsmirror/bookmark-plus.git")
     cal-china-x
     cnfonts
     cmake-font-lock
     cmake-mode
     cmake-project
     color-theme-modern
+    (column-marker . "https://github.com/emacsmirror/column-marker.git")
     company
     company-coq
     company-prescient
@@ -34,7 +36,10 @@
     counsel-projectile
     dashboard
     dim
+    (dired-plus . "https://github.com/emacsmirror/dired-plus.git")
     (dired-single . "https://github.com/emacsattic/dired-single.git")
+    (dired-sort-menu . "https://github.com/emacsmirror/dired-sort-menu.git")
+    (dired-sort-menu-plus . "https://github.com/emacsmirror/dired-sort-menu-plus.git")
     dired-subtree
     edit-server
     elpy
@@ -71,6 +76,7 @@
     markdown-preview-mode
     minimap
     modern-cpp-font-lock
+    (modeline-posn . "https://github.com/emacsmirror/modeline-posn.git")
     multiple-cursors
     nov
     omni-scratch
@@ -79,6 +85,7 @@
     pandoc-mode
     paredit
     persistent-scratch
+    perspective
     plantuml-mode
     powerline-evil
     proof-general
@@ -210,7 +217,6 @@
 
 ;; bookmark+
 (use-package bookmark+
-  :load-path "emacswiki/bookmark+/"
   :config
   (setq bmkp-bookmark-map-prefix-keys (quote ("/")))
   (setq bmkp-last-as-first-bookmark-file nil)
@@ -341,7 +347,6 @@
 
 ;; column-marker
 (use-package column-marker
-  :load-path "emacswiki/column-marker/"
   :config
   (column-marker-1 80))
 
@@ -393,14 +398,12 @@
        (projectile-mode            "Pj")
        (subword-mode               "")
        (undo-tree-mode             "⇔")
-       (workgroups-mode            "")
        (yas-minor-mode             "")
        )))
   (add-hook 'find-file-hook 'simplify-mode-alias))
 
 ;; dired+
 (use-package dired+
-  :load-path "emacswiki/dired+/"
   :config
   (unbind-key "M-O" dired-mode-map)
   (define-key dired-mode-map (kbd "y") 'dired-show-file-type)
@@ -420,13 +423,11 @@
 
 ;; dired-sort-menu+
 (use-package dired-sort-menu
-  :requires (dired+)
-  :load-path "emacswiki/dired-sort-menu/")
+  :requires (dired+))
 
 ;; dired-sort-menu+
 (use-package dired-sort-menu+
-  :requires (dired+ dired-sort-menu)
-  :load-path "emacswiki/dired-sort-menu+/")
+  :requires (dired+ dired-sort-menu))
 
 ;; dired-subtree
 (use-package dired-subtree
@@ -890,7 +891,6 @@
 
 ;; modeline-posn
 (use-package modeline-posn
-  :load-path "emacswiki/modeline-posn/"
   :config
   (line-number-mode 1)
   (column-number-mode 1)
@@ -973,21 +973,14 @@
   :config
   (setq vlf-application 'dont-ask))
 
-;; workgroups2
-(use-package workgroups2
-  :load-path "emacswiki/workgroups2/"
-  :config
-  (setq wg-emacs-exit-save-behavior           'save)      ; Options: 'save 'ask nil
-  (setq wg-workgroups-mode-exit-save-behavior 'save)      ; Options: 'save 'ask nil
-  ;; Mode Line changes
-  (setq wg-mode-line-display-on t)          ; Default: (not (featurep 'powerline))
-  (setq wg-flag-modified t)                 ; Display modified flags as well
-  (setq wg-mode-line-decor-left-brace "["
-        wg-mode-line-decor-right-brace "]"  ; how to surround it
-        wg-mode-line-decor-divider ":")
-  (add-hook 'after-init-hook (lambda ()  (workgroups-mode 1)))
-  ;; (add-hook 'server-after-make-frame-hook (lambda () (wg-open-session (wg-get-session-file))))
-  (add-to-list 'delete-frame-functions (lambda (frame) (wg-save-session))))
+;; persp-mode
+(use-package perspective
+ :custom
+ (persp-mode-prefix-key (kbd "C-c z"))  ; pick your own prefix key here
+ :config
+ (setq persp-state-default-file "~/.emacs_workgroups")
+ (add-hook 'kill-emacs-hook #'persp-state-save)
+ )
 
 ;; wttrin
 (use-package wttrin

@@ -1,4 +1,4 @@
-;;; init-package-builtin --- Configuration for built-in Emacs packages
+;;; init-package-builtin --- Configuration for built-in Emacs packages  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -321,6 +321,7 @@ the next non whitespace character."
 
 (setq delete-pair-blink-delay 0)
 (global-set-key (kbd "C-x 9") 'delete-pair)
+(global-set-key (kbd "C-c /") 'window-swap-states)
 
 (provide 'init-package-builtin)
 ;;; init-package-builtin.el ends here
