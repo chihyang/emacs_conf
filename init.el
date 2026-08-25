@@ -34,10 +34,6 @@
 (fset 'yes-or-no-p 'y-or-n-p)             ; substitue y/n for yes/no
 (require 'package)
 (package-initialize)
-;;; Standard package repositories
-(when (equal package-archives (eval (car (get 'package-archives 'standard-value))))
-  (customize-save-variable 'package-archives (alist-get 'tsinghua package-elpa-sources)))
-
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)

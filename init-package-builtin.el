@@ -149,28 +149,28 @@
             (sgml-guess-indent)))
 
 ;; linum-mode
-(use-package linum
-  :config
-  (defun linum-update-window-scale-fix (win)
-    "fix linum for scaled text"
-    (set-window-margins
-     win
-     (ceiling (* (if (boundp 'text-scale-mode-step)
-                     (expt text-scale-mode-step
-                           text-scale-mode-amount)
-                   1)
-                 (if (car (window-margins))
-                     (car (window-margins)) 1)
-                 ))))
-  (advice-add #'linum-update-window :after #'linum-update-window-scale-fix)
-  (defun linum-format-func (line)
-    "Add padding for line number in terminal mode"
-    (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-      (propertize (format (format "%%%dd " w) line) 'face 'linum)))
-  (when (not (display-graphic-p))
-    (setq linum-format 'linum-format-func))
-  (if (> emacs-major-version 25)
-      (global-display-line-numbers-mode 1)
+(if (> emacs-major-version 25)
+    (global-display-line-numbers-mode 1)
+  (use-package linum
+    :config
+    (defun linum-update-window-scale-fix (win)
+      "fix linum for scaled text"
+      (set-window-margins
+       win
+       (ceiling (* (if (boundp 'text-scale-mode-step)
+                       (expt text-scale-mode-step
+                             text-scale-mode-amount)
+                     1)
+                   (if (car (window-margins))
+                       (car (window-margins)) 1)
+                   ))))
+    (advice-add #'linum-update-window :after #'linum-update-window-scale-fix)
+    (defun linum-format-func (line)
+      "Add padding for line number in terminal mode"
+      (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+        (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+    (when (not (display-graphic-p))
+      (setq linum-format 'linum-format-func))
     (global-linum-mode 1)))
 
 ;; Man-mode
