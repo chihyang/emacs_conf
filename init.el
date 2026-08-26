@@ -3,6 +3,7 @@
 ;;; load packages and customized functions
 ;;; Code:
 (setq gc-cons-threshold (* 50 1024 1024))
+(setq warning-suppress-log-types '((files missing-lexbind-cookie)))
 
 (defconst package-elpa-sources
   '((standard-dev .     (("gnu"    . "https://elpa.gnu.org/packages/")
