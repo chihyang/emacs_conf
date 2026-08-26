@@ -35,6 +35,7 @@
     csharp-mode
     counsel-projectile
     dashboard
+    diff-hl
     dim
     (dired-plus . "https://github.com/emacsmirror/dired-plus.git")
     (dired-single . "https://github.com/emacsattic/dired-single.git")
@@ -51,7 +52,6 @@
     geiser
     geiser-chez
     ;; geiser-racket
-    git-gutter
     gmail-message-mode
     golden-ratio
     graphviz-dot-mode
@@ -364,6 +364,23 @@
   ;; (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   )
 
+;; diff-hl
+(use-package diff-hl
+  :config
+  (global-diff-hl-mode)
+  (diff-hl-margin-mode)
+  (setq diff-hl-show-staged-changes nil)
+  :config
+  ;; Jump to next/previous hunk
+  (define-key diff-hl-mode-map (kbd "C-x v p") 'diff-hl-previous-hunk)
+  (define-key diff-hl-mode-map (kbd "C-x v n") 'diff-hl-next-hunk)
+  ;; Stage current hunk
+  (define-key diff-hl-mode-map (kbd "C-x v s") 'diff-hl-stage-dwim)
+  ;; Revert current hunk
+  (define-key diff-hl-mode-map (kbd "C-x v r") 'diff-hl-revert-hunk)
+  ;; Mark current hunk
+  (define-key diff-hl-mode-map (kbd "C-x v SPC") 'diff-hl-mark-hunk))
+
 ;; dim
 (use-package dim
   :config
@@ -390,7 +407,6 @@
        (eldoc-mode                 "")
        (ethan-wspace-mode          "␣")
        (flyspell-mode              "√")
-       (git-gutter-mode            "")
        (hs-minor-mode              "")
        (ivy-mode                   "")
        (modern-c++-font-lock-mode  " C++11 ")
@@ -493,21 +509,6 @@
   ;; flyspell-popup
   ;; (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
 )
-
-(use-package git-gutter
-  :init
-  ;; If you enable global minor mode
-  (global-git-gutter-mode t)
-  :config
-  ;; Jump to next/previous hunk
-  (global-set-key (kbd "C-x v p") 'git-gutter:previous-hunk)
-  (global-set-key (kbd "C-x v n") 'git-gutter:next-hunk)
-  ;; Stage current hunk
-  (global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
-  ;; Revert current hunk
-  (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
-  ;; Mark current hunk
-  (global-set-key (kbd "C-x v SPC") #'git-gutter:mark-hunk))
 
 ;;; geiser
 (use-package geiser
@@ -675,9 +676,13 @@
 ;; magit
 (use-package magit
   :defer t
+  :after
+  (diff-hl)
   :init
   (setq magit-blame-heading-format "%-20a %H %C %s")
-  (setq magit-diff-refine-hunk 'all))
+  (setq magit-diff-refine-hunk 'all)
+  :config
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
 ;; markdown-mode
 ;; Note: \' matches the end of a string, while $ matches the empty string before
